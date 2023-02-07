@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blockAuth.mapper.BuyerMapper">
+<select id="buyerNumGenerate" resultType="string">
+	select concat('buyer',nvl(max(substr(buyer_num,6)),100000)+ 1) 
+	from member
+</select>
+</mapper>
