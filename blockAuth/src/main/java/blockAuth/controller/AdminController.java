@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("admin")
 public class AdminController {
 	@RequestMapping("adminList")
-	public String insert() {
+	public String admin() {
 		return "thymeleaf/admin/adminList";
 	}
 }
