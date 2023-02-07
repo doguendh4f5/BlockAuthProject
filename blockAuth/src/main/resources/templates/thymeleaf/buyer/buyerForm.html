@@ -56,35 +56,70 @@
 
 </head>
 <body>
-<form action="buyerRegist" method="get">
+<form action="buyerRegist" method="post" th:object=${buyerCommand}>
 <input type="hidden" name="membership" value="F">
 <input type="hidden" name="buyerPoint" value="0">
 <table border="1">
 	<caption>구매자 등록</caption>
-	<tr><th>구매자 번호</th><td><input type="text" name="buyerNum"></td></tr>
-	<tr><th>구매자 아이디</th><td><input type="text" name="buyerId"></td></tr>
-	<tr><th>구매자 비밀번호</th><td><input type="password" name="buyerPw"></td></tr>
-	<tr><th>구매자 비밀번호 확인</th><td><input type="password" name="buyerPwCon"></td></tr>
-	<tr><th>구매자 이름</th><td><input type="text" name="buyerName"></td></tr>
-	<tr><th>구매자 연락처</th><td><input type="tel" name="buyerPhone"></td></tr>
+	<tr>
+		<th>구매자 번호(자동부여)</th>
+		<td><input type="text" name="buyerNum" th:value="${buyerCommand.buyerNum}"></td>
+	</tr>
+	<tr>
+		<th>구매자 아이디</th>
+		<td><input type="text" name="buyerId"><span style="color:red" th:if="${#fields.hasErrors('buyerId')}" th:errors="*{buyerId}"></span></td>
+		
+	</tr>
+	<tr>
+		<th>구매자 비밀번호</th>
+		<td><input type="password" name="buyerPw"><span style="color:red" th:if="${#fields.hasErrors('buyerPw')}" th:errors="*{buyerPw}"></span></td>
+		
+	</tr>
+	<tr>
+		<th>구매자 비밀번호 확인</th>
+		<td><input type="password" name="buyerPwCon"><span style="color:red" th:if="${#fields.hasErrors('buyerPwCon')}" th:errors="*{buyerPwCon}"></span></td>
+		
+	</tr>
+	<tr>
+		<th>구매자 이름</th>
+		<td><input type="text" name="buyerName"><span style="color:red" th:if="${#fields.hasErrors('buyerName')}" th:errors="*{buyerName}"></span></td>
+		
+	</tr>
+	<tr>
+		<th>구매자 연락처</th>
+		<td><input type="tel" name="buyerPhone"><span style="color:red" th:if="${#fields.hasErrors('buyerPhone')}" th:errors="*{buyerPhone}"></span></td>
+		
+	</tr>
 	<th>주소</th>
             <td>
                   <input type="text" name="buyerAddr1"
                   id="sample4_roadAddress" 
                   style="width: 65%; background-image:url('img/search.png'); 
                   background-repeat:no-repeat; background-position:right; background-size:20px 20px; width:171px;" 
-                  onclick="sample4_execDaumPostcode();" readonly="readonly" placeholder="주소"/><br/>
-                  <input type="text" name="buyerAddr2" id="sample4_extraAddress" placeholder="상세주소"/><br/>
+                  onclick="sample4_execDaumPostcode();" readonly="readonly" placeholder="주소"/>
+                  <span style="color:red" th:if="${#fields.hasErrors('buyerAddr1')}" th:errors="*{buyerAddr1}"></span><br/>
+                  <input type="text" name="buyerAddr2" id="sample4_extraAddress" placeholder="상세주소"/>
+                  <span style="color:red" th:if="${#fields.hasErrors('buyerAddr2')}" th:errors="*{buyerAddr2}"></span><br/>
                   <input type="text" name="buyerPostcode"
                   id="sample4_postcode" readonly="readonly" placeholder="우편번호"/>
+                  <span style="color:red" th:if="${#fields.hasErrors('buyerPostcode')}" th:errors="*{buyerPostcode}"></span>
                   </td>
          </tr>
-
-	<tr><th>구매자 생일</th><td><input type="date" name="buyerBirth"></td></tr>
-	<tr><th>구매자 이메일</th><td><input type="email" name="buyerEmail"></td></tr>
-	
-	
-	<tr><th>구매자 지갑주소</th><td><input type="text" name="buyerWalletAddr"></td></tr>
+	<tr>
+		<th>구매자 생일</th>
+		<td><input type="date" name="buyerBirth"><span style="color:red" th:if="${#fields.hasErrors('buyerBirth')}" th:errors="*{buyerBirth}"></span></td>
+		
+	</tr>
+	<tr>
+		<th>구매자 이메일</th>
+		<td><input type="email" name="buyerEmail"><span style="color:red" th:if="${#fields.hasErrors('buyerEmail')}" th:errors="*{buyerEmail}"></span></td>
+		
+	</tr>
+	<tr>
+		<th>구매자 지갑주소</th>
+		<td><input type="text" name="buyerWalletAddr"><span style="color:red" th:if="${#fields.hasErrors('buyerWalletAddr')}" th:errors="*{buyerWalletAddr}"></span></td>
+		
+	</tr>
 	<tr><td colspan="2" align="center"><input type="submit" value="구매자 등록"></td></tr>
 </table>
 </form>

@@ -1,13 +1,18 @@
-package blockAuth.service;
+package blockAuth.service.buyer;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import blockAuth.command.BuyerCommand;
 import blockAuth.domain.BuyerDTO;
+import blockAuth.mapper.BuyerMapper;
 
 @Service
 public class BuyerRegistService {
-	public void execute(BuyerCommand buyerCommand) {
+	@Autowired
+	BuyerMapper buyerMapper;
+	Integer i;
+	public Integer execute(BuyerCommand buyerCommand) {
 		BuyerDTO dto = new BuyerDTO();
 		dto.setBuyerAddr1(buyerCommand.getBuyerAddr1());
 		dto.setBuyerAddr2(buyerCommand.getBuyerAddr2());
@@ -18,10 +23,14 @@ public class BuyerRegistService {
 		dto.setBuyerNum(buyerCommand.getBuyerNum());
 		dto.setBuyerPhone(buyerCommand.getBuyerPhone());
 		dto.setBuyerPoint(buyerCommand.getBuyerPoint());
-		dto.setBuyerPostCode(buyerCommand.getBuyerPostCode());
+		dto.setBuyerPostcode(buyerCommand.getBuyerPostcode());
 		dto.setBuyerPw(buyerCommand.getBuyerPw());
 		dto.setBuyerWalletAddr(buyerCommand.getBuyerWalletAddr());
 		dto.setMembership(buyerCommand.getMembership());
+		i = buyerMapper.buyerInsert(dto);
+		System.out.println(i + "개가 삽입되었습니다.");
 		
+		
+		return i;
 	}
 }

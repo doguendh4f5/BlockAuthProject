@@ -5,6 +5,17 @@
 <mapper namespace="blockAuth.mapper.BuyerMapper">
 <select id="buyerNumGenerate" resultType="string">
 	select concat('buyer',nvl(max(substr(buyer_num,6)),100000)+ 1) 
-	from member
+	from buyer
+</select>
+<insert id="buyerInsert" parameterType="buyerDTO">
+	insert into buyer(BUYER_NUM, BUYER_ID, BUYER_PW, BUYER_NAME, BUYER_PHONE, BUYER_ADDR1, BUYER_ADDR2,
+						BUYER_BIRTH, BUYER_EMAIL, MEMBERSHIP, BUYER_POINT, BUYER_POSTCODE, BUYER_WALLET_ADDR)
+	values(#{buyerNum}, #{buyerId}, #{buyerPw}, #{buyerName}, #{buyerPhone}, #{buyerAddr1}, #{buyerAddr2},
+			#{buyerBirth}, #{buyerEmail}, #{membership}, #{buyerPoint}, #{buyerPostcode}, #{buyerWalletAddr})
+</insert>
+<select id="selectAll" resultType="buyerDTO">
+	select BUYER_NUM buyerNum, BUYER_ID buyerId, BUYER_PW buyerPw, BUYER_NAME buyerName, BUYER_PHONE buyerPhone, BUYER_ADDR1 buyerAddr1, BUYER_ADDR2 buyerAddr2,
+		   BUYER_BIRTH buyerBirth, BUYER_EMAIL buyerEmail, MEMBERSHIP membership, BUYER_POINT buyerPoint, BUYER_POSTCODE buyerPostcode, BUYER_WALLET_ADDR buyerWalletAddr
+	from buyer
 </select>
 </mapper>
