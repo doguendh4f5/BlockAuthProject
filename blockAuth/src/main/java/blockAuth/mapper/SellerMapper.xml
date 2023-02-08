@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blockAuth.mapper.SellerMapper">
+<sql id="baseColumns">
+SELLER_NUM sellerNum, SELLER_ID sellerId, SELLER_PW sellerPw, SELLER_NAME sellerName
+			, SELLER_ADDR1 sellerAddr1, SELLER_ADDR2 sellerAddr2, SELLER_POSTCODE sellerPostcode
+			, BUSINESS_REGI_NUM businessRegiNum, SELLER_TEL sellerTel, SELLER_WALLET_ADDR sellerWalletAddr
+			, MIN_DELIVERY_FEE minDeliveryFee
+</sql>
+<!-- 판매자 정보 자동생성 -->
+<select id="sellerNumGenerate" resultType="string">
+	select concat('seller',nvl(max(substr(seller_num,7)),100000)+ 1) 
+	from seller
+</select>
+<!-- 판매자 정보 삽입 -->
+<insert id="sellerInsert"  parameterType="sellerDTO">
+	INSERT INTO SELLER (SELLER_NUM, SELLER_ID, SELLER_PW, SELLER_NAME
+									, SELLER_ADDR1, SELLER_ADDR2, SELLER_POSTCODE
+									, BUSINESS_REGI_NUM, SELLER_TEL, SELLER_WALLET_ADDR
+									, MIN_DELIVERY_FEE)
+	VALUES(#{sellerNum}, #{sellerId}, #{sellerPw}, #{sellerName}
+				, #{sellerAddr1}, #{sellerAddr2}, #{sellerPostcode}
+				, #{businessRegiNum}, #{sellerTel}, #{sellerWalletAddr}
+				,#{minDeliveryFee})
+</insert>
+<!-- 판매자정보리스트 -->
+<select id="selectAll" resultType="sellerDTO">
+	select SELLER_NUM sellerNum, SELLER_ID sellerId, SELLER_PW sellerPw, SELLER_NAME sellerName
+			, SELLER_ADDR1 sellerAddr1, SELLER_ADDR2 sellerAddr2, SELLER_POSTCODE sellerPostcode
+			, BUSINESS_REGI_NUM businessRegiNum, SELLER_TEL sellerTel, SELLER_WALLET_ADDR sellerWalletAddr
+									, MIN_DELIVERY_FEE minDeliveryFee
+	from seller
+</select>
+<!-- 판매자상세정보 -->
+<select id="selectOne" parameterType="string" resultType="sellerDTO">
+	select <include refid="baseColumns" />
+	from seller
+	where seller_num = #{sellerNum}
+</select>
+<!-- 판매자정보수정 -->
+<update id="sellerUpdate" parameterType="sellerDTO">
+	update seller
+	set seller_tel = #{sellerTel}, seller_addr1 = #{sellerAddr1}, seller_addr2 = #{sellerAddr2}
+		, seller_Postcode = #{sellerPostcode}, seller_wallet_addr = #{sellerWalletAddr}
+		, min_delivery_fee = #{minDeliveryFee} 
+	where seller_num = #{sellerNum}
+</update>
+<!-- 판매자정보삭제 -->
+<delete id="sellerDelete" parameterType="string">
+	delete from seller
+	where seller_num = #{sellerNum}
+</delete>
+</mapper>

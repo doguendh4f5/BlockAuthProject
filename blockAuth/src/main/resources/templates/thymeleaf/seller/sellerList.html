@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SellerListPage</title>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<th>판매자 번호</th>
+			<th>판매자 이름</th>
+			<th>판매자 연락처</th>
+			<th>판매자 지갑주소</th>
+		</tr>
+		<tr th:each="sellerDTO : ${list}">
+			<td><a th:href="@{sellerInfo(num=${sellerDTO.sellerNum})}">[[${sellerDTO.sellerNum}]]</a></td>
+			<td>[[${sellerDTO.sellerName}]]</td>
+			<td>[[${sellerDTO.sellerTel}]]</td>
+			<td>[[${sellerDTO.sellerWalletAddr}]]</td>
+		</tr>
+	</table>
+	<a href="sellerRegist">판매자 등록하기</a>
+</body>
+</html>
