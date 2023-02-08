@@ -5,11 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import blockAuth.command.BuyerCommand;
+import blockAuth.service.buyer.BuyerDetailService;
 import blockAuth.service.buyer.BuyerListService;
+import blockAuth.service.buyer.BuyerModifyService;
 import blockAuth.service.buyer.BuyerNumberService;
 import blockAuth.service.buyer.BuyerRegistService;
 
@@ -49,7 +53,32 @@ public class BuyerController {
 		}else {
 			return "thymeleaf/buyer/buyerForm";
 		}
-		
 	}
-	
+	@Autowired
+	BuyerDetailService buyerDetailService;
+	@RequestMapping(value = "buyerDetail/{buyerNum}")
+	public String buyerDetail(
+			@PathVariable(value = "buyerNum")String buyerNum,
+			Model model) {
+		buyerDetailService.execute(buyerNum, model);
+		return "thymeleaf/buyer/buyerDetail";
+	}
+	@RequestMapping(value = "buyerModify", method = RequestMethod.GET)
+	public String buyerUpdate(
+			@RequestParam(value = "buyerNum")String buyerNum,
+			Model model) {
+		buyerDetailService.execute(buyerNum, model);
+		return "thymeleaf/buyer/buyerUpdate";
+	}
+	@Autowired
+	BuyerModifyService buyerModifyService;
+	@RequestMapping(value = "buyerModify", method = RequestMethod.POST)
+	public String buyerModify(@Validated BuyerCommand buyerCommand,
+			BindingResult result) {
+		if(result.hasErrors()) {
+			return "thymeleaf/buyer/buyerUpdate";
+		}
+		buyerModifyService.execute(buyerCommand);
+		return "redirect:buyerDetail/"+buyerCommand.getBuyerNum();
+	}
 }

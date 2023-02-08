@@ -11,4 +11,6 @@ public interface BuyerMapper {
 	public String buyerNumGenerate();
 	public Integer buyerInsert(BuyerDTO dto);
 	public List<BuyerDTO> selectAll();
+	public BuyerDTO selectOne(String buyerNum);
+	public Integer buyerUpdate(BuyerDTO dto);
 }

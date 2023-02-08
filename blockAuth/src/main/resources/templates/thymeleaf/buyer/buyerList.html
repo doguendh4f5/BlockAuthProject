@@ -8,7 +8,7 @@
 <table border="1">
 	<tr><th>구매자 번호</th><th>구매자 이름</th><th>구매자 이메일</th><th>멤버십 유/무</th></tr>
 	<tr th:each="buyerDTO : ${list}">
-		<td>[[${buyerDTO.buyerNum}]]</td>
+		<td><a th:href="|buyerDetail/${buyerDTO.buyerNum}|">[[${buyerDTO.buyerNum}]]</a></td>
 		<td>[[${buyerDTO.buyerName}]]</td>
 		<td>[[${buyerDTO.buyerEmail}]]</td>
 		<td>[[${buyerDTO.membership}]]</td>
