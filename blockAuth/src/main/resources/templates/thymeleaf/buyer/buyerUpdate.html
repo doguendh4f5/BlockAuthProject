@@ -58,29 +58,67 @@
 <strong>[[${buyerCommand.buyerName}]] 님의 수정페이지</strong><br>
 <form action="buyerModify" method="post" th:object=${buyerCommand}>
 <input type="hidden" name="buyerNum" th:value="${buyerCommand.buyerNum}">
+<input type="hidden" name="buyerPw" value="1111aaaa!">
+<input type="hidden" name="buyerPwCon" value="1111aaaa!">
+<input type="hidden" name="buyerWalletAddr" value="1234">
+
 <table border="1">
 	<tr><th>구매자 번호</th><td>[[${buyerCommand.buyerNum}]]</td></tr>
-	<tr><th>구매자 아이디</th><td><input type="text" name="buyerId" th:value="${buyerCommand.buyerId}"></td></tr>
-	<tr><th>구매자 이름</th><td><input type="text" name="buyerName" th:value="${buyerCommand.buyerName}"></td></tr>
-	<tr><th>구매자 연락처</th><td><input type="tel" name="buyerPhone" th:value="${buyerCommand.buyerPhone}"></td></tr>
+	<tr><th>구매자 아이디</th>
+	<td>
+		<input type="text" name="buyerId" th:value="${buyerCommand.buyerId}">
+		<span style="color:red" th:if="${#fields.hasErrors('buyerId')}" th:errors="*{buyerId}"></span>
+	</td>
+	</tr>
+	<tr>
+	<th>구매자 이름</th>
+	<td>
+		<input type="text" name="buyerName" th:value="${buyerCommand.buyerName}">
+		<span style="color:red" th:if="${#fields.hasErrors('buyerName')}" th:errors="*{buyerName}"></span>
+	</td>
+	</tr>
+	<tr>
+	<th>구매자 연락처</th>
+	<td>
+		<input type="tel" name="buyerPhone" th:value="${buyerCommand.buyerPhone}">
+		<span style="color:red" th:if="${#fields.hasErrors('buyerPhone')}" th:errors="*{buyerPhone}"></span>
+	</td>
+	</tr>
 	<tr>
 	<th>구매자 주소</th>
 	<td>
-                  <input type="text" name="buyerAddr1"
+                  <input type="text" name="buyerAddr1" th:value="${buyerCommand.buyerAddr1}"
                   id="sample4_roadAddress" 
                   style="width: 65%; background-image:url('img/search.png'); 
                   background-repeat:no-repeat; background-position:right; background-size:20px 20px; width:171px;" 
-                  onclick="sample4_execDaumPostcode();" readonly="readonly" placeholder="주소"/><br>
+                  onclick="sample4_execDaumPostcode();" readonly="readonly" placeholder="주소"/>
+                  <span style="color:red" th:if="${#fields.hasErrors('buyerAddr1')}" th:errors="*{buyerAddr1}"></span>
+                  <br>
                   
-                  <input type="text" name="buyerAddr2" id="sample4_extraAddress" placeholder="상세주소"/><br>
+                  <input type="text" name="buyerAddr2" id="sample4_extraAddress" th:value="${buyerCommand.buyerAddr2}" placeholder="상세주소"/>
+                  <span style="color:red" th:if="${#fields.hasErrors('buyerAddr2')}" th:errors="*{buyerAddr2}"></span>
+                  <br>
                   
-                  <input type="text" name="buyerPostcode"
+                  <input type="text" name="buyerPostcode" th:value="${buyerCommand.buyerPostcode}"
                   id="sample4_postcode" readonly="readonly" placeholder="우편번호"/>
+                  <span style="color:red" th:if="${#fields.hasErrors('buyerPostcode')}" th:errors="*{buyerPostcode}"></span>
                   
     </td>
 	</tr>
-	<tr><th>구매자 생일</th><td><input type="date" name="buyerBirth" th:value="${#dates.format(buyerCommand.buyerBirth, 'yyyy-MM-dd')}"></td></tr>
-	<tr><th>구매자 이메일</th><td><input type="email" name="buyerEmail" th:value="${buyerCommand.buyerEmail}"></td></tr>
+	<tr>
+	<th>구매자 생일</th>
+	<td>
+		<input type="date" name="buyerBirth" th:value="${#dates.format(buyerCommand.buyerBirth, 'yyyy-MM-dd')}">
+		<span style="color:red" th:if="${#fields.hasErrors('buyerBirth')}" th:errors="*{buyerBirth}"></span>
+	</td>
+	</tr>
+	<tr>
+	<th>구매자 이메일</th>
+	<td>
+	<input type="email" name="buyerEmail" th:value="${buyerCommand.buyerEmail}">
+	<span style="color:red" th:if="${#fields.hasErrors('buyerEmail')}" th:errors="*{buyerEmail}"></span>
+	</td>
+	</tr>
 	<tr><th colspan="2"><input type="submit" value="수정완료"></th></tr>
 </table>
 </form>

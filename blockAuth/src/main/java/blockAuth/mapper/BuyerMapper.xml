@@ -35,4 +35,8 @@ MEMBERSHIP membership, BUYER_POINT buyerPoint, BUYER_POSTCODE buyerPostcode, BUY
 		buyer_birth = #{buyerBirth}, buyer_email = #{buyerEmail}
 	where buyer_num = #{buyerNum}
 </update>
+<delete id="buyerDelete" parameterType="string">
+	delete from buyer
+	where buyer_num = #{buyerNum}
+</delete>
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import blockAuth.command.BuyerCommand;
+import blockAuth.service.buyer.BuyerDeleteService;
 import blockAuth.service.buyer.BuyerDetailService;
 import blockAuth.service.buyer.BuyerListService;
 import blockAuth.service.buyer.BuyerModifyService;
@@ -80,5 +81,13 @@ public class BuyerController {
 		}
 		buyerModifyService.execute(buyerCommand);
 		return "redirect:buyerDetail/"+buyerCommand.getBuyerNum();
+	}
+	@Autowired
+	BuyerDeleteService buyerDeleteService;
+	@RequestMapping("buyerDelete")
+	public String buyerDelete(
+			@RequestParam(value = "buyerNum")String buyerNum) {
+		buyerDeleteService.execute(buyerNum);
+		return "redirect:buyerList";
 	}
 }

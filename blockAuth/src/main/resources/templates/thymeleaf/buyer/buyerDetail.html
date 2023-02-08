@@ -21,7 +21,7 @@
 	<tr><th>구매자 지갑주소</th><td>[[${buyerCommand.buyerWalletAddr}]]</td></tr>
 	<tr><th colspan="2">
 	<a th:href="|../buyerModify?buyerNum=${buyerCommand.buyerNum}|">구매자 수정</a>|
-	구매자 삭제|
+	<a th:href="|../buyerDelete?buyerNum=${buyerCommand.buyerNum}|">구매자 삭제</a>|
 	<a href="/buyer/buyerList">리스트로 가기</a>
 	</th></tr>
 </table>
