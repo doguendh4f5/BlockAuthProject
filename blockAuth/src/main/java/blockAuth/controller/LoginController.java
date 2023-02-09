@@ -2,27 +2,32 @@ package blockAuth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import blockAuth.command.LoginCommand;
+import blockAuth.service.CookieService;
 import blockAuth.service.LoginService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
+	@Autowired
+	CookieService cookieService;
 	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login(LoginCommand loginCommand, HttpSession session) {
-		
+	public String login(LoginCommand loginCommand, HttpSession session,
+			HttpServletRequest request, Model model) {
+		cookieService.execute(request, model);
 		return "thymeleaf/login";
 	}
 	@RequestMapping(value = "login/loginOk", method = RequestMethod.GET)
 	public String home() {
-		
 		return "redirect:/login";
 	}
 	@Autowired
@@ -33,6 +38,7 @@ public class LoginController {
 		if(result.hasErrors()) {
 			return "thymeleaf/login";
 		}
+		
 		String i = loginService.execute(loginCommand, result, session, response);
 		return i;
 	}

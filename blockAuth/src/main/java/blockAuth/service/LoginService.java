@@ -28,6 +28,7 @@ public class LoginService {
 				return "thymeleaf/login";
 			} else {
 				session.setAttribute("authInfo", authInfo);
+				
 				if(loginCommand.getIdSave() != null && loginCommand.getIdSave()) {
 					Cookie cookie = new Cookie("idSave", authInfo.getUserId());
 					cookie.setPath("/");
@@ -39,7 +40,13 @@ public class LoginService {
 					cookie.setMaxAge(0);
 					response.addCookie(cookie);
 				}
-				
+				//자동로그인
+				if(loginCommand.getAutoLogin() != null && loginCommand.getAutoLogin()) {
+					Cookie cookie = new Cookie("autoLogin", authInfo.getUserId());
+					cookie.setPath("/");
+					cookie.setMaxAge(60*60*24*30);
+					response.addCookie(cookie);
+				}
 				
 				return "redirect:/";
 			}
