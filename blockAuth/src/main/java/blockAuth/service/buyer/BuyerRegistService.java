@@ -27,7 +27,7 @@ public class BuyerRegistService {
 		dto.setBuyerPhone(buyerCommand.getBuyerPhone());
 		dto.setBuyerPoint(buyerCommand.getBuyerPoint());
 		dto.setBuyerPostcode(buyerCommand.getBuyerPostcode());
-		dto.setBuyerPw(buyerCommand.getBuyerPw());
+		dto.setBuyerPw(passwordEncoder.encode(buyerCommand.getBuyerPw()));
 		dto.setBuyerWalletAddr(buyerCommand.getBuyerWalletAddr());
 		dto.setMembership(buyerCommand.getMembership());
 		i = buyerMapper.buyerInsert(dto);
