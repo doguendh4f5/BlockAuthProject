@@ -28,29 +28,21 @@ public class LoginService {
 				return "thymeleaf/login";
 			} else {
 				session.setAttribute("authInfo", authInfo);
-
-				// 아이디저장
-				if (loginCommand.getIdSave() != null && loginCommand.getIdSave()) {
+				if(loginCommand.getIdSave() != null && loginCommand.getIdSave()) {
 					Cookie cookie = new Cookie("idSave", authInfo.getUserId());
 					cookie.setPath("/");
-					cookie.setMaxAge(60 * 60 * 24 * 30);
+					cookie.setMaxAge(60*60*24*30);
 					response.addCookie(cookie);
-				} else {
+				}else {
 					Cookie cookie = new Cookie("idSave", "");
 					cookie.setPath("/");
 					cookie.setMaxAge(0);
 					response.addCookie(cookie);
 				}
-				// 자동로그인
-				if (loginCommand.getAutoLogin() != null && loginCommand.getAutoLogin()) {
-					Cookie cookie = new Cookie("autoLogin", authInfo.getUserId());
-					cookie.setPath("/");
-					cookie.setMaxAge(60 * 60 * 24 * 30);
-					response.addCookie(cookie);
-				}
-				return "thymeleaf/index";
+				
+				
+				return "redirect:/";
 			}
-
 		} else {
 			result.rejectValue("userId", "loginCommand.userId", "아이디가 존재하지 않습니다.");
 			return "thymeleaf/login";

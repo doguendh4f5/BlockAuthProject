@@ -22,6 +22,7 @@ public class LoginController {
 	}
 	@RequestMapping(value = "login/loginOk", method = RequestMethod.GET)
 	public String home() {
+		
 		return "redirect:/login";
 	}
 	@Autowired
@@ -43,6 +44,6 @@ public class LoginController {
 		response.addCookie(cookie);
 		
 		session.invalidate();
-		return "thymeleaf/login";
+		return "redirect:/";
 	}
 }
