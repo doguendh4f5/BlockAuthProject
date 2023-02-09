@@ -20,22 +20,22 @@ public class LoginController {
 		
 		return "thymeleaf/login";
 	}
-	@RequestMapping(value = "/login/loginOk", method = RequestMethod.GET)
+	@RequestMapping(value = "login/loginOk", method = RequestMethod.GET)
 	public String home() {
 		return "redirect:/login";
 	}
 	@Autowired
 	LoginService loginService;
-	@RequestMapping(value = "/login/loginOk", method = RequestMethod.POST)
+	@RequestMapping(value = "login/loginOk", method = RequestMethod.POST)
 	public String loginOk(@Validated LoginCommand loginCommand,
 			BindingResult result, HttpSession session, HttpServletResponse response){
 		if(result.hasErrors()) {
 			return "thymeleaf/login";
 		}
-		loginService.execute(loginCommand, result, session, response);
-		return "thymeleaf/index";
+		String i = loginService.execute(loginCommand, result, session, response);
+		return i;
 	}
-	@RequestMapping(value = "/login/logout")
+	@RequestMapping(value = "login/logout")
 	public String logout(LoginCommand loginCommand, HttpSession session, HttpServletResponse response) {
 		Cookie cookie = new Cookie("autoLogin", "");
 		cookie.setPath("/");
