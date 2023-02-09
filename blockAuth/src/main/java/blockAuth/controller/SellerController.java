@@ -1,5 +1,8 @@
 package blockAuth.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,6 +64,13 @@ public class SellerController {
 			return "thymeleaf/seller/sellerForm";
 		}
 		Integer i = sellerRegiService.execute(sellCommand);
+		
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+		String now = today.format(formatter);
+		String fileName = now + "_" + sellCommand.getSellerName() + "_계약서.pdf";
+		sellerRegiService.createPdf(sellCommand, fileName);		
+		
 		if(i != null) {
 			return "redirect:sellerList";
 		}else {
