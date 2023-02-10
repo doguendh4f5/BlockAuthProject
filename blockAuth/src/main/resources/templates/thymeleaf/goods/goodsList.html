@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GoodsListPage</title>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<th>상품 번호</th>
+			<th>상품 이미지</th>
+			<th>상품명</th>
+			<th>상품 가격</th>
+			<th>판매자</th>
+		</tr>
+		<tr th:each=" goodsCommand  , idx :  ${list}">
+			<th><a th:href="|goodsDetail/${goodsCommand.goodsNum}|">[[${goodsCommand.goodsNum}]]</a></th>
+			<th><img th:src="|/goods/upload/${goodsCommand.goodsMain}|" width="30px" /></th>
+			<th>[[${goodsCommand.goodsName}]]</th>
+			<th>[[${goodsCommand.goodsPrice}]]</th>
+			<th>[[${goodsCommand.goodsCompany}]]</th>
+		</tr>
+	</table>
+	<a href="goodsRegist">상품 등록하기</a>
+</body>
+</html>

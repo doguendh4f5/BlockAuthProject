@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GoodsRegistPage</title>
+</head>
+<body>
+	<form action="goodsRegist" method="post" th:object="${goodsCommand}" enctype="multipart/form-data" >
+		<table border=1>
+			<tr><th>제품 번호(자동)</th>
+				<td><input type="text" name="goodsNum"  th:value="${goodsCommand.goodsNum}"  readonly="readonly" /><br/>
+				</td>
+			</tr>
+			<tr>
+				<th>상품명</th>
+				<td>
+					<input type="text" name="goodsName" placeholder="상품명을 작성하세요." th:value="${goodsCommand.goodsName}" />
+				</td>
+			</tr>
+			<tr>
+				<th>상품 가격</th>
+				<td>
+					<input type="number" name="goodsPrice" min="100" step="100" value="1000" th:value="${goodsCommand.goodsPrice}" />
+				</td>
+			</tr>
+			<tr>
+				<th>상품 설명</th>
+				<td>
+					<textarea rows="6" cols="30" name="goodsContent" th:value="${goodsCommand.goodsContent}" ></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>상품 크기</th>
+				<td>
+					<input type="text" name="goodsSize" th:value="${goodsCommand.goodsSize}" />
+				</td>
+			</tr>
+			<tr>
+				<th>상품 재고</th>
+				<td>
+					<input type="number" name="goodsStock" min="1" step="1" value="1" th:value="${goodsCommand.goodsStock}" />
+				</td>
+			</tr>
+			<tr>
+				<th>상품 제조국</th>
+				<td>
+					<input type="text" name="goodsCountry" th:value="${goodsCommand.goodsCountry}" />
+				</td>
+			</tr>
+			<tr>
+				<th>상품 카테고리</th>
+				<td>
+					<select name="goodsCategory" th:value="${goodsCommand.goodsCategory}" >
+						<option value="">카테고리 선택</option>
+						<optgroup label="패션의류/잡화">
+							<option value="여성패션">여성패션</option>
+							<option value="남성패션">남성패션</option>
+     					</optgroup>
+						<optgroup label="전자제품">
+							<option value="대형가전">대형가전</option>
+							<option value="소형가전">소형가전</option>
+     					</optgroup>
+						<optgroup label="식품">
+							<option value="과일">과일</option>
+							<option value="채소">채소</option>
+							<option value="육류">육류</option>
+							<option value="어류">어류</option>
+     					</optgroup>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>제조사</th>
+				<td>
+					<input type="text" name="goodsCompany" th:value="${goodsCommand.goodsCompany}" />
+				</td>
+			</tr>
+			<tr>
+				<th>제조일자</th>
+				<td>
+					<input type="date" name="goodsRegiDate" th:value="${#dates.format(goodsCommand.goodsRegiDate, 'yyyy-MM-dd')}" />
+				</td>
+			</tr>
+			<tr>
+				<th>상품 이미지</th>
+				<td>
+					<input type="file" name="goodsMain" th:value="${goodsCommand.goodsMain}" /><BR />		
+				</td>
+			</tr>
+			<tr>
+				<th>무료배송 최소구매비용</th>
+				<td>
+					<input type="number" name="goodsDeliveryFee" min="0" step="500" value="0" th:value="${goodsCommand.goodsDeliveryFee}" />
+				</td>
+			</tr>
+			
+			<tr>
+				<th colspan="2" > 
+					<input type="submit" value="상품등록" />
+					<input type="reset" value="다시 작성" />
+				</th>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

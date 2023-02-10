@@ -20,4 +20,7 @@ public interface SellerMapper {
 	public Integer sellerUpdate(SellerDTO sellerDTO);
 	//판매자정보삭제
 	public Integer sellerDelete(String sellerNum);
+	
+	//AuthInfo에서 Id로 Seller 정보 찾기
+	public SellerDTO selectNum(String sellerId);
 }

@@ -39,6 +39,12 @@ SELLER_NUM sellerNum, SELLER_ID sellerId, SELLER_PW sellerPw, SELLER_NAME seller
 	from seller
 	where seller_num = #{sellerNum}
 </select>
+<!-- 판매자상세정보(아이디로 찾기) -->
+<select id="selectNum" parameterType="string" resultType="sellerDTO">
+	select <include refid="baseColumns" />
+	from seller
+	where seller_id = #{sellerId}
+</select>
 <!-- 판매자정보수정 -->
 <update id="sellerUpdate" parameterType="sellerDTO">
 	update seller

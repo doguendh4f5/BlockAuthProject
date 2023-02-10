@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blockAuth.mapper.GoodsMapper">
+<sql id="baseColumns">
+GOODS_NUM goodsNum, SELLER_NUM sellerNum, GOODS_NAME goodsName, GOODS_PRICE goodsPrice
+			, GOODS_CONTENT goodsContent, GOODS_SIZE goodsSize, GOODS_STOCK goodsStock
+			, GOODS_COUNTRY goodsCountry, GOODS_CATEGORY goodsCategory, GOODS_COMPANY goodsCompany
+			, MODIFY_NUM modifyNum, GOODS_REGI_DATE goodsRegiDate, GOODS_MAIN goodsMain
+			, GOODS_UPT_DATE goodsUptDate, GOODS_DELIVERY_FEE goodsDeliveryFee, WRITER_NUM writerNum
+			, GOODS_MAIN_ORG goodsMainOrg
+</sql>
+<select id="goodsNumGenerate" resultType="string">
+	select concat('goods',nvl(max(substr(goods_num,6)),100000)+ 1) 
+	from goods
+</select>
+<insert id="goodsInsert" parameterType="goodsDTO">
+	insert into goods(GOODS_NUM , SELLER_NUM , GOODS_NAME, GOODS_PRICE
+			, GOODS_CONTENT, GOODS_SIZE, GOODS_STOCK, GOODS_COUNTRY, GOODS_CATEGORY
+			, GOODS_COMPANY,GOODS_REGI_DATE,GOODS_MAIN,GOODS_DELIVERY_FEE
+			, WRITER_NUM, GOODS_MAIN_ORG)
+	values(#{goodsNum}, #{sellerNum}, #{goodsName},#{goodsPrice}
+		, #{goodsContent}, #{goodsSize}, #{goodsStock}, #{goodsCountry}, #{goodsCategory}
+		, #{goodsCompany}, #{goodsRegiDate}, #{goodsMain}, #{goodsDeliveryFee}
+		, #{writerNum}, #{goodsMainOrg})
+</insert>
+<select id="goodsList" resultType="goodsDTO">
+	select  <include refid="baseColumns" />
+	from goods
+</select>
+<select id="goodsSelectOne" parameterType="string" resultType="goodsDTO">
+select <include refid="baseColumns" />
+from goods
+where GOODS_NUM = #{goodsNum}
+</select>
+<update id="goodsUpdate" parameterType="goodsDTO">
+	update goods
+	<trim prefix="set" suffixOverrides="," >
+		GOODS_NUM = #{goodsNum},
+		GOODS_NAME = #{goodsName},
+		GOODS_PRICE = #{goodsPrice},
+		GOODS_CONTENT = #{goodsContent},
+		GOODS_SIZE = #{goodsSize},
+		GOODS_STOCK = #{goodsStock},
+		GOODS_COUNTRY = #{goodsCountry} ,
+		GOODS_COMPANY = #{goodsCompany},
+		GOODS_UPT_DATE = sysdate,
+		GOODS_DELIVERY_FEE = #{goodsDeliveryFee},
+		MODIFY_NUM = #{modifyNum},
+		<if test="goodsMain != null" >
+			 GOODS_MAIN = #{goodsMain} , 
+			 GOODS_MAIN_ORG = #{goodsMainOrg},
+		 </if>	 
+	</trim>
+	<trim prefix="where" prefixOverrides="AND | OR">
+		and GOODS_NUM = #{goodsNum}
+	</trim>
+</update>
+<delete id="goodsDelete" parameterType="string">
+	delete from goods
+	where goods_num = #{goodsNum}
+</delete>
+</mapper>
