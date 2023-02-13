@@ -39,4 +39,11 @@ MEMBERSHIP membership, BUYER_POINT buyerPoint, BUYER_POSTCODE buyerPostcode, BUY
 	delete from buyer
 	where buyer_num = #{buyerNum}
 </delete>
+<select id="buyerIdCheck" parameterType="string" resultType="string">
+	select buyer_id from buyer
+	where buyer_id = #{buyerId}
+	union
+	select seller_id from seller
+	where seller_id = #{sellerId}
+</select>
 </mapper>
