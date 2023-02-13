@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Change Password</title>
+<style>
+	table {
+			    margin-left:auto; 
+			    margin-right:auto;
+	}
+</style>
+</head>
+<body>
+	<form action="memberPwChange" method="post" name="frm" id="frm" th:object="${passwordChangeCommand}">
+		<table>
+			<caption>비밀번호를 입력하기 전 확인절차</caption>
+			<tr>
+				<td>현재 비밀번호 입력 : </td>
+				<td>
+					<input type="password" name="userPw"  />
+					<br /><span style="color:red" th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}"></span>
+					<input type="hidden" name="userPwCon" value="1111qqqqq!" />
+				</td>
+				<td><input type="submit" value="확인" /></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
