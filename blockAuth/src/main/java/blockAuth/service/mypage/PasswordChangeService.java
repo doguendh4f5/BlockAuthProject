@@ -24,14 +24,6 @@ public class PasswordChangeService {
 		SellerDTO seller = new SellerDTO();
 		Integer i = 0;
 		
-		System.out.println("authInfo.getBuyerNum() : " + authInfo.getBuyerNum());
-		System.out.println("authInfo.getClass() : " + authInfo.getClass());
-		System.out.println("authInfo.getGrade() : " + authInfo.getGrade());
-		System.out.println("authInfo.getSellerNum() : " + authInfo.getSellerNum());
-		System.out.println("authInfo.getBuyerNum() : " + authInfo.getBuyerNum());
-		System.out.println("authInfo.getUserId() : " + authInfo.getUserId());
-		System.out.println("authInfo.getUserPw() : " + authInfo.getUserPw());
-		
 		if(authInfo.getGrade().equals("buyer")) {
 			//로그인 한 사용자 레벨이 buyer일 경우
 			buyer.setBuyerId(authInfo.getUserId());
@@ -43,6 +35,7 @@ public class PasswordChangeService {
 			seller.setSellerPw(userPw);
 			i = myPageMapper.updateSellerPw(seller);
 		}
+		authInfo.setUserPw(userPw);
 		return i;
 	}
 }

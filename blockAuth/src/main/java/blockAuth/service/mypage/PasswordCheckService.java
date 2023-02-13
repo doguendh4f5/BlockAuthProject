@@ -18,7 +18,7 @@ public class PasswordCheckService {
 		AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
 		String str = "";
 		
-		if(!passwordEncoder.matches(authInfo.getUserPw(), userPw)) {
+		if(passwordEncoder.matches(userPw, authInfo.getUserPw())) {
 			str =  "비밀번호가 맞았습니다.";
 			System.out.println(str);
 		}else {
