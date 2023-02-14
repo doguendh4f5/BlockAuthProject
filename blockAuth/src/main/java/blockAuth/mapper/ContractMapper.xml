@@ -7,4 +7,20 @@
 	select concat('selCon', nvl(max(substr(contract_num, 7)), 100000) + 1)
    	from contract
 </select>
+
+<insert id="createContract" parameterType="contractDTO">
+	insert into contract(CONTRACT_NUM, CONTRACT_NAME, SELLER_NUM, SELLER_WALLET_ADDR, CONTRACT_DATE, EXPIRY_DATE, CONTRACT_METADATA)
+	values(#{contractNum}, #{contractName}, #{sellerNum}, #{sellerWalletAddr}, #{contractDate}, #{expiryDate}, #{contractMetadata})
+</insert>
+
+<select id="selectContract" resultType="contractDTO" parameterType="string">
+	select CONTRACT_NUM contractNum, CONTRACT_NAME contractName, SELLER_NUM sellerNum, SELLER_WALLET_ADDR sellerWalletAddr, CONTRACT_DATE contractDate, EXPIRY_DATE expiryDate, CONTRACT_METADATA contractMetadata
+	from contract 
+	where SELLER_NUM = #{sellerNum}
+</select>
+
+<select id="selectAllOfContract" resultType="contractDTO">
+	select CONTRACT_NUM contractNum, CONTRACT_NAME contractName, SELLER_NUM sellerNum, SELLER_WALLET_ADDR sellerWalletAddr, CONTRACT_DATE contractDate, EXPIRY_DATE expiryDate, CONTRACT_METADATA contractMetadata
+	from contract 
+</select>
 </mapper>

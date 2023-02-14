@@ -7,11 +7,13 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -54,8 +56,20 @@ public class SellerRegiService {
 	}
 	
 	// pdf 파일 생성
-	public void createPdf(SellCommand sellCommand, String fileName) {
+	public void createPdf(SellCommand sellCommand, Model model) {
+		
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+		String now = today.format(formatter);
+		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyMMdd");
+		String now2 = today.format(formatter2);
+		LocalDate finDay = today.plusYears(2);
+		String expDay = finDay.format(formatter);
+		
+		String fileName = now2 + "_" + sellCommand.getSellerName() + "_계약서사본.pdf";
 		String contractNum = contractNumberService.execute();
+		String contractName = now2 + " " + sellCommand.getSellerName() + " 전자상거래입점계약서";
+		
 		
 		String result = ""; 
 		String fileURL = "src/main/resources/static/contTempFiles/";
@@ -68,7 +82,12 @@ public class SellerRegiService {
                     BaseFont.EMBEDDED);
 			
 			Font font = new Font(baseFont, 10);
-			Font font2 = new Font(baseFont, 18);
+			Font font2 = new Font(baseFont, 17);
+			
+			String signature = "src/main/resources/static/images/logo.png";
+			Image sign = Image.getInstance(signature);
+			sign.scalePercent(50);
+			sign.setAbsolutePosition(320, 130);
 			
 			Chunk chunk = new Chunk("\n전자상거래입점계약서", font2); // 타이틀 객체
 			
@@ -80,15 +99,19 @@ public class SellerRegiService {
             document.add(Chunk.NEWLINE); 
             
             Chunk chunk1 = new Chunk("1. 계약번호 : " + contractNum, font);
-            Chunk chunk2 = new Chunk("2. 계약명 : " + fileName, font);
+            Chunk chunk2 = new Chunk("2. 계약명 : " + contractName, font);
             Chunk chunk3 = new Chunk("3. 계약자 지갑주소 : " + sellCommand.getSellerWalletAddr(), font);
+            Chunk chunk15 = new Chunk("4. 계약자 계좌정보 : " + sellCommand.getBank() + " " + sellCommand.getAccountNum(), font);
             
             Paragraph ph1 = new Paragraph(chunk1);
             Paragraph ph2 = new Paragraph(chunk2);
             Paragraph ph3 = new Paragraph(chunk3);
+            Paragraph ph15 = new Paragraph(chunk15);
+            
             document.add(ph1);
             document.add(ph2);
             document.add(ph3);
+            document.add(ph15);
             document.add(Chunk.NEWLINE);
             
             Chunk chunk4 = new Chunk("블록어스(사업자등록번호 1234567890, 이하\"갑\")와 " + sellCommand.getSellerName() 
@@ -96,7 +119,6 @@ public class SellerRegiService {
             
             Paragraph ph4 = new Paragraph(chunk4);
             document.add(ph4);
-            document.add(Chunk.NEWLINE);
             document.add(Chunk.NEWLINE);
             
             Chunk chunk5 = new Chunk("다음", font);
@@ -124,7 +146,7 @@ public class SellerRegiService {
             Chunk chunk8 = new Chunk("제3조(갑과 을의 의무)\n"
             						+ "① 갑은 블록어스 입점을 을에게 무상으로 사용할 수 있도록 제공한다.\n"
             						+ "② 입점의 제공조건은 다음과 같다.\n"
-            						+ "	가. 기간 : (시작일) 부터 (종료일)까지\n"
+            						+ "	가. 기간 : " + now + "부터 " + expDay + "까지\n"
             						+ "	나. 용도 : 을의 물건 판매 및 노출\n"
             						+ "③ 을은 블록어스를 입점 및 소비자의 상품 문의 외 용도로 사용할 수 없다\n"
             						+ "④ 을은 블록어스 입점을 제 3자에게 사용하도록 권한을 이전하여서는 안 된다", font);
@@ -155,10 +177,6 @@ public class SellerRegiService {
             document.add(ph11);
             document.add(Chunk.NEWLINE);
             document.add(Chunk.NEWLINE);
-            
-    		LocalDate today = LocalDate.now();
-    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-    		String now = today.format(formatter);
     		
             Chunk chunk12 = new Chunk(now, font);
             
@@ -167,23 +185,28 @@ public class SellerRegiService {
             document.add(ph12);
             document.add(Chunk.NEWLINE);
             
-            Chunk chunk13 = new Chunk("갑   (주)블록어스\n"
-            						+ "(서울특별시 영등포구 양평동3가 15-1 월드메르디앙비즈센터 4층 401 402호)", font);
+            Chunk chunk13 = new Chunk("갑   (주)블록어스   (인)", font);
             
             Paragraph ph13 = new Paragraph(chunk13);
             ph13.setAlignment(Element.ALIGN_CENTER);
             document.add(ph13);
+            document.add(sign);
             document.add(Chunk.NEWLINE);
             
-            Chunk chunk14 = new Chunk("을   " + sellCommand.getSellerName() + "\n"
+            Chunk chunk16 = new Chunk("(서울특별시 영등포구 양평동3가 15-1 월드메르디앙비즈센터 4층 401 402호)", font);
+            
+            Paragraph ph16 = new Paragraph(chunk16);
+            ph16.setAlignment(Element.ALIGN_CENTER);
+            document.add(ph16);
+            document.add(Chunk.NEWLINE);
+            
+            Chunk chunk14 = new Chunk("을   " + sellCommand.getSellerName() + "   (인)\n"
             						+ sellCommand.getSellerAddr1() + " " + sellCommand.getSellerAddr2(), font);
             
             Paragraph ph14 = new Paragraph(chunk14);
             ph14.setAlignment(Element.ALIGN_CENTER);
             document.add(ph14);
             document.add(Chunk.NEWLINE);
-            document.add(Chunk.NEWLINE);
-            
             
             document.close(); // 저장이 끝났으면 document객체를 닫는다.
             result = "pdf 파일이 생성되었습니다.";
@@ -194,6 +217,12 @@ public class SellerRegiService {
 			 e.printStackTrace();
 	         result = "pdf 파일 생성에 실패하였습니다.";
 		}
-		System.out.println(result);
+		model.addAttribute("sellerWalletAddr", sellCommand.getSellerWalletAddr()); 
+		model.addAttribute("contractNum", contractNum);
+		model.addAttribute("contractName", contractName);
+		model.addAttribute("contractDate", now);
+		model.addAttribute("expiryDate", expDay);
+		model.addAttribute("sellerNum", sellCommand.getSellerNum());
+		model.addAttribute("fileName", fileName);
 	}
 }

@@ -1,8 +1,5 @@
 package blockAuth.controller;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import blockAuth.command.SellCommand;
+import blockAuth.service.FileDownload;
+import blockAuth.service.contract.ContractNumberService;
 import blockAuth.service.seller.SellerDeleteService;
 import blockAuth.service.seller.SellerDetailService;
 import blockAuth.service.seller.SellerInfoservice;
@@ -20,6 +19,8 @@ import blockAuth.service.seller.SellerListService;
 import blockAuth.service.seller.SellerModifyService;
 import blockAuth.service.seller.SellerNumService;
 import blockAuth.service.seller.SellerRegiService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("seller")
@@ -39,6 +40,10 @@ public class SellerController {
 	SellerDetailService sellerDetailService;
 	@Autowired
 	SellerDeleteService sellerDeleteService;
+	@Autowired
+	ContractNumberService contractNumberService;
+	@Autowired
+	FileDownload fileDownload;
 	
 	@RequestMapping("sellerList")
 	public String sellerList(Model model) {
@@ -54,7 +59,7 @@ public class SellerController {
 	
 	@RequestMapping(value = "sellerRegist", method = RequestMethod.POST)
 	public String sellerRegist(@Validated SellCommand sellCommand
-				, BindingResult result) {
+				, BindingResult result, Model model) {
 		if(result.hasErrors()) {
 			return "thymeleaf/seller/sellerForm";
 		}
@@ -64,15 +69,10 @@ public class SellerController {
 			return "thymeleaf/seller/sellerForm";
 		}
 		Integer i = sellerRegiService.execute(sellCommand);
-		
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-		String now = today.format(formatter);
-		String fileName = now + "_" + sellCommand.getSellerName() + "_계약서.pdf";
-		sellerRegiService.createPdf(sellCommand, fileName);		
+		sellerRegiService.createPdf(sellCommand, model);		
 		
 		if(i != null) {
-			return "redirect:sellerList";
+			return "thymeleaf/seller/sellerContractCheck";
 		}else {
 			return "thymeleaf/seller/sellerList";
 		}
@@ -106,5 +106,18 @@ public class SellerController {
 	public String sellerDelete(@RequestParam(value = "sellerNum") String sellerNum) {
 		sellerDeleteService.execute(sellerNum);
 		return "redirect:sellerList";
+	}
+	
+	/*
+	@RequestMapping(value = "sellerContractInfo")
+	public String sellerContractInfo(@RequestParam(value = "sellerNum") String sellerNum, Model model) {
+		sellerContractService.execute(sellerNum, model);
+		return "thymeleaf/seller/sellerContractInfo";
+	}
+	*/
+	
+	@RequestMapping("fileDownload")
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response, String fileName) {
+		fileDownload.fileDownLoad("src/main/resources/static/contTempFiles/", fileName, fileName, request, response);
 	}
 }

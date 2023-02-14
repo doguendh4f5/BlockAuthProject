@@ -33,6 +33,11 @@ public class SellCommand {
 	@NotNull(message = "무료배송되는 최소구매금액을 입력해주세요.")
 	Long minDeliveryFee;
 	
+	@NotBlank(message = "거래은행을 선택해주세요.")
+	String bank;
+	@NotBlank(message = "계좌번호를 입력해주세요.")
+	String accountNum;
+	
 	public boolean isSellerPwEqualsSellerPwCon() {
 		return sellerPw.equals(sellerPwCon);
 	}

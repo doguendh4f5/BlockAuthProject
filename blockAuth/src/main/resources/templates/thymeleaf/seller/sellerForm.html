@@ -141,7 +141,35 @@
 			<br /><span style="color:red" th:if="${#fields.hasErrors('minDeliveryFee')}" th:errors="*{minDeliveryFee}"></span>
 		</td>
 	</tr>
-	<tr><td colspan="2" align="center"><input type="submit" value="구매자 등록"></td></tr>
+	
+		<tr>
+		<th>거래 은행</th>
+		<td>
+			<select name="bank">
+			<option value="">== 주거래은행 선택 ==</option>
+			<option value="KEB하나은행" th:selected="${sellCommand.bank}=='KEB하나은행'">KEB하나은행</option>
+			<option value="국민은행" th:selected="${sellCommand.bank}=='국민은행'">국민은행</option>
+			<option value="신한은행" th:selected="${sellCommand.bank}=='신한은행'">신한은행</option>
+			<option value="외환은행" th:selected="${sellCommand.bank}=='외환은행'">외환은행</option>
+			<option value="우리은행" th:selected="${sellCommand.bank}=='우리은행'">우리은행</option>
+			<option value="한국시티은행" th:selected="${sellCommand.bank}=='한국시티은행'">한국시티은행</option>
+			<option value="기업은행" th:selected="${sellCommand.bank}=='기업은행'">기업은행</option>
+			<option value="농협" th:selected="${sellCommand.bank}=='농협'">농협</option>
+			<option value="수협" th:selected="${sellCommand.bank}=='수협'">수협</option>
+			<option value="카카오뱅크" th:selected="${sellCommand.bank}=='카카오뱅크'">카카오뱅크</option>
+			</select>
+			<br /><span style="color:red" th:if="${#fields.hasErrors('bank')}" th:errors="*{bank}"></span>
+		</td>
+	</tr>
+	
+		<tr>
+		<th>계좌번호</th>
+		<td>
+			<input type="text" name="accountNum" th:value="${sellCommand.accountNum}" placeholder="-를 제외한 계좌번호를 입력해주세요">
+			<br /><span style="color:red" th:if="${#fields.hasErrors('accountNum')}" th:errors="*{accountNum}"></span>
+		</td>
+	</tr>
+	<tr><td colspan="2" align="center"><input type="submit" value="판매자 등록"></td></tr>
 </table>
 </form>
 </body>
