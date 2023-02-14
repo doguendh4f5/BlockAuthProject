@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/web3@0.19.0/dist/web3.js"></script>
+<script type="text/javascript" src="/static/js/contractList.js"></script>
+<script>
+function contractInfo(){
+	var data = $('#metadata').text();
+	console.log(data);
+	window.open("https://selcontest.infura-ipfs.io/ipfs/" + data);
+}
+</script>
+</head>
+<body>
+<input type="hidden" id="wallet" th:value="${sellerWalletAddr}" />
+
+<table border="1">
+<caption><h4>계약 상세 정보</h4></caption>
+<tr th:onchange="getAuctionById(this)">
+<td>계약번호</td><td><span id="contractNum"></span></td></tr>
+<tr><td>계약서 메타데이터</td><td><span id="metadata"></span></td></tr>
+<tr><td>토큰 아이디</td><td><span id="tokenId"></span></td></tr>
+<tr><td>계약일</td><td><span id="contractDate"></span></td></tr>
+<tr><td>종료일</td><td><span id="expiryDate"></span></td></tr>
+<tr><td>계약 컨트랙트 주소</td><td><span id="contractAddress"></span></td></tr>
+<tr><td>토큰 소유자</td><td><span id="owner"></span></td></tr>
+<tr><td>토큰 활성여부</td><td><span id="active"></span></td></tr>
+<tr><td>계약 만료여부</td><td><span id="finalized"></span><br/></td></tr>
+<tr><td>계약서 사본 조회</td><td><button type="button" onclick="contractInfo();">조회</button></td></tr>
+</table>
+<br/><br/>
+<a href="javascript:history.back();">계약 목록</a>
+
+</body>
+</html>

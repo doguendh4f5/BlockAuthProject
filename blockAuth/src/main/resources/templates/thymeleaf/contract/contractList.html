@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table border="1">
+		<caption><h3>계약 목록</h3></caption>
+		<tr>
+			<th>계약번호</th>
+			<th>사업자명</th>
+			<th>계약명</th>
+			<th>계약일</th>
+		</tr>
+		<tr th:each="contractDTO : ${list}">
+			<td><a th:href="@{contractInfo(contractNum=${contractDTO.sellerNum}, sellerWalletAddr=${contractDTO.sellerWalletAddr})}">[[${contractDTO.contractNum}]]</a>
+			</td>
+			<td>[[${contractDTO.sellerNum}]]</td>
+			<td>[[${contractDTO.contractName}]]</td>
+			<td>[[${contractDTO.contractDate}]]</td>
+		</tr>
+	</table>
+</body>
+</html>
