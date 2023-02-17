@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+<style>
+#div1{
+	border : 1px solid black;
+	background-color : white;
+	width : 860px;
+	height : 850px;
+	padding : 50px;
+}
+#div2{
+	font-size : 13px;
+}
+#div3{
+	border : 2px solid #ccc;
+	background-color : #FFEAEA;
+	padding-top : 25px;
+	padding-right : 25px;
+	padding-left : 25px;
+	padding-bottom : 10px;
+	font-size : 13px;
+}
+#div4{
+	border : 2px solid #ccc;
+	background-color : #EAEAEA;
+	padding-top : 25px;
+	padding-right : 25px;
+	padding-left : 25px;
+	padding-bottom : 10px;
+	font-size : 13px;
+}
+#div5{
+	font-size : 14px;
+}
+#sp1{
+	font-size : 15px;
+	color : #FF6C6C;
+	font-weight : bold;
+}
+#sp2{
+	font-size : 10px;
+}
+#sp3{
+	font-size : 14px;
+}
+#sp4{
+	font-size : 13px;
+}
+#btn1{
+	border : none;
+	background-color : #FF8383;
+	color : white;
+	width : 150px;
+	height : 50px;
+	font-weight : bold;
+	font-size : 17px;
+	margin : auto;
+	border-radius : 5px;
+	display : block;
+	}
+.row{
+ justify-content : center;
+ margin-top: 50px;
+}
+</style>
+</head>
+<body>
+<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin/adminList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cartList">장바구니</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+          <li class="nav-item">
+            <a class="nav-link" href="inquireList">고객센터</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <div class="row">
+
+<div id="div1">
+<h3><b>회원 탈퇴</b></h3>
+<div id="div2">
+회원님 Block-Auth를 이용하시는데 불편함이 있으셨나요?
+<br/>
+		이용 불편 및 각종 문의사항은 고객센터로 문의 주시면 성심 성의껏 답변 드리겠습니다.<br /> 
+		<span id="sp2">&nbsp;&nbsp;- 자주 묻는 질문 / 1:1 온라인 문의 / 전화 문의: 1577-7011 (365일 오전 9시~오후6시)</span>
+</div>
+<br/>
+<div id="div3">
+<span id="sp1">
+회원 탈퇴 시 고객님의 개인정보 및 Block-Auth에서 만들어진 모든 데이터는 삭제됩니다.<br/>
+(단, 동의 약관에 따라 아래 항목은 표기된 법률에 따라 특정 기간 동안 보관됩니다.)
+</span>
+<br/><br/>
+<ol>
+<li>계약 또는 청약철회 등에 관한 기록 보존 이유 : 전자상거래 등에서의 소비자보호에 관한 법률 / 보존기간 : 5년</li>
+<li>대금결제 및 재화 등의 공급에 관한 기록 보존 이유 : 전자상거래 등에서의 소비자보호에 관한 법률 / 보존기간 : 5년</li>
+<li>전자금융 거래에 관한 기록 보존 이유 : 전자금융거래법 보존 기간 / 5년</li>
+<li>소비자의 불만 또는 분쟁처리에 관한 기록 보존 이유 : 전자상거래 등에서의 소비자보호에 관한 법률 / 보존기간 : 3년</li>
+<li>신용정보의 수집/처리 및 이용 등에 관한 기록 보존 이유 : 신용정보의 이용 및 보호에 관한 법률 / 보존기간 : 3년</li>
+</ol>
+</div>
+<br/>
+<h3><b>유의 사항</b></h3>
+<br/>
+<div id="div4">
+<ul>
+<li>회원탈퇴 처리 후에는 회원님의 개인정보를 복원할 수 없습니다.</li>
+<li>구매, 배송, 문의 미처리 시 회원 탈퇴가 불가능합니다.</li>
+</ul>
+</div>
+<br/>
+<div id="div5">
+<input type="checkbox" required="required" /><b>Block-Auth 회원 탈퇴 시 처리사항 안내를 확인하였음에 동의합니다.</b><br/><br/>
+<span id="sp3">보안을 위해 회원님의 이름과 계정 이메일 및 비밀번호를 확인합니다.</span><br /><br/> 
+<span id="sp4">
+이름 : <input type="text" value="" />&nbsp; 
+이메일 : <input type="text" value="" />&nbsp; 
+비밀번호 : <input type="password" name="userPw" id="userPw" />
+</span><br/><br/><br/>
+<button type="submit" id="btn1">회 원 탈 퇴</button>&nbsp; 
+<span style="color: red; font-size: 10px"></span>
+</div>
+</div>
+</div></div>
+ <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+</body>
+</html>

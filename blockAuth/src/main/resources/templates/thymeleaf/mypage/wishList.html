@@ -26,6 +26,34 @@ body {
     border-radius : 5px;
 }
 </style>
+<style>
+	.btn1{
+		text-align : center;
+		background-color : #8EA8DB;
+		border : none;
+		color : white;
+		font-weight : bold;
+		font-size : 18px;
+		width : 200px;
+		height : 50px;
+		border-radius : 7px;
+		margin : auto;
+		display : block;
+	}
+	.ftco-section{
+		padding-bottom : 60px;
+	}
+	</style>
+	<style>
+#tr1{
+	color : black;
+	background-color : #FFCBCB;
+}
+th, td{
+	width:20%;
+	text-align:center;
+}
+</style>
 <link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -75,12 +103,12 @@ function reg(){
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">관리자페이지
+            <a class="nav-link" href="admin/adminList">관리자페이지
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">마이페이지</a>
+            <a class="nav-link" href="/mypage">마이페이지</a>
           </li>
           <span th:if="${session.authInfo == null}">
           <li class="nav-item">
@@ -106,10 +134,11 @@ function reg(){
 
         <h1 class="my-4">Block-Auth</h1>
         <div class="list-group">
-          <a href="/buyer/buyerList" class="list-group-item">구매자 관리</a>
-          <a href="/seller/sellerList" class="list-group-item">판매자 관리</a>
-          <a href="/goods/goodsList" class="list-group-item">상품 관리</a>
-          <a href="/contract/contractList" class="list-group-item">계약 관리</a>
+          <a href="mypage/membershipInfo" class="list-group-item">블록어스클럽 가입</a>
+          <a href="#" class="list-group-item">내 정보 수정</a>
+          <a href="#" class="list-group-item">찜한 상품</a>
+          <a href="#" class="list-group-item">구매리스트</a>
+          <a href="mypage/withdrawal" class="list-group-item">회원 탈퇴</a>
         </div>
 
       </div>
@@ -120,42 +149,51 @@ function reg(){
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">계약 목록</h2>
+					<h2 class="heading-section">찜한 목록</h2>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
 						<table class="table">
-						  <thead class="thead-dark">
-						    <tr>
-						      <th>계약번호</th>
-						      <th>사업자명</th>
-						      <th>계약명</th>
-						      <th>계약일</th>
-						      <th style="width:5%">&nbsp;</th>
+						  <thead>
+						    <tr id="tr1">
+						      <th style="width:5%;">&nbsp;</th>
+						      <th>번호</th>
+						      <th>이미지</th>
+						      <th>상품명</th>
+						      <th>상품 금액</th>
 						    </tr>
 						  </thead>
 						  <tbody>
-						    <tr class="alert" role="alert" th:each="contractDTO : ${list}">
-						      <th scope="row"><a th:href="@{contractInfo(contractNum=${contractDTO.sellerNum}, sellerWalletAddr=${contractDTO.sellerWalletAddr})}">[[${contractDTO.contractNum}]]</a></th>
-						      <td>[[${contractDTO.sellerNum}]]</td>
-						      <td>[[${contractDTO.contractName}]]</td>
-						      <td>[[${contractDTO.contractDate}]]</td>
-						      <td>
-						      	<a href="#" class="close" data-dismiss="alert" aria-label="Close">
-				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
-				          	</a>
-				        	</td>
+						    <tr>
+						  	  <th></th>
+						      <th scope="row"><a href="#">1001</a></th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						    </tr>
+
+						    <tr>
+						   	 <th></th>
+						      <th scope="row">1002</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						    </tr>
+
+						    <tr>
+						    <th></th>
+						      <th scope="row">1003</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
 						    </tr>
 						  </tbody>
 						</table>
-						
+					</div>
 				</div>
 			</div>
-		</div>
 	</section>
-
-
       </div>
       <!-- /.col-lg-9 -->
 

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>장바구니 리스트</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="static/css/style4.css">
+	<link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+	<style>
+	.btn1{
+		text-align : center;
+		background-color : #8EA8DB;
+		border : none;
+		color : white;
+		font-weight : bold;
+		font-size : 18px;
+		width : 200px;
+		height : 50px;
+		border-radius : 7px;
+		margin : auto;
+		display : block;
+	}
+	.ftco-section{
+		padding-bottom : 60px;
+	}
+	th, td{
+	text-align:center;
+	font-size:20px;
+}
+.table{
+padding-top:0;
+}
+
+	</style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin/adminList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cartList">장바구니</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+          <li class="nav-item">
+            <a class="nav-link" href="inquireList">고객센터</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  
+<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-4">
+					<h2 class="heading-section">장바구니 목록</h2><br/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+						<table class="table table-striped">
+						  <thead class="thead-primary">
+						    <tr id="tr1">
+						   
+						    	<th style="width:5%;"><label class="checkbox-wrap checkbox-primary">
+										  <input type="checkbox" checked>
+										  <span class="checkmark"></span>
+										</label></th>
+						    	<th style="width:5%;">이미지</th>
+						    	<th>상품 정보</th>
+						     	 <th>상품 금액</th>
+						      	<th style="width:10%;">수량</th>
+						      <th>배송비</th>
+						      <th style="width:5%;">&nbsp;</th>
+						      
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr class="alert" role="alert">
+						    	<td>
+						    		<label class="checkbox-wrap checkbox-primary">
+										  <input type="checkbox" checked>
+										  <span class="checkmark"></span>
+										</label>
+						    	</td>
+						    	<td>
+						    		<div class="img" style="background-image: url(images/product-1.png);"></div>
+						    	</td>
+						      <td>
+						      	<div class="email">
+						      		<span>Sneakers Shoes 2020 For Men </span>
+						      		<span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
+						      	</div>
+						      </td>
+						      <td>$44.99</td>
+						      <td class="quantity">
+					        	<div class="input-group">
+				             	<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">
+				          	</div>
+				          </td>
+				          <td>$89.98</td>
+						      <td>
+						      	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
+				          	</button>
+				        	</td>
+						    </tr>
+
+						    <tr class="alert" role="alert">
+						    	<td>
+						    		<label class="checkbox-wrap checkbox-primary">
+										  <input type="checkbox">
+										  <span class="checkmark"></span>
+										</label>
+						    	</td>
+						    	<td>
+						    		<div class="img" style="background-image: url(images/product-2.png);"></div>
+						    	</td>
+						      <td>
+						      	<div class="email">
+						      		<span>Sneakers Shoes 2020 For Men </span>
+						      		<span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
+						      	</div>
+						      </td>
+						      <td>$30.99</td>
+						      <td class="quantity">
+					        	<div class="input-group">
+				             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+				          	</div>
+				          </td>
+				          <td>$30.99</td>
+						      <td>
+						      	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
+				          	</button>
+				        	</td>
+						    </tr>
+
+						    <tr class="alert" role="alert">
+						    	<td>
+						    		<label class="checkbox-wrap checkbox-primary">
+										  <input type="checkbox">
+										  <span class="checkmark"></span>
+										</label>
+						    	</td>
+						    	<td>
+						    		<div class="img" style="background-image: url(images/product-3.png);"></div>
+						    	</td>
+						      <td>
+						      	<div class="email">
+						      		<span>Sneakers Shoes 2020 For Men </span>
+						      		<span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
+						      	</div>
+						      </td>
+						      <td>$35.50</td>
+						      <td class="quantity">
+					        	<div class="input-group">
+				             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+				          	</div>
+				          </td>
+				          <td>$35.50</td>
+						      <td>
+						      	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
+				          	</button>
+				        	</td>
+						    </tr>
+
+						    <tr class="alert" role="alert">
+						    	<td>
+						    		<label class="checkbox-wrap checkbox-primary">
+										  <input type="checkbox">
+										  <span class="checkmark"></span>
+										</label>
+						    	</td>
+						    	<td>
+						    		<div class="img" style="background-image: url(images/product-4.png);"></div>
+						    	</td>
+						      <td>
+						      	<div class="email">
+						      		<span>Sneakers Shoes 2020 For Men </span>
+						      		<span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
+						      	</div>
+						      </td>
+						      <td>$76.99</td>
+						      <td class="quantity">
+					        	<div class="input-group">
+				             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+				          	</div>
+				          </td>
+				          <td>$76.99</td>
+						      <td>
+						      	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
+				          	</button>
+				        	</td>
+						    </tr>
+
+						    <tr class="alert" role="alert">
+						    	<td class="border-bottom-0">
+						    		<label class="checkbox-wrap checkbox-primary">
+										  <input type="checkbox">
+										  <span class="checkmark"></span>
+										</label>
+						    	</td>
+						    	<td class="border-bottom-0">
+						    		<div class="img" style="background-image: url(images/product-1.png);"></div>
+						    	</td>
+						      <td class="border-bottom-0">
+						      	<div class="email">
+						      		<span>Sneakers Shoes 2020 For Men </span>
+						      		<span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
+						      	</div>
+						      </td>
+						      <td class="border-bottom-0">$40.00</td>
+						      <td class="quantity border-bottom-0">
+					        	<div class="input-group">
+				             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+				          	</div>
+				          </td>
+				          <td class="border-bottom-0">$40.00</td>
+						      <td class="border-bottom-0">
+						      	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
+				          	</button>
+				        	</td>
+						    </tr>
+						  </tbody>
+						</table>
+						<br/>
+						 <button type="button" class="btn1">주 문 하 기</button>
+				</div>
+			</div>
+		</div>
+	</section>
+	 <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+</body>
+</html>

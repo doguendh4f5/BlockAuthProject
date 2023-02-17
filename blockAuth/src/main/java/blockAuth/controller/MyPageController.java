@@ -81,7 +81,24 @@ public class MyPageController {
 			return "thymeleaf/mypage/memberPwChange";
 		}
 	}
-	
+		
+		//마이페이지 수정
+		@RequestMapping("myInfoEdit")
+		public String myInfoEdit() {
+			return "thymeleaf/mypage/myInfoEdit";
+		}
+		
+		// 마이페이지 회원 탈퇴
+		@RequestMapping("withdrawal")
+		public String withdrawal() {
+			return "thymeleaf/mypage/withdrawal";
+		}
+		
+		// 마이페이지 찜한 목록
+		@RequestMapping("wishList")
+		public String wishList() {
+			return "thymeleaf/mypage/wishList";
+		}
 	
 	
 	

@@ -120,4 +120,6 @@ public class GoodsController {
 		goodsDeleteService.execute(goodsNum, request);
 		return "redirect:../goodsList";		
 	}
+	
+	
 }

@@ -22,7 +22,10 @@
 body {
   padding-top: 56px;
 }
-   
+#btn1{
+  background-color: #FFCA6C;
+  border:1px solid #FFCA6C;
+}   
 </style>
 <link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
   <meta charset="utf-8">
@@ -34,7 +37,12 @@ body {
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  
+  <script>
+	function contractInfo(){
+		var data = "[[${metadata}]]";
+		window.open("https://selcontest.infura-ipfs.io/ipfs/" + data);
+	}
+  </script>	
 
 </head>
 
@@ -48,7 +56,7 @@ body {
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
+           <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" href="admin/adminList">관리자페이지
               <span class="sr-only">(current)</span>
@@ -87,11 +95,10 @@ body {
 
         <h1 class="my-4">Block-Auth</h1>
         <div class="list-group">
-          <a href="mypage/membershipInfo" class="list-group-item">블록어스클럽 가입</a>
+         <a href="#" class="list-group-item">상품 관리</a>
+          <a href="#" class="list-group-item">상품 문의</a>
+          <a href="#" class="list-group-item">송장정보 입력</a>
           <a href="#" class="list-group-item">내 정보 수정</a>
-          <a href="#" class="list-group-item">찜한 상품</a>
-          <a href="#" class="list-group-item">구매리스트</a>
-          <a href="mypage/withdrawal" class="list-group-item">회원 탈퇴</a>
         </div>
 
       </div>
@@ -103,7 +110,7 @@ body {
               <div class="card-body">
                   <div class="row">
                       <div class="col-md-12">
-                          <h4>Your Profile</h4>
+                          <h5><b>나의 개인정보</b></h5>
                           <hr>
                       </div>
                   </div>
@@ -111,64 +118,51 @@ body {
                       <div class="col-md-12">
                           <form  >
                               <div class="form-group row">
-                                <label for="username" class="col-4 col-form-label">User Name*</label> 
+                                <label for="username" class="col-4 col-form-label">이름</label> 
                                 <div class="col-8">
                                   <input id="username" name="username" placeholder="Username" class="form-control here" required="required" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="name" class="col-4 col-form-label">First Name</label> 
+                                <label for="name" class="col-4 col-form-label">아이디</label> 
                                 <div class="col-8">
                                   <input id="name" name="name" placeholder="First Name" class="form-control here" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="lastname" class="col-4 col-form-label">Last Name</label> 
+                                <label for="lastname" class="col-4 col-form-label">연락처</label> 
                                 <div class="col-8">
                                   <input id="lastname" name="lastname" placeholder="Last Name" class="form-control here" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="text" class="col-4 col-form-label">Nick Name*</label> 
+                                <label for="text" class="col-4 col-form-label">주소</label> 
                                 <div class="col-8">
                                   <input id="text" name="text" placeholder="Nick Name" class="form-control here" required="required" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="select" class="col-4 col-form-label">Display Name public as</label> 
+                                <label for="select" class="col-4 col-form-label">사업자등록번호</label> 
                                 <div class="col-8">
-                                  <select id="select" name="select" class="custom-select">
-                                    <option value="admin">Admin</option>
-                                  </select>
+ 								  <input id="text" name="text" placeholder="Nick Name" class="form-control here" required="required" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="email" class="col-4 col-form-label">Email*</label> 
+                                <label for="email" class="col-4 col-form-label">대표자 지갑주소</label> 
                                 <div class="col-8">
                                   <input id="email" name="email" placeholder="Email" class="form-control here" required="required" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="website" class="col-4 col-form-label">Website</label> 
+                                <label for="website" class="col-4 col-form-label">무료배송 최소금액</label> 
                                 <div class="col-8">
                                   <input id="website" name="website" placeholder="website" class="form-control here" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="publicinfo" class="col-4 col-form-label">Public Info</label> 
-                                <div class="col-8">
-                                  <textarea id="publicinfo" name="publicinfo" cols="40" rows="4" class="form-control"></textarea>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="newpass" class="col-4 col-form-label">New Password</label> 
-                                <div class="col-8">
-                                  <input id="newpass" name="newpass" placeholder="New Password" class="form-control here" type="text">
-                                </div>
-                              </div> 
-                              <div class="form-group row">
                                 <div class="offset-4 col-8">
-                                  <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
+                                  <button name="submit" type="button" class="btn btn-primary">수정하기</button>
+                                  <button type="button" class="btn btn-primary" id="btn1" onclick="contractInfo();">계약서 확인</button>
                                 </div>
                               </div>
                             </form>

@@ -1,56 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>GoodsRegistPage</title>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style type="text/css">
+   .col-md-9{
+      margin : auto;
+   }
+   #div1{
+   margin:0;
+   display: flex;
+   justify-content : center;
+   }
+</style>
+
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+#btn1{
+
+}   
+</style>
+<link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Block-Auth</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  
+
 </head>
+
 <body>
-	<form action="goodsRegist" method="post" th:object="${goodsCommand}" enctype="multipart/form-data" >
-		<table border=1>
-			<tr><th>제품 번호(자동)</th>
-				<td><input type="text" name="goodsNum"  th:value="${goodsCommand.goodsNum}"  readonly="readonly" /><br/>
-				</td>
-			</tr>
-			<tr>
-				<th>상품명</th>
-				<td>
-					<input type="text" name="goodsName" placeholder="상품명을 작성하세요." th:value="${goodsCommand.goodsName}" />
-				</td>
-			</tr>
-			<tr>
-				<th>상품 가격</th>
-				<td>
-					<input type="number" name="goodsPrice" min="100" step="100" value="1000" th:value="${goodsCommand.goodsPrice}" />
-				</td>
-			</tr>
-			<tr>
-				<th>상품 설명</th>
-				<td>
-					<textarea rows="6" cols="30" name="goodsContent" th:value="${goodsCommand.goodsContent}" ></textarea>
-				</td>
-			</tr>
-			<tr>
-				<th>상품 크기</th>
-				<td>
-					<input type="text" name="goodsSize" th:value="${goodsCommand.goodsSize}" />
-				</td>
-			</tr>
-			<tr>
-				<th>상품 재고</th>
-				<td>
-					<input type="number" name="goodsStock" min="1" step="1" value="1" th:value="${goodsCommand.goodsStock}" />
-				</td>
-			</tr>
-			<tr>
-				<th>상품 제조국</th>
-				<td>
-					<input type="text" name="goodsCountry" th:value="${goodsCommand.goodsCountry}" />
-				</td>
-			</tr>
-			<tr>
-				<th>상품 카테고리</th>
-				<td>
-					<select name="goodsCategory" th:value="${goodsCommand.goodsCategory}" >
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin/adminList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">장바구니</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+          <li class="nav-item">
+            <a class="nav-link" href="#">고객센터</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+          <a href="goodsList" class="list-group-item">상품관리</a>
+          
+          <a href="#" class="list-group-item">상품 문의</a>
+          <a href="#" class="list-group-item">송장정보 입력</a>
+          <a href="#" class="list-group-item">내정보 수정</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+		
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h4>상품 등록</h4>
+                          <hr>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <form  >
+                              <div class="form-group row">
+                                <label for="username" class="col-4 col-form-label">제품 번호(자동부여)</label> 
+                                <div class="col-8">
+                                  <input type="text" name="goodsNum"  th:value="${goodsCommand.goodsNum}"  readonly="readonly" class="form-control here"/>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="name" class="col-4 col-form-label">상품명</label> 
+                                <div class="col-8">
+                                  <input type="text" name="goodsName" placeholder="상품명을 작성하세요." th:value="${goodsCommand.goodsName}" class="form-control here"/>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="lastname" class="col-4 col-form-label">상품 가격</label> 
+                                <div class="col-8">
+                                  <input type="number" name="goodsPrice" min="100" step="100" value="1000" th:value="${goodsCommand.goodsPrice}" class="form-control here"/>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="text" class="col-4 col-form-label">상품 설명</label> 
+                                <div class="col-8">
+                                  <textarea rows="6" cols="30" name="goodsContent" th:value="${goodsCommand.goodsContent}" class="form-control here"></textarea>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="select" class="col-4 col-form-label">상품 크기</label> 
+                                <div class="col-8">
+                                <input type="text" name="goodsSize" th:value="${goodsCommand.goodsSize}" class="form-control here"/>
+                                  
+                                  
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="email" class="col-4 col-form-label">상품 재고</label> 
+                                <div class="col-8">
+                                  <input type="number" name="goodsStock" min="1" step="1" value="1" th:value="${goodsCommand.goodsStock}" class="form-control here"/>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="website" class="col-4 col-form-label">상품 제조국</label> 
+                                <div class="col-8">
+                                  <input type="text" name="goodsCountry" th:value="${goodsCommand.goodsCountry}" class="form-control here"/>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="publicinfo" class="col-4 col-form-label">상품 카테고리</label> 
+                                <div class="col-8">
+                                  <select name="goodsCategory" th:value="${goodsCommand.goodsCategory}" class="form-control here"/>
 						<option value="">카테고리 선택</option>
 						<optgroup label="패션의류/잡화">
 							<option value="여성패션">여성패션</option>
@@ -67,40 +180,68 @@
 							<option value="어류">어류</option>
      					</optgroup>
 					</select>
-				</td>
-			</tr>
-			<tr>
-				<th>제조사</th>
-				<td>
-					<input type="text" name="goodsCompany" th:value="${goodsCommand.goodsCompany}" />
-				</td>
-			</tr>
-			<tr>
-				<th>제조일자</th>
-				<td>
-					<input type="date" name="goodsRegiDate" th:value="${#dates.format(goodsCommand.goodsRegiDate, 'yyyy-MM-dd')}" />
-				</td>
-			</tr>
-			<tr>
-				<th>상품 이미지</th>
-				<td>
-					<input type="file" name="goodsMain" th:value="${goodsCommand.goodsMain}" /><BR />		
-				</td>
-			</tr>
-			<tr>
-				<th>무료배송 최소구매비용</th>
-				<td>
-					<input type="number" name="goodsDeliveryFee" min="0" step="500" value="0" th:value="${goodsCommand.goodsDeliveryFee}" />
-				</td>
-			</tr>
-			
-			<tr>
-				<th colspan="2" > 
-					<input type="submit" value="상품등록" />
-					<input type="reset" value="다시 작성" />
-				</th>
-			</tr>
-		</table>
-	</form>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="newpass" class="col-4 col-form-label">제조사</label> 
+                                <div class="col-8">
+                                  <input type="text" name="goodsCompany" th:value="${goodsCommand.goodsCompany}" class="form-control here"/>
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                <label for="newpass" class="col-4 col-form-label">제조일자</label> 
+                                <div class="col-8">
+                                  <input type="date" name="goodsRegiDate" th:value="${#dates.format(goodsCommand.goodsRegiDate, 'yyyy-MM-dd')}" class="form-control here"/>
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                <label for="newpass" class="col-4 col-form-label">상품 이미지</label> 
+                                <div class="col-8">
+                                  <input type="file" name="goodsMain" th:value="${goodsCommand.goodsMain}" class="form-control here"/>
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                <label for="newpass" class="col-4 col-form-label">무료배송 최소구매비용</label> 
+                                <div class="col-8">
+                                  <input type="number" name="goodsDeliveryFee" min="0" step="500" value="0" th:value="${goodsCommand.goodsDeliveryFee}" class="form-control here"/>
+                                </div>
+                              </div> 
+                              <div class="form-group row" id="div1">
+                                <div class="offset-4 col-8" id="div1">
+                                  <button name="submit" type="submit" class="btn btn-primary" id="btn1">상품 등록</button>
+                                </div>
+                              </div>
+                            </form>
+                      </div>
+                  </div>
+                  
+              </div>
+          
+      </div>
+		
+
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>
