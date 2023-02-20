@@ -15,4 +15,5 @@ public interface BuyerMapper {
 	public Integer buyerUpdate(BuyerDTO dto);
 	public Integer buyerDelete(String buyerNum);
 	public String buyerIdCheck(String buyerId);
+	public BuyerDTO selectOneId(String buyerId);
 }

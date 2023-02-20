@@ -94,8 +94,10 @@ body {
 
         <h1 class="my-4">Block-Auth</h1>
         <div class="list-group">
-          <a href="mypage/membershipInfo" class="list-group-item">블록어스클럽 가입</a>
-          <a href="/mypage/myInfoEdit" class="list-group-item">내 정보 수정</a>
+          <span th:if="${session.authInfo.getGrade().equals('buyer')}">
+	          <a href="mypage/membershipInfo" class="list-group-item">블록어스클럽 가입</a>
+	          <a href="/mypage/buyerMyInfoEdit" class="list-group-item">내 정보 수정</a>
+          </span>
           <a href="/mypage/memberPwCheck" class="list-group-item">비밀번호 변경</a>
           <a href="#" class="list-group-item">찜한 상품</a>
           <a href="#" class="list-group-item">구매리스트</a>
@@ -111,76 +113,47 @@ body {
               <div class="card-body">
                   <div class="row">
                       <div class="col-md-12">
-                          <h4>Your Profile</h4>
+                          <h4>[[${buyerCommand.buyerName}]] 's Information</h4>
                           <hr>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-md-12">
                              <div class="form-group row">
-                               <label for="username" class="col-4 col-form-label">User Number</label> 
+                               <label for="buyerNum" class="col-4 col-form-label">Buyer Number</label> 
                                <div class="col-8">
-                                 <p id="userNum" name="userNum" class="form-control here">번호</p>
+                                 <p id="buyerNum" name="buyerNum" class="form-control here">[[${buyerCommand.buyerNum}]]</p>
                                </div>
-                             </div>
-                             <div class="form-group row">
-                               <label for="username" class="col-4 col-form-label">User Id</label> 
+                             
+                               <label for="buyerId" class="col-4 col-form-label">ID</label> 
                                <div class="col-8">
-                                 <p id="userId" name="userId" class="form-control here">아이디</p>
+                                 <p id="buyerId" name="buyerId" class="form-control here">[[${buyerCommand.buyerId}]]</p>
                                </div>
-                             </div>
-                             <div class="form-group row">
-                               <label for="username" class="col-4 col-form-label">User Name</label> 
+                               <label for="buyerPhone" class="col-4 col-form-label">Phone</label> 
                                <div class="col-8">
-                                 <p id="userName" name="userName" class="form-control here">이름</p>
+                                 <p id="buyerPhone" name="buyerPhone" class="form-control here">[[${buyerCommand.buyerPhone}]]</p>
                                </div>
-                             </div>
-                             <div class="form-group row">
-                               <label for="userPhone" class="col-4 col-form-label">User Phone</label> 
+                               <label for="buyerAddr1" class="col-4 col-form-label">Address</label> 
                                <div class="col-8">
-                                 <p id="userPhone" name="userPhone" class="form-control here">번호</p>
+                                 <p id="buyerAddr1" name="buyerAddr1" class="form-control here">[[${buyerCommand.buyerAddr1}]]</p>
+                                 <p id="buyerAddr2" name="buyerAddr2" class="form-control here">[[${buyerCommand.buyerAddr2}]]</p>
+                                 <p id="buyerPostcode" name="buyerPostcode" class="form-control here">[[${buyerCommand.buyerPostcode}]]</p>
                                </div>
-                             </div>
-                             <div class="form-group row">
-                               <label for="userAddr1" class="col-4 col-form-label">user Addr1</label> 
+                               <label for="buyerBirth" class="col-4 col-form-label">BirthDay</label> 
                                <div class="col-8">
-                                 <p id="userAddr1" name="userAddr1" class="form-control here">주소</p>
+                                 <p id="buyerBirth" name="buyerBirth" class="form-control here">[[${#dates.format(buyerCommand.buyerBirth, 'yyyy-MM-dd')}]]</p>
                                </div>
-                             </div>
-                             <div class="form-group row">
-                               <label for="userAddr1" class="col-4 col-form-label">user Addr2</label> 
+                               <label for="buyerEmail" class="col-4 col-form-label">Email</label> 
                                <div class="col-8">
-                                 <p id="userAddr2" name="userAddr2" class="form-control here">상세주소</p>
+                                 <p id="buyerEmail" name="buyerEmail" class="form-control here">[[${buyerCommand.buyerEmail}]]</p>
                                </div>
-                             </div>
-                             <div class="form-group row">
-                               <label for="userPodstCode" class="col-4 col-form-label">user Post Code</label> 
+                               <label for="buyerPoint" class="col-4 col-form-label">Point</label> 
                                <div class="col-8">
-                                 <p id="userPodstCode" name="userPodstCode" class="form-control here">우편번호</p>
+                                 <p id="buyerPoint" name="buyerPoint" class="form-control here">[[${buyerCommand.buyerPoint}]] 포인트</p>
                                </div>
-                             </div>
-                             <div class="form-group row">
-                               <label for="userBirthDay" class="col-4 col-form-label">user BirthDay</label> 
+                               <label for=buyerWalletAddr class="col-4 col-form-label">Wallet Address</label> 
                                <div class="col-8">
-                                 <p id="userBirthDay" name="userBirthDay" class="form-control here">생일</p>
-                               </div>
-                             </div>
-                             <div class="form-group row">
-                               <label for="userEmail" class="col-4 col-form-label">user Email</label> 
-                               <div class="col-8">
-                                 <p id="userEmail" name="userEmail" class="form-control here">이메일</p>
-                               </div>
-                             </div>
-                             <div class="form-group row">
-                               <label for="userPoint" class="col-4 col-form-label">user Point</label> 
-                               <div class="col-8">
-                                 <p id="userPoint" name="userPoint" class="form-control here">보유 포인트</p>
-                               </div>
-                             </div>
-                             <div class="form-group row">
-                               <label for="userWalletAddr" class="col-4 col-form-label">user Wallet Addr</label> 
-                               <div class="col-8">
-                                 <p id="userWalletAddr" name="userWalletAddr" class="form-control here">지갑주소</p>
+                                 <p id="buyerWalletAddr" name="buyerWalletAddr" class="form-control here">[[${buyerCommand.buyerWalletAddr}]]</p>
                                </div>
                              </div>
                       </div>

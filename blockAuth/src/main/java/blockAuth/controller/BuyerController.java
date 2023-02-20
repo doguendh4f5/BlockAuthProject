@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import blockAuth.command.BuyerCommand;
+import blockAuth.domain.AuthInfo;
 import blockAuth.service.buyer.BuyerDeleteService;
 import blockAuth.service.buyer.BuyerDetailService;
 import blockAuth.service.buyer.BuyerListService;
 import blockAuth.service.buyer.BuyerModifyService;
 import blockAuth.service.buyer.BuyerNumberService;
 import blockAuth.service.buyer.BuyerRegistService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("buyer")
@@ -75,11 +77,15 @@ public class BuyerController {
 	BuyerModifyService buyerModifyService;
 	@RequestMapping(value = "buyerModify", method = RequestMethod.POST)
 	public String buyerModify(@Validated BuyerCommand buyerCommand,
-			BindingResult result) {
+			BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
 			return "thymeleaf/buyer/buyerUpdate";
 		}
 		buyerModifyService.execute(buyerCommand);
+		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+		if(authInfo.getGrade().equals("buyer")) {
+			return "thymeleaf/mypage/buyerMypage";
+		}
 		return "redirect:buyerDetail/"+buyerCommand.getBuyerNum();
 	}
 	@Autowired

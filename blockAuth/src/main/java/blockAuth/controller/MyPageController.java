@@ -2,13 +2,15 @@ package blockAuth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import blockAuth.command.PasswordChangeCommand;
-import blockAuth.domain.AuthInfo;
+import blockAuth.service.mypage.BuyerMyInfoEditService;
+import blockAuth.service.mypage.MypageDetailService;
 import blockAuth.service.mypage.PasswordChangeService;
 import blockAuth.service.mypage.PasswordCheckService;
 import jakarta.servlet.http.HttpSession;
@@ -20,11 +22,16 @@ public class MyPageController {
 	PasswordCheckService passwordCheckService;	//비밀번호 확인 서비스
 	@Autowired
 	PasswordChangeService passwordChangeService;	//비밀번호 변경 서비스
+	@Autowired
+	MypageDetailService mypageDetailService;	//마이페이지 정보 가져오기
+	@Autowired
+	BuyerMyInfoEditService buyerMyInfoEditService;	//구매자 마이페이지 수정
 	
 	// 마이페이지 첫 화면
 	@RequestMapping("")
-	public String mypage() {
-		return "thymeleaf/mypage/mypage";
+	public String mypage(HttpSession session, Model model) {
+		String url = mypageDetailService.execute(session, model);
+		return url;
 	}
 	
 	// 멤버십 구독 관련 페이지
@@ -82,23 +89,24 @@ public class MyPageController {
 		}
 	}
 		
-		//마이페이지 수정
-		@RequestMapping("myInfoEdit")
-		public String myInfoEdit() {
-			return "thymeleaf/mypage/myInfoEdit";
-		}
-		
-		// 마이페이지 회원 탈퇴
-		@RequestMapping("withdrawal")
-		public String withdrawal() {
-			return "thymeleaf/mypage/withdrawal";
-		}
-		
-		// 마이페이지 찜한 목록
-		@RequestMapping("wishList")
-		public String wishList() {
-			return "thymeleaf/mypage/wishList";
-		}
+	//마이페이지 수정
+	@RequestMapping("buyerMyInfoEdit")
+	public String myInfoEdit(HttpSession session, Model model) {
+		buyerMyInfoEditService.execute(session, model);
+		return "thymeleaf/mypage/buyerMyInfoEdit";
+	}
+	
+	// 마이페이지 회원 탈퇴
+	@RequestMapping("withdrawal")
+	public String withdrawal() {
+		return "thymeleaf/mypage/withdrawal";
+	}
+	
+	// 마이페이지 찜한 목록
+	@RequestMapping("wishList")
+	public String wishList() {
+		return "thymeleaf/mypage/wishList";
+	}
 	
 	
 	

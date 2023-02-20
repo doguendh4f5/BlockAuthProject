@@ -28,6 +28,11 @@ MEMBERSHIP membership, BUYER_POINT buyerPoint, BUYER_POSTCODE buyerPostcode, BUY
 	from buyer
 	where buyer_num = #{buyerNum}
 </select>
+<select id="selectOneId" parameterType="string" resultType="buyerDTO">
+	select <include refid="buyerBase" />
+	from buyer
+	where buyer_id = #{buyerId}
+</select>
 <update id="buyerUpdate" parameterType="buyerDTO">
 	update buyer
 	set buyer_id = #{buyerId}, buyer_name = #{buyerName}, buyer_phone = #{buyerPhone},
