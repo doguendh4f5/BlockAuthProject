@@ -57,9 +57,16 @@ body {
           <li class="nav-item">
             <a class="nav-link" href="#">장바구니</a>
           </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">마이페이지</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
           <li class="nav-item">
             <a class="nav-link" href="/mypage">마이페이지</a>
           </li>
+          </span>
           <span th:if="${session.authInfo == null}">
           <li class="nav-item">
             <a class="nav-link" href="/login">로그인</a>
@@ -88,7 +95,7 @@ body {
         <h1 class="my-4">Block-Auth</h1>
         <div class="list-group">
           <a href="mypage/membershipInfo" class="list-group-item">블록어스클럽 가입</a>
-          <a href="#" class="list-group-item">내 정보 수정</a>
+          <a href="/mypage/memberPwCheck" class="list-group-item">내 정보 수정</a>
           <a href="#" class="list-group-item">찜한 상품</a>
           <a href="#" class="list-group-item">구매리스트</a>
           <a href="mypage/withdrawal" class="list-group-item">회원 탈퇴</a>
@@ -109,80 +116,78 @@ body {
                   </div>
                   <div class="row">
                       <div class="col-md-12">
-                          <form  >
-                              <div class="form-group row">
-                                <label for="username" class="col-4 col-form-label">User Name*</label> 
-                                <div class="col-8">
-                                  <input id="username" name="username" placeholder="Username" class="form-control here" required="required" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="name" class="col-4 col-form-label">First Name</label> 
-                                <div class="col-8">
-                                  <input id="name" name="name" placeholder="First Name" class="form-control here" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="lastname" class="col-4 col-form-label">Last Name</label> 
-                                <div class="col-8">
-                                  <input id="lastname" name="lastname" placeholder="Last Name" class="form-control here" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="text" class="col-4 col-form-label">Nick Name*</label> 
-                                <div class="col-8">
-                                  <input id="text" name="text" placeholder="Nick Name" class="form-control here" required="required" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="select" class="col-4 col-form-label">Display Name public as</label> 
-                                <div class="col-8">
-                                  <select id="select" name="select" class="custom-select">
-                                    <option value="admin">Admin</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="email" class="col-4 col-form-label">Email*</label> 
-                                <div class="col-8">
-                                  <input id="email" name="email" placeholder="Email" class="form-control here" required="required" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="website" class="col-4 col-form-label">Website</label> 
-                                <div class="col-8">
-                                  <input id="website" name="website" placeholder="website" class="form-control here" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="publicinfo" class="col-4 col-form-label">Public Info</label> 
-                                <div class="col-8">
-                                  <textarea id="publicinfo" name="publicinfo" cols="40" rows="4" class="form-control"></textarea>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="newpass" class="col-4 col-form-label">New Password</label> 
-                                <div class="col-8">
-                                  <input id="newpass" name="newpass" placeholder="New Password" class="form-control here" type="text">
-                                </div>
-                              </div> 
-                              <div class="form-group row">
-                                <div class="offset-4 col-8">
-                                  <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
-                                </div>
-                              </div>
-                            </form>
+                             <div class="form-group row">
+                               <label for="username" class="col-4 col-form-label">User Number</label> 
+                               <div class="col-8">
+                                 <p id="userNum" name="userNum" class="form-control here">번호</p>
+                               </div>
+                             </div>
+                             <div class="form-group row">
+                               <label for="username" class="col-4 col-form-label">User Id</label> 
+                               <div class="col-8">
+                                 <p id="userId" name="userId" class="form-control here">아이디</p>
+                               </div>
+                             </div>
+                             <div class="form-group row">
+                               <label for="username" class="col-4 col-form-label">User Name</label> 
+                               <div class="col-8">
+                                 <p id="userName" name="userName" class="form-control here">이름</p>
+                               </div>
+                             </div>
+                             <div class="form-group row">
+                               <label for="userPhone" class="col-4 col-form-label">User Phone</label> 
+                               <div class="col-8">
+                                 <p id="userPhone" name="userPhone" class="form-control here">번호</p>
+                               </div>
+                             </div>
+                             <div class="form-group row">
+                               <label for="userAddr1" class="col-4 col-form-label">user Addr1</label> 
+                               <div class="col-8">
+                                 <p id="userAddr1" name="userAddr1" class="form-control here">주소</p>
+                               </div>
+                             </div>
+                             <div class="form-group row">
+                               <label for="userAddr1" class="col-4 col-form-label">user Addr2</label> 
+                               <div class="col-8">
+                                 <p id="userAddr2" name="userAddr2" class="form-control here">상세주소</p>
+                               </div>
+                             </div>
+                             <div class="form-group row">
+                               <label for="userPodstCode" class="col-4 col-form-label">user Post Code</label> 
+                               <div class="col-8">
+                                 <p id="userPodstCode" name="userPodstCode" class="form-control here">우편번호</p>
+                               </div>
+                             </div>
+                             <div class="form-group row">
+                               <label for="userBirthDay" class="col-4 col-form-label">user BirthDay</label> 
+                               <div class="col-8">
+                                 <p id="userBirthDay" name="userBirthDay" class="form-control here">생일</p>
+                               </div>
+                             </div>
+                             <div class="form-group row">
+                               <label for="userEmail" class="col-4 col-form-label">user Email</label> 
+                               <div class="col-8">
+                                 <p id="userEmail" name="userEmail" class="form-control here">이메일</p>
+                               </div>
+                             </div>
+                             <div class="form-group row">
+                               <label for="userPoint" class="col-4 col-form-label">user Point</label> 
+                               <div class="col-8">
+                                 <p id="userPoint" name="userPoint" class="form-control here">보유 포인트</p>
+                               </div>
+                             </div>
+                             <div class="form-group row">
+                               <label for="userWalletAddr" class="col-4 col-form-label">user Wallet Addr</label> 
+                               <div class="col-8">
+                                 <p id="userWalletAddr" name="userWalletAddr" class="form-control here">지갑주소</p>
+                               </div>
+                             </div>
                       </div>
                   </div>
-                  
               </div>
-          
       </div>
-		
-
-
-      </div>
-      <!-- /.col-lg-9 -->
+     </div>
+    <!-- /.col-lg-9 -->
 
     </div>
     <!-- /.row -->

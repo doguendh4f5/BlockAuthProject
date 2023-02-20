@@ -2,28 +2,60 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Change Password</title>
-<style>
-	table {
-			    margin-left:auto; 
-			    margin-right:auto;
+<title>Member Check</title>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<style type="text/css">
+	.container{
+		width:auto;
+
 	}
+	.col-md-4{
+		text-align:center;
+	}
+</style>
+<style type="text/css">
+#success_message{ display: none;}
 </style>
 </head>
 <body>
-	<form action="memberPwChange" method="post" name="frm" id="frm" th:object="${passwordChangeCommand}">
-		<table>
-			<caption>비밀번호를 입력하기 전 확인절차</caption>
-			<tr>
-				<td>현재 비밀번호 입력 : </td>
-				<td>
-					<input type="password" name="userPw"  />
-					<br /><span style="color:red" th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}"></span>
-					<input type="hidden" name="userPwCon" value="1111qqqqq!" />
-				</td>
-				<td><input type="submit" value="확인" /></td>
-			</tr>
-		</table>
-	</form>
+    <div class="container">
+
+    <form class="well form-horizontal" action="memberPwChange" method="post"  id="contact_form" th:object="${passwordChangeCommand}">
+<fieldset>
+
+<!-- Form Name -->
+<legend><center><h2><b>비밀번호를 입력하기 전 확인절차</b></h2></center></legend><br>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label">비밀번호 입력</label>  
+  <div class="col-md-4 inputGroupContainer">
+  <div class="input-group">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+  <input type="password" name="userPw" class="form-control">
+    </div>
+    <span style="color:red" th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}"></span>
+	<input type="hidden" name="userPwCon" value="1111qqqqq!" />
+  </div>
+</div>
+
+<!-- Select Basic -->
+
+<!-- Success message -->
+<div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Success!.</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label"></label>
+  <div class="col-md-4"><br>
+<button type="submit" class="btn btn-warning" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp확인 <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+</div>
+    </div><!-- /.container -->
 </body>
 </html>
