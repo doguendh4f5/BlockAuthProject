@@ -15,17 +15,17 @@
 	}
 </style>
 <style type="text/css">
-#success_message{ display: none;}
+#success_message{display: none;}
 </style>
 </head>
 <body>
     <div class="container">
 
-    <form class="well form-horizontal" action="memberPwChange" method="post"  id="contact_form" th:object="${passwordChangeCommand}">
+    <form class="form-horizontal" action="memberPwChange" method="post"  id="contact_form" th:object="${passwordChangeCommand}">
 <fieldset>
 
 <!-- Form Name -->
-<legend><center><h2><b>비밀번호를 입력하기 전 확인절차</b></h2></center></legend><br>
+<legend><center><h3><b>회원정보를 수정하기 전 확인절차</b></h3></center></legend><br>
 
 <!-- Text input-->
 <div class="form-group">
@@ -39,8 +39,6 @@
 	<input type="hidden" name="userPwCon" value="1111qqqqq!" />
   </div>
 </div>
-
-<!-- Select Basic -->
 
 <!-- Success message -->
 <div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Success!.</div>
