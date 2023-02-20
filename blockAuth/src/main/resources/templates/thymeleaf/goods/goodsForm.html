@@ -115,7 +115,7 @@ body {
                   </div>
                   <div class="row">
                       <div class="col-md-12">
-                          <form  >
+                          <form action="goodsRegist" method="post" th:object="${goodsCommand}" enctype="multipart/form-data" >
                               <div class="form-group row">
                                 <label for="username" class="col-4 col-form-label">제품 번호(자동부여)</label> 
                                 <div class="col-8">
