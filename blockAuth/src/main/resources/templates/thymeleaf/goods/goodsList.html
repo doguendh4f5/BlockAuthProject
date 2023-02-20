@@ -150,7 +150,7 @@ function reg(){
                         <td>[[${goodsCommand.goodsPrice}]]</td>
                         <td>[[${goodsCommand.goodsCompany}]]</td>
                         <td>
-                           <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+                           <a th:href="|../goods/goodsDelete/${goodsCommand.goodsNum}|" class="close" data-dismiss="alert" aria-label="Close">
                            <span aria-hidden="true"><i class="fa fa-close"></i></span>
                          </a>
                        </td>
