@@ -1,5 +1,6 @@
 package blockAuth.command;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -32,6 +33,9 @@ public class SellCommand {
 	String sellerWalletAddr;
 	@NotNull(message = "무료배송되는 최소구매금액을 입력해주세요.")
 	Long minDeliveryFee;
+	@Email(message = "형식에 맞지 않습니다.")
+	String sellerEmail;
+	
 	
 	@NotBlank(message = "거래은행을 선택해주세요.")
 	String bank;

@@ -18,4 +18,5 @@ public class SellerDTO {
 	String sellerTel;
 	String sellerWalletAddr;
 	Long minDeliveryFee;
+	String sellerEmail;
 }
