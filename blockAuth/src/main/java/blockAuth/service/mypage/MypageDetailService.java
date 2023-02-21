@@ -23,7 +23,7 @@ public class MypageDetailService {
 		if(grade.equals("seller")) {
 			SellerDTO seller = sellerMapper.selectNum(authInfo.getUserId());
 			model.addAttribute("sellCommand", seller);
-			return "thymeleaf/mypage/sellerMypage";
+			return "thymeleaf/sellerMyPage/sellerMypage";
 		}else {
 			BuyerDTO buyer = buyerMapper.selectOneId(authInfo.getUserId());
 			model.addAttribute("buyerCommand", buyer);
