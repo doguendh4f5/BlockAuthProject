@@ -22,6 +22,7 @@ public class SellerModifyService {
 		seller.setSellerPostcode(sellCommand.getSellerPostcode());
 		seller.setSellerWalletAddr(sellCommand.getSellerWalletAddr());
 		seller.setMinDeliveryFee(sellCommand.getMinDeliveryFee());
+		seller.setSellerEmail(sellCommand.getSellerEmail());
 		int i = sellerMapper.sellerUpdate(seller);
 		System.out.println("판매자 정보 " + i + "개가 수정되었습니다.");
 	}

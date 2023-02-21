@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import blockAuth.command.SellCommand;
+import blockAuth.domain.AuthInfo;
 import blockAuth.service.FileDownload;
 import blockAuth.service.contract.ContractNumberService;
 import blockAuth.service.seller.SellerDeleteService;
@@ -21,6 +22,7 @@ import blockAuth.service.seller.SellerNumService;
 import blockAuth.service.seller.SellerRegiService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("seller")
@@ -94,11 +96,15 @@ public class SellerController {
 	
 	@RequestMapping(value="sellerModify", method = RequestMethod.POST)
 	public String sellerModify(@Validated SellCommand sellCommand
-			, BindingResult result) {
+			, BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
 			return "thymeleaf/seller/sellerUpdate";
 		}
 		sellerModifyService.execute(sellCommand);
+		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+		if(authInfo.getGrade().equals("seller")) {
+			return "thymeleaf/sellerMyPage/sellerMyPage";
+		}
 		return "redirect:sellerInfo?num="+sellCommand.getSellerNum();
 	}
 	

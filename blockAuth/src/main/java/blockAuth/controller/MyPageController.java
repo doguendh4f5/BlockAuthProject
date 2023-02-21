@@ -13,6 +13,7 @@ import blockAuth.service.mypage.BuyerMyInfoEditService;
 import blockAuth.service.mypage.MypageDetailService;
 import blockAuth.service.mypage.PasswordChangeService;
 import blockAuth.service.mypage.PasswordCheckService;
+import blockAuth.service.mypage.SellerMyInfoEditService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -26,6 +27,8 @@ public class MyPageController {
 	MypageDetailService mypageDetailService;	//마이페이지 정보 가져오기
 	@Autowired
 	BuyerMyInfoEditService buyerMyInfoEditService;	//구매자 마이페이지 수정
+	@Autowired
+	SellerMyInfoEditService sellerMyInfoEditService; //판매자 마이페이지 수정
 	
 	// 마이페이지 첫 화면
 	@RequestMapping("")
@@ -89,11 +92,18 @@ public class MyPageController {
 		}
 	}
 		
-	//마이페이지 수정
+	//구매자 마이페이지 수정
 	@RequestMapping("buyerMyInfoEdit")
 	public String myInfoEdit(HttpSession session, Model model) {
 		buyerMyInfoEditService.execute(session, model);
 		return "thymeleaf/mypage/buyerMyInfoEdit";
+	}
+	
+	//판매자 마이페이지 수정
+	@RequestMapping("sellerMyInfoEdit")
+	public String sellerMyInfoEdit(HttpSession session, Model model) {
+		sellerMyInfoEditService.execute(session, model);
+		return "thymeleaf/sellerMyPage/sellerMyInfoEdit";
 	}
 	
 	// 마이페이지 회원 탈퇴

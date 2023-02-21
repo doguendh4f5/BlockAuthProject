@@ -22,10 +22,7 @@
 body {
   padding-top: 56px;
 }
-#btn1{
-  background-color: #FFCA6C;
-  border:1px solid #FFCA6C;
-}   
+   
 </style>
 <link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
   <meta charset="utf-8">
@@ -37,12 +34,7 @@ body {
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <script>
-	function contractInfo(){
-		var data = "[[${metadata}]]";
-		window.open("https://selcontest.infura-ipfs.io/ipfs/" + data);
-	}
-  </script>	
+  
 
 </head>
 
@@ -56,7 +48,7 @@ body {
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
-           <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" href="admin/adminList">관리자페이지
               <span class="sr-only">(current)</span>
@@ -65,9 +57,16 @@ body {
           <li class="nav-item">
             <a class="nav-link" href="#">장바구니</a>
           </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">마이페이지</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
           <li class="nav-item">
             <a class="nav-link" href="/mypage">마이페이지</a>
           </li>
+          </span>
           <span th:if="${session.authInfo == null}">
           <li class="nav-item">
             <a class="nav-link" href="/login">로그인</a>
@@ -95,10 +94,14 @@ body {
 
         <h1 class="my-4">Block-Auth</h1>
         <div class="list-group">
-         <a href="#" class="list-group-item">상품 관리</a>
-          <a href="#" class="list-group-item">상품 문의</a>
-          <a href="#" class="list-group-item">송장정보 입력</a>
-          <a href="#" class="list-group-item">내 정보 수정</a>
+          <span th:if="${session.authInfo.getGrade().equals('buyer')}">
+	          <a href="/mypage/membershipInfo" class="list-group-item">블록어스클럽 가입</a>
+	          <a href="/mypage/buyerMyInfoEdit" class="list-group-item">내 정보 수정</a>
+          </span>
+          <a href="/mypage/memberPwCheck" class="list-group-item">비밀번호 변경</a>
+          <a href="#" class="list-group-item">찜한 상품</a>
+          <a href="#" class="list-group-item">구매리스트</a>
+          <a href="/mypage/withdrawal" class="list-group-item">회원 탈퇴</a>
         </div>
 
       </div>
@@ -110,73 +113,56 @@ body {
               <div class="card-body">
                   <div class="row">
                       <div class="col-md-12">
-                          <h5><b>나의 개인정보</b></h5>
+                          <h4>[[${sellCommand.sellerName}]] 님의 정보</h4>
                           <hr>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-md-12">
-                          <form  >
-                              <div class="form-group row">
-                                <label for="username" class="col-4 col-form-label">이름</label> 
-                                <div class="col-8">
-                                  <input id="username" name="username" placeholder="Username" class="form-control here" required="required" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="name" class="col-4 col-form-label">아이디</label> 
-                                <div class="col-8">
-                                  <input id="name" name="name" placeholder="First Name" class="form-control here" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="lastname" class="col-4 col-form-label">연락처</label> 
-                                <div class="col-8">
-                                  <input id="lastname" name="lastname" placeholder="Last Name" class="form-control here" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="text" class="col-4 col-form-label">주소</label> 
-                                <div class="col-8">
-                                  <input id="text" name="text" placeholder="Nick Name" class="form-control here" required="required" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="select" class="col-4 col-form-label">사업자등록번호</label> 
-                                <div class="col-8">
- 								  <input id="text" name="text" placeholder="Nick Name" class="form-control here" required="required" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="email" class="col-4 col-form-label">대표자 지갑주소</label> 
-                                <div class="col-8">
-                                  <input id="email" name="email" placeholder="Email" class="form-control here" required="required" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="website" class="col-4 col-form-label">무료배송 최소금액</label> 
-                                <div class="col-8">
-                                  <input id="website" name="website" placeholder="website" class="form-control here" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
+                             <div class="form-group row">
+                               <label for="sellerId" class="col-4 col-form-label">아이디</label> 
+                               <div class="col-8">
+                                 <p id="sellerId" name="sellerId" class="form-control here">[[${sellCommand.sellerId}]]</p>
+                               </div>
+                               <label for="sellerEmail" class="col-4 col-form-label">이메일</label> 
+                               <div class="col-8">
+                                 <p id="sellerEmail" name="sellerEmail" class="form-control here">[[${sellCommand.sellerEmail}]]</p>
+                               </div>
+                               <label for="sellerTel" class="col-4 col-form-label">연락처</label> 
+                               <div class="col-8">
+                                 <p id="sellerTel" name="sellerTel" class="form-control here">[[${sellCommand.sellerTel}]]</p>
+                               </div>
+                               <label for="buyerAddr1" class="col-4 col-form-label">주소</label> 
+                               <div class="col-8">
+                                 <p id="sellerAddr1" name="sellerAddr1" class="form-control here">[[${sellCommand.sellerAddr1}]]</p>
+                                 <p id="sellerPostcode" name="sellerPostcode" class="form-control here">[[${sellCommand.sellerPostcode}]]</p>
+                                 <p id="sellerAddr2" name="sellerAddr2" class="form-control here">[[${sellCommand.sellerAddr2}]]</p>
+                               </div>
+                               <label for="businessRegiNum" class="col-4 col-form-label">사업자등록번호</label> 
+                               <div class="col-8">
+                                 <p id="businessRegiNum" name="businessRegiNum" class="form-control here">[[${sellCommand.businessRegiNum}]]</p>
+                               </div>
+                               <label for="sellerWalletAddr" class="col-4 col-form-label">대표자 지갑주소</label> 
+                               <div class="col-8">
+                                 <p id="sellerWalletAddr" name="sellerWalletAddr" class="form-control here">[[${sellCommand.sellerWalletAddr}]]</p>
+                               </div>
+                               <label for="minDeliveryFee" class="col-4 col-form-label">무료배송 최소금액</label> 
+                               <div class="col-8">
+                                 <p id="minDeliveryFee" name="minDeliveryFee" class="form-control here">[[${sellCommand.minDeliveryFee}]]원 이상 구매 시 무료배송</p>
+                               </div>
+                             </div>
+                             <div class="form-group row">
                                 <div class="offset-4 col-8">
-                                  <button name="submit" type="button" class="btn btn-primary">수정하기</button>
+                                  <button name="submit" type="submit" onClick="location.href='/mypage/sellerMyInfoEdit'" class="btn btn-primary">내 정보 수정</button>
                                   <button type="button" class="btn btn-primary" id="btn1" onclick="contractInfo();">계약서 확인</button>
                                 </div>
                               </div>
-                            </form>
                       </div>
                   </div>
-                  
               </div>
-          
       </div>
-		
-
-
-      </div>
-      <!-- /.col-lg-9 -->
+     </div>
+    <!-- /.col-lg-9 -->
 
     </div>
     <!-- /.row -->
