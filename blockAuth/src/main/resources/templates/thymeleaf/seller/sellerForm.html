@@ -54,6 +54,58 @@
     }
 </script>
 
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#sellerId").on("keyup",function(){
+			console.log("bskjvcsivsav");
+			$.ajax({
+				type:'post',
+				url:'../buyerIdCheck',
+				dataType:"text",
+				data:{"buyerId":$("#sellerId").val()},
+				success:function(result){
+					$("#idCheck").html(result);
+					if(result.trim()=="사용가능한 아이디입니다."){
+						$("#idCheck").css("color","blue");
+					}else{
+						$("#idCheck").css("color","red");
+					}
+				},
+				error:function(){
+					alert("코드 에러")
+				}
+			});
+		});
+	});	
+</script>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#sellerEmail").on("keyup",function(){
+		console.log("dfdsfd");
+		$.ajax({
+			type:'post',
+			url:'../buyerEmailCheck',
+			dataType:"text",
+			data:{"buyerEmail":$("#sellerEmail").val(), "buyerId" : $("#sellerId").val()},
+			success:function(result){
+				$("#emailCk").html(result);
+				if(result.trim()=="사용가능한 이메일입니다."){
+					$("#emailCk").css("color","blue");
+				}else{
+					$("#emailCk").css("color","red");
+				}
+			},
+			error:function(){
+				alert("코드 에러")
+			}
+		});
+	});
+});	
+</script>
+
 </head>
 <body>
 <form action="sellerRegist" method="post" th:object=${sellCommand}>
@@ -66,7 +118,8 @@
 	<tr>
 		<th>아이디</th>
 		<td>
-			<input type="text" name="sellerId" th:value="${sellCommand.sellerId}" >
+			<input type="text" name="sellerId" th:value="${sellCommand.sellerId}" id="sellerId" >
+			<span id="idCheck"></span>
 			<br /><span style="color:red" th:if="${#fields.hasErrors('sellerId')}" th:errors="*{sellerId}"></span>
 		</td>
 		
@@ -120,6 +173,15 @@
                   </td>
          </tr>
 	<tr>
+	<tr>
+		<th>이메일</th>
+		<td>
+			<input type="text" name="sellerEmail" th:value="${sellCommand.sellerEmail}" id="sellerEmail" >
+			<span id="emailCk"></span>
+			<br /><span style="color:red" th:if="${#fields.hasErrors('sellerEmail')}" th:errors="*{sellerEmail}"></span>
+		</td>
+		
+	</tr>
 		<th>사업자등록번호</th>
 		<td>
 			<input type="text" name="businessRegiNum" th:value="${sellCommand.businessRegiNum}" >

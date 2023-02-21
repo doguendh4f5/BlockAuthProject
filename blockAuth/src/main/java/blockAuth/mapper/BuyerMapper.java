@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import blockAuth.domain.AuthInfo;
 import blockAuth.domain.BuyerDTO;
 
 @Repository(value = "blockAuth.mapper.BuyerMapper")
@@ -16,4 +17,5 @@ public interface BuyerMapper {
 	public Integer buyerDelete(String buyerNum);
 	public String buyerIdCheck(String buyerId);
 	public BuyerDTO selectOneId(String buyerId);
+	public AuthInfo buyerEmail(String email);
 }

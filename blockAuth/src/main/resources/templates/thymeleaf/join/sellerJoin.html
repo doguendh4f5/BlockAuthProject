@@ -202,6 +202,33 @@ $(document).ready(function() {
 		});
 	});	
 </script>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#sellerEmail").on("keyup",function(){
+		console.log("dfdsfd");
+		$.ajax({
+			type:'post',
+			url:'../buyerEmailCheck',
+			dataType:"text",
+			data:{"buyerEmail":$("#sellerEmail").val(), "buyerId" : $("#sellerId").val()},
+			success:function(result){
+				$("#emailCk").html(result);
+				if(result.trim()=="사용가능한 이메일입니다."){
+					$("#emailCk").css("color","blue");
+				}else{
+					$("#emailCk").css("color","red");
+				}
+			},
+			error:function(){
+				alert("코드 에러")
+			}
+		});
+	});
+});	
+</script>
+
 </head>
 <body>
     <div class="container">
@@ -347,9 +374,17 @@ $(document).ready(function() {
   </div>
 </div>
 
-
-
-
+<div class="form-group">
+  <label class="col-md-4 control-label">판매자 이메일</label>  
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+  <input type="email" name="sellerEmail" th:value="${sellCommand.sellerEmail}" class="form-control" id="sellerEmail">
+  <span id="emailCk"></span>
+			<span style="color:red" th:if="${#fields.hasErrors('sellerEmail')}" th:errors="*{sellerEmail}"></span>
+    </div>
+  </div>
+</div>
 
 <div class="form-group">
   <label class="col-md-4 control-label">사업자등록번호</label>  

@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import blockAuth.command.BuyerCommand;
 import blockAuth.command.SellCommand;
@@ -15,6 +14,7 @@ import blockAuth.service.buyer.BuyerJoinOkService;
 import blockAuth.service.buyer.BuyerNumberService;
 import blockAuth.service.seller.SellerJoinOkService;
 import blockAuth.service.seller.SellerNumService;
+import blockAuth.service.seller.SellerRegiService;
 
 @Controller
 public class JoinController {
@@ -61,10 +61,12 @@ public class JoinController {
 		return "thymeleaf/join/sellerJoin";
 	}
 	@Autowired
+	SellerRegiService sellerRegiService;
+	@Autowired
 	SellerJoinOkService sellerJoinOkService;
 	@RequestMapping(value = "sellerJoinOk")
 	public String sellerJoinOk(@Validated SellCommand sellCommand,
-			BindingResult result) {
+			BindingResult result, Model model) {
 		if(result.hasErrors()) {
 			return "thymeleaf/join/sellerJoin";
 		}
@@ -74,8 +76,10 @@ public class JoinController {
 			return "thymeleaf/join/sellerJoin";
 		}
 		Integer i = sellerJoinOkService.execute(sellCommand);
+		sellerRegiService.createPdf(sellCommand, model);
+		
 		if(i != null) {
-			return "redirect:/login";
+			return "thymeleaf/seller/sellerContractCheck";
 		}else {
 			return "thymeleaf/join/sellerJoin";
 		}

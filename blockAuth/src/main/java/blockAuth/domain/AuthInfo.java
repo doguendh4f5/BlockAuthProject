@@ -13,4 +13,7 @@ public class AuthInfo {
 	String buyerNum;
 	String sellerNum;
 	String grade;
+	
+	String phone;
+	String email;
 }

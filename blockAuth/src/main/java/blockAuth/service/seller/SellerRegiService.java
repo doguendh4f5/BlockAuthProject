@@ -47,6 +47,7 @@ public class SellerRegiService {
 		seller.setSellerTel(sellCommand.getSellerTel());
 		seller.setSellerWalletAddr(sellCommand.getSellerWalletAddr());
 		seller.setMinDeliveryFee(sellCommand.getMinDeliveryFee());
+		seller.setSellerEmail(sellCommand.getSellerEmail());
 		
 		// 저장된 값 insert로 DB에 삽입
 		Integer i = sellerMapper.sellerInsert(seller);

@@ -28,6 +28,7 @@ public class SellerJoinOkService {
 		dto.setSellerWalletAddr(sellCommand.getSellerWalletAddr());
 		dto.setMinDeliveryFee(sellCommand.getMinDeliveryFee());
 		dto.setBusinessRegiNum(sellCommand.getBusinessRegiNum());
+		dto.setSellerEmail(sellCommand.getSellerEmail());
 		i = sellerMapper.sellerInsert(dto);
 		System.out.println(i + "개가 삽입되었습니다.");
 		

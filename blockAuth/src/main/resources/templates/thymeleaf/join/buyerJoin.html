@@ -202,11 +202,40 @@ $(document).ready(function() {
 		});
 	});	
 </script>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#buyerEmail").on("keyup",function(){
+		console.log("dfdsfd");
+		$.ajax({
+			type:'post',
+			url:'../buyerEmailCheck',
+			dataType:"text",
+			data:{"buyerEmail":$("#buyerEmail").val(), "buyerId" : $("#buyerId").val()},
+			success:function(result){
+				$("#emailCk").html(result);
+				if(result.trim()=="사용가능한 이메일입니다."){
+					$("#emailCk").css("color","blue");
+				}else{
+					$("#emailCk").css("color","red");
+				}
+			},
+			error:function(){
+				alert("코드 에러")
+			}
+		});
+	});
+});	
+</script>
+
 </head>
 <body>
     <div class="container">
 
     <form class="well form-horizontal" action="buyerJoinOk" method="post"  id="contact_form" th:object="${buyerCommand}">
+    <input type="hidden" name="buyerPoint" value="0">
+    <input type="hidden" name="membership" value="F">
 <fieldset>
 
 <!-- Form Name -->
@@ -356,7 +385,8 @@ $(document).ready(function() {
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-  <input type="email" name="buyerEmail" th:value="${buyerCommand.buyerEmail}" class="form-control">
+  <input type="email" name="buyerEmail" th:value="${buyerCommand.buyerEmail}" class="form-control" id="buyerEmail">
+  <span id="emailCk"></span>
 			<span style="color:red" th:if="${#fields.hasErrors('buyerEmail')}" th:errors="*{buyerEmail}"></span>
     </div>
   </div>

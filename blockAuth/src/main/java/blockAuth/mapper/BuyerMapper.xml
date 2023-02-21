@@ -51,4 +51,11 @@ MEMBERSHIP membership, BUYER_POINT buyerPoint, BUYER_POSTCODE buyerPostcode, BUY
 	select seller_id from seller
 	where seller_id = #{sellerId}
 </select>
+<select id="buyerEmail" resultType="authInfo" parameterType="string">
+	select buyer_email email, buyer_id userId from buyer
+	where buyer_email = #{email}
+	union
+	select seller_email, seller_id from seller
+	where seller_email = #{email}
+</select>
 </mapper>

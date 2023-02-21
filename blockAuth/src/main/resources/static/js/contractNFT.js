@@ -862,6 +862,36 @@ $("#imgUpload").click(function(){
 			});
 			*/
 		});
+		
+		$("#createContract2").click(function(){
+			if(!data[0]['tokenId']){
+				alert("계약서가 저장되지 않았습니다.");
+				return;
+			}
+			contract.contractInstance.createContract($("#contractNum").val(), $("#contractDate").val(), data[0]['dataURI'], $("#expiryDate").val(), data[0]['tokenId'], MYNFT_CA, 
+			{from : data[0]['account'], gas : GAS_AMOUNT}, function(error, transactionHash){
+				$.ajax({
+					url : "../contract/createContract",
+					type : "post",
+					data : {"contractNum" : $("#contractNum").val(), "contractName" : $("#contractName").val(), "sellerNum" : $("#sellerNum").val()
+							, "sellerWalletAddr" : $("#sellerWalletAddr").val(), "contractDate" : $("#contractDate").val()
+							, "expiryDate" : $("#expiryDate").val(), "metadata" : $("#metadata").val()},
+					success : function(result){
+						alert("계약서가 생성되었습니다.")
+						location.href="/";
+					},
+					error : function(){
+						alert("err");
+					}
+				});	
+			}); 
+			
+			/*
+			watchCreated(function(error, result){
+				if (!error) alert("creation completed!");
+			});
+			*/
+		});
 });
 
 function registerUniqueToken(contractInstance, account, tokenId, dataURI){ 
