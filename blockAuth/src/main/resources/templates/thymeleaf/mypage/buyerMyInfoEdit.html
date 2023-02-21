@@ -136,12 +136,12 @@ body {
 
         <h1 class="my-4">Block-Auth</h1>
         <div class="list-group">
-          <a href="mypage/membershipInfo" class="list-group-item">블록어스클럽 가입</a>
+          <a href="/mypage/membershipInfo" class="list-group-item">블록어스클럽 가입</a>
           <a href="/mypage/buyerMyInfoEdit" class="list-group-item">내 정보 수정</a>
           <a href="/mypage/memberPwCheck" class="list-group-item">비밀번호 변경</a>
           <a href="#" class="list-group-item">찜한 상품</a>
           <a href="#" class="list-group-item">구매리스트</a>
-          <a href="mypage/withdrawal" class="list-group-item">회원 탈퇴</a>
+          <a href="/mypage/withdrawal" class="list-group-item">회원 탈퇴</a>
         </div>
 
       </div>
@@ -153,7 +153,7 @@ body {
               <div class="card-body">
                   <div class="row">
                       <div class="col-md-12">
-                          <h4>[[${buyerCommand.buyerName}]] 's Information Modify</h4>
+                          <h4>[[${buyerCommand.buyerName}]] 님의 정보</h4>
                           <hr>
                       </div>
                   </div>
@@ -161,7 +161,7 @@ body {
                       <div class="col-md-12">
                           <form action="../buyer/buyerModify" method="post" th:object=${buyerCommand} >
                               <div class="form-group row">
-                                <label for="buyerPhone" class="col-4 col-form-label">Phone</label> 
+                                <label for="buyerPhone" class="col-4 col-form-label">전화번호</label> 
                                 <div class="col-8">
                                   <input type="hidden" name="buyerNum" th:value="${buyerCommand.buyerNum}">
                                   <input type="hidden" name="buyerId" th:value="${buyerCommand.buyerId}">
@@ -176,7 +176,7 @@ body {
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="text" class="col-4 col-form-label">Address</label> 
+                                <label for="text" class="col-4 col-form-label">주소</label> 
                                 <div class="col-8">
                                   <input type="text" name="buyerAddr1" th:value="${buyerCommand.buyerAddr1}" class="form-control here"
 					                  id="sample4_roadAddress" placeholder="주소"
@@ -189,21 +189,21 @@ body {
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="buyerBirth" class="col-4 col-form-label">BirthDay</label> 
+                                <label for="buyerBirth" class="col-4 col-form-label">생일</label> 
                                 <div class="col-8">
                                   <input id="buyerBirth" name="buyerBirth" placeholder="yyyy-MM-dd"
                                       th:value="${#dates.format(buyerCommand.buyerBirth, 'yyyy-MM-dd')}" class="form-control here" required="required" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="buyerEmail" class="col-4 col-form-label">Email</label> 
+                                <label for="buyerEmail" class="col-4 col-form-label">이메일</label> 
                                 <div class="col-8">
                                   <input id="buyerEmail" name="buyerEmail" placeholder="email@email" th:value="${buyerCommand.buyerEmail}" class="form-control here" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
                                 <div class="offset-4 col-8">
-                                  <button name="submit" type="submit" class="btn btn-primary">Update Profile</button>
+                                  <button name="submit" type="submit" class="btn btn-primary">수정 완료</button>
                                 </div>
                               </div>
                           </form>
