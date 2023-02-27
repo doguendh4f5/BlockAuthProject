@@ -11,5 +11,9 @@
 	select seller_id userId, seller_pw userPw, 'seller'
 	from seller
 	where seller_id = #{sellerId}
+	union
+	select admin_id userId, admin_pw userPw, 'admin'
+	from admin1
+	where admin_id = #{adminId}
 </select>
 </mapper>

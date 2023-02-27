@@ -26,7 +26,6 @@ public class CookieService {
 					model.addAttribute("loginCommand", loginCommand);
 				}
 				if(cookie.getName().startsWith("auto")) {
-					System.out.println("n vzxhnv");
 					AuthInfo authInfo = loginMapper.loginSelect(cookie.getValue());
 					HttpSession session = request.getSession();
 					session.setAttribute("authInfo", authInfo);
