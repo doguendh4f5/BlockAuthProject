@@ -67,9 +67,9 @@ public class GoodsController {
 	}
 	
 	//상품상세페이지
-	@RequestMapping("goodsDetail/{goodsNum}")
+	@RequestMapping("goodsDetail")
 	public String goodsDetail(
-			@PathVariable(value = "goodsNum") String goodsNum,
+			@RequestParam(value = "goodsNum") String goodsNum,
 			Model model) {
 		model.addAttribute("newLineChar", '\n'); 
 		goodsDetailService.execute(model, goodsNum);

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import blockAuth.service.CookieService;
+import blockAuth.service.goods.GoodsListService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @SpringBootApplication
@@ -24,10 +25,13 @@ public class BlockAuthApplication {
 	}
 	
 	@Autowired
+	GoodsListService goodsListService;
+	@Autowired
 	CookieService cookieService;
 	@RequestMapping("/")
 	public String index(HttpServletRequest request, Model model) {
 		cookieService.execute(request, model);
+		goodsListService.execute(model);
 		return "thymeleaf/index";
 	}
 	

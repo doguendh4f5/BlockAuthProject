@@ -181,8 +181,8 @@ body {
                               <div class="form-group row">
                                 <div class="offset-4 col-8">
                                 <br/>
-                                 <a th:href="@{../goodsModify(goodsNum=${goodsCommand.goodsNum})}"><button type="button" class="btn btn-primary">상품 수정하기</button></a>
-                                  <a th:href="|../goodsDelete/${goodsCommand.goodsNum}|"><button type="button" class="btn btn-primary" id="btn2">상품 삭제하기</button></a>
+                                 <a th:href="@{../goods/goodsModify(goodsNum=${goodsCommand.goodsNum})}"><button type="button" class="btn btn-primary">상품 수정하기</button></a>
+                                  <a th:href="|../goods/goodsDelete/${goodsCommand.goodsNum}|"><button type="button" class="btn btn-primary" id="btn2">상품 삭제하기</button></a>
                                 </div>
                               </div>
                             </form>
