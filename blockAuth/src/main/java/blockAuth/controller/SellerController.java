@@ -96,10 +96,10 @@ public class SellerController {
 	
 	@RequestMapping(value="sellerModify", method = RequestMethod.POST)
 	public String sellerModify(@Validated SellCommand sellCommand
-			, BindingResult result, HttpSession session) {
-		if(result.hasErrors()) {
+			, /*BindingResult result, */HttpSession session) {
+		/*if(result.hasErrors()) {
 			return "thymeleaf/seller/sellerUpdate";
-		}
+		}*/
 		sellerModifyService.execute(sellCommand);
 		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
 		if(authInfo.getGrade().equals("seller")) {

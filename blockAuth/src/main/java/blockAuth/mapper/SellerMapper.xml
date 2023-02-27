@@ -50,7 +50,7 @@ SELLER_NUM sellerNum, SELLER_ID sellerId, SELLER_PW sellerPw, SELLER_NAME seller
 	update seller
 	set seller_tel = #{sellerTel}, seller_addr1 = #{sellerAddr1}, seller_addr2 = #{sellerAddr2}
 		, seller_Postcode = #{sellerPostcode}, seller_wallet_addr = #{sellerWalletAddr}
-		, min_delivery_fee = #{minDeliveryFee}, seller_eamil = #{sellerEmail} 
+		, min_delivery_fee = #{minDeliveryFee}, seller_email = #{sellerEmail} 
 	where seller_num = #{sellerNum}
 </update>
 <!-- 판매자정보삭제 -->

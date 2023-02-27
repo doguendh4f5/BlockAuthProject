@@ -60,10 +60,11 @@
 <table border="1">
 	<caption>판매자 정보 등록</caption>
 	
-			<input type="hidden" name="sellerPw" value="1111qqqq!" >
-			<input type="hidden" name="sellerPwCon" value="1111qqqq!" >
-			<input type="hidden" name="sellerId" value="1111qqqq!" >
-	
+			<input type="hidden" name="sellerPw" th:value="${sellCommand.sellerPw}" >
+			<input type="hidden" name="sellerPwCon" th:value="${sellCommand.sellerPw}" >
+			<input type="hidden" name="sellerId" th:value="${sellCommand.sellerId}" >
+			<input type="hidden" name="bank" th:value="${sellCommand.bank}" >
+			<input type="hidden" name="accountNum" th:value="${sellCommand.accountNum}" >
 	<tr>
 		<th>판매자 번호(자동부여)</th>
 		<td><input type="text" name="sellerNum" th:value="${sellCommand.sellerNum}" readonly="readonly"></td>

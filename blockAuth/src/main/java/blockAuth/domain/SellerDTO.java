@@ -19,4 +19,6 @@ public class SellerDTO {
 	String sellerWalletAddr;
 	Long minDeliveryFee;
 	String sellerEmail;
+	String bank;
+	String accountNum;
 }

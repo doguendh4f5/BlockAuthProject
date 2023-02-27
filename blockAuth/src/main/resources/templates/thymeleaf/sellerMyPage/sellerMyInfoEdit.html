@@ -136,8 +136,6 @@ body {
 
         <h1 class="my-4">Block-Auth</h1>
         <div class="list-group">
-          <a href="/mypage/membershipInfo" class="list-group-item">블록어스클럽 가입</a>
-          <a href="/mypage/buyerMyInfoEdit" class="list-group-item">내 정보 수정</a>
           <a href="/mypage/memberPwCheck" class="list-group-item">비밀번호 변경</a>
           <a href="#" class="list-group-item">찜한 상품</a>
           <a href="#" class="list-group-item">구매리스트</a>
@@ -167,8 +165,10 @@ body {
                                  <input type="hidden" name="sellerName" th:value="${sellCommand.sellerName}">
                                  <input type="hidden" name="sellerNum" th:value="${sellCommand.sellerNum}">
                                  <input type="hidden" name="sellerEmail" th:value="${sellCommand.sellerEmail}">
-                                 <input type="hidden" name="sellerPw" value="1111qqqq!" >
-								 <input type="hidden" name="sellerPwCon" value="1111qqqq!" >
+                                 <input type="hidden" name="sellerPw" th:value="${sellCommand.sellerPw}" >
+								 <input type="hidden" name="sellerPwCon" th:value="${sellCommand.sellerPw}" >
+								 <input type="hidden" name="bank" value="1111" >
+								 <input type="hidden" name="accountNum" value="1111" >
                                </div>
                                <label for="sellerTel" class="col-4 col-form-label">연락처</label> 
                                <div class="col-8">
