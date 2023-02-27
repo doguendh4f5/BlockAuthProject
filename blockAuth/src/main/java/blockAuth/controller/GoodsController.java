@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import blockAuth.command.FileInfo;
 import blockAuth.command.GoodsCommand;
+import blockAuth.domain.AuthInfo;
 import blockAuth.domain.GoodsDTO;
 import blockAuth.service.goods.FileDelService;
 import blockAuth.service.goods.GoodsDeleteService;
@@ -70,7 +71,7 @@ public class GoodsController {
 	@RequestMapping("goodsDetail")
 	public String goodsDetail(
 			@RequestParam(value = "goodsNum") String goodsNum,
-			Model model) {
+			Model model, HttpSession session) {
 		model.addAttribute("newLineChar", '\n'); 
 		goodsDetailService.execute(model, goodsNum);
 		return "thymeleaf/goods/goodsDetail";

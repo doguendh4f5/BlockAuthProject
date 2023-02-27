@@ -144,7 +144,7 @@ function reg(){
                     </thead>
                     <tbody>
                       <tr class="alert" role="alert" th:each="goodsCommand : ${list}">
-                        <th scope="row"><a th:href="|goodsDetail/${goodsCommand.goodsNum}|">[[${goodsCommand.goodsNum}]]</a></th>
+                        <th scope="row"><a th:href="@{../goods/goodsDetail(goodsNum=${goodsCommand.goodsNum})}">[[${goodsCommand.goodsNum}]]</a></th>
                         <td><img th:src="|/goods/upload/${goodsCommand.goodsMain}|" width="30px"></td>
                         <td>[[${goodsCommand.goodsName}]]</td>
                         <td>[[${goodsCommand.goodsPrice}]]</td>
