@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style type="text/css">
+   .col-md-9{
+      margin : auto;
+      
+   }
+   #sp1{
+   	font-size:10px;
+   }
+   #btn2{
+   	background-color : #FF8383;
+   	border : 1px solid #FF8383;
+   }
+</style>
+
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+   
+</style>
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Block-Auth</title>  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin/adminList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">장바구니</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+          <li class="nav-item">
+            <a class="nav-link" href="#">고객센터</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+         <a href="#" class="list-group-item">상품 관리</a>
+          <a href="#" class="list-group-item">상품 문의</a>
+          <a href="#" class="list-group-item">송장정보 입력</a>
+          <a href="#" class="list-group-item">내 정보 수정</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+		
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h4>상품 상세</h4>
+                          <hr>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <form action="goodsModify" method="post" th:object="${goodsCommand}" enctype="multipart/form-data">
+                              <div class="form-group row">
+                                <label for="goodsName" class="col-4 col-form-label">상품명</label> 
+                                <div class="col-8">
+                                  <input id="goodsName" name="goodsName" th:value="${goodsCommand.goodsName}" class="form-control here" readonly="readonly" type="text">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="goodsPrice" class="col-4 col-form-label">상품 가격</label> 
+                                <div class="col-8">
+                                  <input id="goodsPrice" name="goodsPrice" th:value="${goodsCommand.goodsPrice}" class="form-control here" type="number" readonly="readonly">
+                                </div>
+                              </div>
+                             <div class="form-group row">
+                                <label for="goodsMain" class="col-4 col-form-label">메인 이미지</label> 
+                                <div class="col-8">
+                                  <a th:href="|/goods/upload/${goodsCommand.goodsMain}|" target="_blank"><img th:src="|/goods/upload/${goodsCommand.goodsMain}|" width="50px"/></a>
+                                	<span id="sp1"> (이미지 클릭 시 원본 이미지가 열립니다)</span>
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                <label for="goodsContent" class="col-4 col-form-label">상품 설명</label> 
+                                <div class="col-8">
+                                 	<textarea id="goodsContent" name="goodsContent" cols="40" rows="4" class="form-control" readonly="readonly">[[${goodsCommand.goodsContent}]]</textarea>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="goodsSize" class="col-4 col-form-label">상품 크기</label> 
+                                <div class="col-8">
+                                  <input id="goodsSize" name="goodsSize" th:value="${goodsCommand.goodsSize}" class="form-control here" readonly="readonly" type="text">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="goodsStock" class="col-4 col-form-label">상품 재고</label> 
+                                <div class="col-8">
+                                  <input id="goodsStock" name="goodsStock" th:value="${goodsCommand.goodsStock}" class="form-control here" readonly="readonly" type="number">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="goodsCountry" class="col-4 col-form-label">상품 제조국</label> 
+                                <div class="col-8">
+                                  <input id="goodsCountry" name="goodsCountry" th:value="${goodsCommand.goodsCountry}" class="form-control here" readonly="readonly" type="text">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="goodsCategory" class="col-4 col-form-label">상품 카테고리</label> 
+                                <div class="col-8">
+								<input id="goodsCategory" name="goodsCategory" th:value="${goodsCommand.goodsCategory}" class="form-control here" readonly="readonly" type="text">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="goodsContent" class="col-4 col-form-label">제조사</label> 
+                                <div class="col-8">
+                                  <input id="goodsContent" name="goodsContent" th:value="${goodsCommand.goodsContent}" class="form-control here" type="text" readonly="readonly">
+                              </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="goodsDeliveryFee" class="col-4 col-form-label">배송비</label> 
+                                <div class="col-8">
+                                  <input id="goodsDeliveryFee" name="goodsDeliveryFee" th:value="${goodsCommand.goodsDeliveryFee}" class="form-control here" type="number" readonly="readonly">
+                                </div>
+                              </div> 
+                               <div class="form-group row">
+                                <label for="goodsRegiDate" class="col-4 col-form-label">등록일자?제조일자?</label> 
+                                <div class="col-8">
+                                  <input id="goodsRegiDate" name="goodsRegiDate" th:value="${goodsCommand.goodsRegiDate}" class="form-control here" type="date" readonly="readonly">
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                <div class="offset-4 col-8">
+                                <br/>
+                                 <a th:href="@{../goods/goodsModify(goodsNum=${goodsCommand.goodsNum})}"><button type="button" class="btn btn-primary">상품 수정하기</button></a>
+                                  <a th:href="|../goods/goodsDelete/${goodsCommand.goodsNum}|"><button type="button" class="btn btn-primary" id="btn2">상품 삭제하기</button></a>
+                                </div>
+                              </div>
+                            </form>
+                      </div>
+                  </div>
+                  
+              </div>
+          
+      </div>
+		
+
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+</body>
+
+</html>
