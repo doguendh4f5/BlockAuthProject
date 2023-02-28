@@ -17,5 +17,6 @@ public class BuyerMyInfoEditService {
 		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
 		BuyerDTO buyer = buyerMapper.selectOneId(authInfo.getUserId());
 		model.addAttribute("buyerCommand", buyer);
+		model.addAttribute("membership", authInfo.getMembership());
 	}
 }

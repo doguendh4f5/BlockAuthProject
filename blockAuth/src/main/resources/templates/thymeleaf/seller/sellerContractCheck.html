@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/web3@0.19.0/dist/web3.js"></script>
+<!--  <script src="https://cdn.jsdelivr.net/npm/web3@0.19.0/dist/web3.js"></script> -->
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
 <script type="text/javascript" src="/static/js/contractNFT.js"></script>
+<script type="text/javascript" src="/static/js/settings.js"></script>
 <script>
 function contractSave(){
 	location.href="/seller/fileDownload?fileName=" + $("#fileName").val();
@@ -28,10 +30,12 @@ function contractSave(){
 <tr><th>계약서 생성하기</td><td>&nbsp;<button type="button" onclick="contractSave();">계약서 생성</td></tr>
 <tr><th>생성된 계약서 확인 후 서명한 계약서 사본을 첨부하세요<br/></th>
 <th><input type="file" name="captureFile" id="captureFile" accept=".pdf" /></th></tr>
+<tr><th>서명을 위한 지갑의 비밀키를 첨부하세요<br/></th>
+<th><input type="file" onchange="onFileSelected(event)" /></th></tr>
 </table>
 <h5> <button type="button" id="imgUpload">계약서 저장</button></h5> <br/>
 <br/>
-<button type="button" id="createContract2">계약서 첨부</button><br />
+<button type="button" id="createContract">계약서 첨부</button><br />
 </center>
 </body>
 </html>

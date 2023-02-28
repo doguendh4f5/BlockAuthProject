@@ -5,6 +5,7 @@ import "./MyNFT.sol";
 // 계약서 구조체
 contract SellerContract {
 	SellerContract[] public sellerContract; 
+	SellerAccount[] public sellerAccount; 
  	mapping(address => uint[]) public contractOwner; 
 
 	struct SellerContract {  
@@ -20,6 +21,12 @@ contract SellerContract {
 	  bool finalized; //판매 종료여부
 	}
 
+	struct SellerAccount{
+	  string v;
+	  string r;
+	  string s;
+	}
+
 	function() public {
 	  revert();
 	}
@@ -33,10 +40,11 @@ contract SellerContract {
 
     // 해당 토큰이 해당 컨트랙트 주소의 소유인지 확인
 	function createContract(string _contractNum, string _contractDate, string _metadata,
-							string _expiryDate, uint256 _tokenId, address _repoAddress) public contractIsNFTOwner(_repoAddress, _tokenId) returns(bool) {
+							string _expiryDate, uint256 _tokenId, address _repoAddress, string _v, string _r, string _s) public contractIsNFTOwner(_repoAddress, _tokenId) returns(bool) {
 
 		uint contractId = sellerContract.length;
 		SellerContract memory newContract;
+		SellerAccount memory newAddress;
 		newContract.contractNum = _contractNum;
 		newContract.contractDate = _contractDate;
 		newContract.metadata = _metadata;
@@ -47,7 +55,12 @@ contract SellerContract {
 		newContract.active = true;
 		newContract.finalized = false;
 
+		newAddress.v = _v;
+		newAddress.r = _r;
+		newAddress.s = _s;
+
 		sellerContract.push(newContract);
+		sellerAccount.push(newAddress);
 		contractOwner[msg.sender].push(contractId); 
 
 		emit ContractCreated(msg.sender, contractId); 
@@ -132,6 +145,20 @@ contract SellerContract {
 			con.owner,
 			con.active,
 			con.finalized
+);
+	}
+
+	// 서명 반환
+	function getSellerAccountById(uint _contractId) public constant returns(
+		string v,
+		string r,
+		string s
+) {
+		SellerAccount memory con2 = sellerAccount[_contractId];
+		return (
+			con2.v,
+			con2.r,
+			con2.s
 );
 	}
 

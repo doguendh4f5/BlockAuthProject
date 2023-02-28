@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+   <style>
+      @font-face{
+      font-family:"NanumBarunGothic";
+      font-style:normal;
+      src:url("/static/font/NanumBarunGothic.ttf") format("truetype");
+      }
+      #sp1{
+         font-family:"NanumBarunGothic";
+         font-size:20px;
+         text-align:left;
+      }
+      #sp2{
+         font-size:23px;
+      }
+      #p1{
+      
+      }
+      #p2{
+         font-size:18px;
+      }
+      table {
+          height:600px;
+          width:480px;
+          border-radius:30px;
+      }
+      table, td, th {
+          border-collapse : collapse;
+      };
+      #tr1{
+         background-color:#F6F6F6;
+         border-bottom:1px solid #ccc;
+      }
+      #btn1{
+         background-color:#1266FF;
+         color:white;
+         font-size:17px;
+         font-weight:bold;
+         border:none;
+         padding:10px;
+         border-radius:20px;
+         width:300px;
+         height:50px;
+      }
+      #btn1:hover{
+         background-color:#6CC0FF;
+         color:white;
+         font-size:17px;
+         font-weight:bold;
+         border:none;
+         padding:10px;
+         border-radius:20px;
+         width:300px;
+         height:50px;
+      }
+      #tb1{
+      background-color:white;
+      }
+      .wrapper{
+         display : flex;
+         justify-content : center;
+         align-items : center;
+         min-height : 100vh;
+         background-color : #f8f9fd;
+         background-size : cover;
+      }
+      #tr2{
+      height:20%;
+      border-top-left-radius:20px;
+      border-top-right-radius:20px;
+      background-color:#232323;
+      color : white;
+      }
+      #tr3{
+      height:60%;
+      }
+      #div1{
+      width:330px;
+      font-size:15px;
+      border:2px solid black;
+      margin:auto;
+      
+      }
+      #sp3{
+      font-weight:bold;
+      font-size:25px;
+      text-align:left;
+      }
+      #td4{
+         text-align:center;
+         border-top : 1px solid #ccc;
+      }
+      #div2{
+      font-size:13px;
+      margin:10px;
+      }
+   </style>
+   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+   <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
+   <script>
+      function memberWowRegist(){
+         var IMP = window.IMP; // 생략가능
+            IMP.init('imp52777110');  // 가맹점 식별 코드
+
+            IMP.request_pay({
+               pg : 'kakao', // 결제방식
+                pay_method : 'card',   // 결제 수단
+                merchant_uid : 'merchant_' + new Date().getTime(),
+               name : '블록어스',   // order 테이블에 들어갈 주문명 혹은 주문 번호
+                amount : '4990',   // 결제 금액
+                buyer_email : '[[${session.buyerEmail}]]',   // 구매자 email
+               buyer_name :  '',   // 구매자 이름
+                buyer_tel :  '',   // 구매자 전화번호
+                buyer_addr :  '',   // 구매자 주소
+                buyer_postcode :  '',   // 구매자 우편번호
+                m_redirect_url : '/khx/payEnd.action'   // 결제 완료 후 보낼 컨트롤러의 메소드명
+            }, function(rsp) {
+            if ( rsp.success ) { // 성공시
+               var msg = '결제가 완료되었습니다.';
+               msg += '고유ID : ' + rsp.imp_uid;
+               msg += '상점 거래ID : ' + rsp.merchant_uid;
+               msg += '결제 금액 : ' + rsp.paid_amount;
+               msg += '카드 승인번호 : ' + rsp.apply_num;
+               
+            } else { // 실패시
+               var msg = '결제에 실패하였습니다.';
+               msg += '에러내용 : ' + rsp.error_msg;
+            }
+         });
+      }
+   </script>
+</head>
+<body>
+<div class="wrapper">
+   <table id="tb1">
+
+         <tr id="tr4">
+            <td id="tr2">
+               <div>
+                  <span id="sp1"><b id="b1">&nbsp;&nbsp;&nbsp;&nbsp;Block-Auth</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;멤버십 가입하기</span>
+               </div>
+            </td>
+         </tr>   
+
+         <tr id="tr3"><td colspan=3>
+            <span id="sp3"><Br/>&nbsp;&nbsp;&nbsp;1개월 무료체험</span><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月 <b>4,990</b>원의 혜택<br/><br/><br/>
+            <div id="div1">
+            <br/>
+            <b id="p1">&nbsp;⊙</b> 멤버십 가입 시 전 상품 <b id="p1">무료배송</b><br/>
+            <b id="p1">&nbsp;⊙</b> 결제 금액 <b id="p1">1%</b> 적립 (주문 1건당 적립)<br/>
+            <b id="p1">&nbsp;⊙</b> 언제든 <b id="p1">해지 가능</b>합니다.<br/>&nbsp;
+         </div>
+         <br/>
+         <div id="div2">
+         &nbsp;&nbsp;<input type="checkbox" required="required"/> (필수) <b>멤버십 정기결제</b>에 동의합니다.<br/>
+         &nbsp;&nbsp;<input type="checkbox" required="required"/> (필수) <b>이용약관</b> 및 <b>결제 및 멤버십 유의사항</b>에 동의합니다.
+         </div>
+         </td></tr>
+         <tr id="td4"><td colspan="3">
+            <button type="button" id="btn1" onclick="memberWowRegist();">무료체험 신청</button>
+         </td></tr>
+   </table>
+</div>
+</body>
+</html>

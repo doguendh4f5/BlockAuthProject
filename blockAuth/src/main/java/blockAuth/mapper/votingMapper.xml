@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blockAuth.mapper.VotingMapper">
+<insert id="insertCandidate" parameterType="candidatesDTO">
+	insert into candidates(vote_num, goods_name, vote)
+	values(concat('GoodsVote',vote_seq.nextval), #{goodsName}, 0)
+</insert>
+<select id="getVoteList" resultType="CandidatesDTO">
+	select vote_num voteNum, idx, goods_name goodsName, vote
+	from candidates
+</select>
+</mapper>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<th>번호</th>
+			<th>투표 번호</th>
+		</tr>
+		<tr th:each="candidatesDTO : ${list}">
+			<th>[[${candidatesDTO.idx}]]</th>
+			<th>[[${candidatesDTO.voteNum}]]</th>
+		</tr>
+		<tr><th colspan="2"><button type="button" onclick="location.href='votePage'">투표 등록하기</button></th></tr>
+	</table>
+</body>
+</html>

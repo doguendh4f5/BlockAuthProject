@@ -39,8 +39,9 @@ public class MyPageController {
 	
 	// 멤버십 구독 관련 페이지
 	@RequestMapping("membershipInfo")
-	public String memberShip() {
-		return "thymeleaf/mypage/membership";
+	public String memberShip(HttpSession session, Model model) {
+		buyerMyInfoEditService.execute(session, model);
+		return "pay/membership";
 	}
 	
 	//비밀번호 변경 전 현재 비밀번호 확인 페이지

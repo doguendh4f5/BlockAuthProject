@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = '(' + extraRoadAddr + ')';
+                }
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample4_postcode').value = data.zonecode;
+                document.getElementById("sample4_roadAddress").value = roadAddr;                
+                
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                } else {
+                    document.getElementById("sample4_extraAddress").value = '';
+                }
+                /*
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+                */
+            }
+        }).open();
+    }
+</script>
+<style type="text/css">
+   .col-md-9{
+      margin : auto;
+      
+   }
+</style>
+
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+   
+</style>
+<link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Block-Auth</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin/adminList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">장바구니</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+          <li class="nav-item">
+            <a class="nav-link" href="#">고객센터</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+       <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+          <a href="/mypage/memberPwCheck" class="list-group-item">비밀번호 변경</a>
+          <a href="#" class="list-group-item">찜한 상품</a>
+          <a href="#" class="list-group-item">구매리스트</a>
+          <a href="/mypage/withdrawal" class="list-group-item">회원 탈퇴</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+		
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h4>[[${sellCommand.sellerName}]] 님의 정보 수정</h4>
+                          <hr>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <form action="../seller/sellerModify" method="post" th:object=${sellCommand} >
+                              <div class="form-group row">
+                               <label for="sellerId" class="col-4 col-form-label">아이디</label> 
+                               <div class="col-8">
+                                 <input type="text" id="sellerId" name="sellerId" class="form-control here" th:value="${sellCommand.sellerId}" readonly="readonly">
+                                 <input type="hidden" name="sellerName" th:value="${sellCommand.sellerName}">
+                                 <input type="hidden" name="sellerNum" th:value="${sellCommand.sellerNum}">
+                                 <input type="hidden" name="sellerEmail" th:value="${sellCommand.sellerEmail}">
+                                 <input type="hidden" name="sellerPw" th:value="${sellCommand.sellerPw}" >
+								 <input type="hidden" name="sellerPwCon" th:value="${sellCommand.sellerPw}" >
+								 <input type="hidden" name="bank" value="1111" >
+								 <input type="hidden" name="accountNum" value="1111" >
+                               </div>
+                               <label for="sellerTel" class="col-4 col-form-label">연락처</label> 
+                               <div class="col-8">
+                                 <input type="text" id="sellerTel" name="sellerTel" class="form-control here" th:value="${sellCommand.sellerTel}">
+                               </div>
+                               <label for="buyerAddr1" class="col-4 col-form-label">주소</label> 
+                               <div class="col-8">
+                                 <input type="text" id="sellerAddr1" name="sellerAddr1" class="form-control here" th:value="${sellCommand.sellerAddr1}" readonly="readonly">
+                                 <input type="text" id="sellerPostcode" name="sellerPostcode" class="form-control here" th:value="${sellCommand.sellerPostcode}" readonly="readonly">
+                                 <input type="text" id="sellerAddr2" name="sellerAddr2" class="form-control here" th:value="${sellCommand.sellerAddr2}">
+                               </div>
+                               <label for="businessRegiNum" class="col-4 col-form-label">사업자등록번호</label> 
+                               <div class="col-8">
+                                 <input type="text" id="businessRegiNum" name="businessRegiNum" class="form-control here" th:value="${sellCommand.businessRegiNum}" readonly="readonly">
+                               </div>
+                               <label for="sellerWalletAddr" class="col-4 col-form-label">대표자 지갑주소</label> 
+                               <div class="col-8">
+                                 <input type="text" id="sellerWalletAddr" name="sellerWalletAddr" class="form-control here" th:value="${sellCommand.sellerWalletAddr}" readonly="readonly">
+                               </div>
+                               <label for="minDeliveryFee" class="col-4 col-form-label">무료배송 최소금액</label> 
+                               <div class="col-8">
+                                 <input type="number" id="minDeliveryFee" name="minDeliveryFee" step="500" class="form-control here" th:value="${sellCommand.minDeliveryFee}">
+                               </div>
+                             </div>
+                              <div class="form-group row">
+                                <div class="offset-4 col-8">
+                                  <button name="submit" type="submit" class="btn btn-primary">수정 완료</button>
+                                </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+                  
+              </div>
+          
+      </div>
+		
+
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

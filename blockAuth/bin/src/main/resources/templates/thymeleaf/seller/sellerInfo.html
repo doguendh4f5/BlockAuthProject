@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>SellerInfoPage</title>
+<script>
+function contractInfo(){
+	var data = "[[${metadata}]]";
+	window.open("https://selcontest.infura-ipfs.io/ipfs/" + data);
+}
+</script>
 </head>
 <body>
 	<table border="1">
@@ -32,6 +38,10 @@
 			</td>
 		</tr>
 		<tr>
+			<th>이메일</th>
+			<td>[[${sellCommand.sellerEmail}]]</td>
+		</tr>
+		<tr>
 			<th>사업자등록번호</th>
 			<td>[[${sellCommand.businessRegiNum}]]</td>
 		</tr>
@@ -47,6 +57,7 @@
 			<td colspan="2" align="center">
 				<a th:href="|sellerModify?sellerNum=${sellCommand.sellerNum}|">판매자 수정</a>|
 				<a th:href="|sellerDelete?sellerNum=${sellCommand.sellerNum}|">판매자 삭제</a>|
+				<a href="" onclick="contractInfo();">계약서 확인</a>|
 				<a href="/seller/sellerList">리스트로 가기</a>
 			</td>
 		</tr>

@@ -18,4 +18,5 @@ public interface BuyerMapper {
 	public String buyerIdCheck(String buyerId);
 	public BuyerDTO selectOneId(String buyerId);
 	public AuthInfo buyerEmail(String email);
+	public Integer membershipRegist(String buyerId);
 }

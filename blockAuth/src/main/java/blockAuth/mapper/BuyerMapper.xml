@@ -58,4 +58,9 @@ MEMBERSHIP membership, BUYER_POINT buyerPoint, BUYER_POSTCODE buyerPostcode, BUY
 	select seller_email, seller_id from seller
 	where seller_email = #{email}
 </select>
+<update id="membershipRegist" parameterType="string">
+	update buyer
+	set membership = 'T'
+	where buyer_id = #{buyerId}
+</update>
 </mapper>

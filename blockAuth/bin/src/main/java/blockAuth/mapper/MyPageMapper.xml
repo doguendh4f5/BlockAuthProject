@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blockAuth.mapper.MyPageMapper">
+<sql id="buyerBase">
+BUYER_NUM buyerNum, BUYER_ID buyerId, BUYER_PW buyerPw, BUYER_NAME buyerName, BUYER_PHONE buyerPhone, 
+BUYER_ADDR1 buyerAddr1, BUYER_ADDR2 buyerAddr2, BUYER_BIRTH buyerBirth, BUYER_EMAIL buyerEmail, 
+MEMBERSHIP membership, BUYER_POINT buyerPoint, BUYER_POSTCODE buyerPostcode, BUYER_WALLET_ADDR buyerWalletAddr
+</sql>
+<update id="updateBuyerPw" parameterType="buyerDTO">
+	update buyer
+	set BUYER_PW = #{buyerPw}
+	where buyer_id = #{buyerId}
+</update>
+<update id="updateSellerPw" parameterType="sellerDTO">
+	update seller
+	set seller_PW = #{sellerPw}
+	where seller_id = #{sellerId}
+</update>
+</mapper>

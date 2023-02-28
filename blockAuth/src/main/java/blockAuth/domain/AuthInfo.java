@@ -16,4 +16,6 @@ public class AuthInfo {
 	
 	String phone;
 	String email;
+	
+	String membership;
 }

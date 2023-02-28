@@ -7,7 +7,7 @@
 SELLER_NUM sellerNum, SELLER_ID sellerId, SELLER_PW sellerPw, SELLER_NAME sellerName
 			, SELLER_ADDR1 sellerAddr1, SELLER_ADDR2 sellerAddr2, SELLER_POSTCODE sellerPostcode
 			, BUSINESS_REGI_NUM businessRegiNum, SELLER_TEL sellerTel, SELLER_WALLET_ADDR sellerWalletAddr
-			, MIN_DELIVERY_FEE minDeliveryFee
+			, MIN_DELIVERY_FEE minDeliveryFee, seller_email sellerEmail
 </sql>
 <!-- 판매자 정보 자동생성 -->
 <select id="sellerNumGenerate" resultType="string">
@@ -19,18 +19,18 @@ SELLER_NUM sellerNum, SELLER_ID sellerId, SELLER_PW sellerPw, SELLER_NAME seller
 	INSERT INTO SELLER (SELLER_NUM, SELLER_ID, SELLER_PW, SELLER_NAME
 									, SELLER_ADDR1, SELLER_ADDR2, SELLER_POSTCODE
 									, BUSINESS_REGI_NUM, SELLER_TEL, SELLER_WALLET_ADDR
-									, MIN_DELIVERY_FEE)
+									, MIN_DELIVERY_FEE, seller_email)
 	VALUES(#{sellerNum}, #{sellerId}, #{sellerPw}, #{sellerName}
 				, #{sellerAddr1}, #{sellerAddr2}, #{sellerPostcode}
 				, #{businessRegiNum}, #{sellerTel}, #{sellerWalletAddr}
-				,#{minDeliveryFee})
+				,#{minDeliveryFee}, #{sellerEmail})
 </insert>
 <!-- 판매자정보리스트 -->
 <select id="selectAll" resultType="sellerDTO">
 	select SELLER_NUM sellerNum, SELLER_ID sellerId, SELLER_PW sellerPw, SELLER_NAME sellerName
 			, SELLER_ADDR1 sellerAddr1, SELLER_ADDR2 sellerAddr2, SELLER_POSTCODE sellerPostcode
 			, BUSINESS_REGI_NUM businessRegiNum, SELLER_TEL sellerTel, SELLER_WALLET_ADDR sellerWalletAddr
-									, MIN_DELIVERY_FEE minDeliveryFee
+									, MIN_DELIVERY_FEE minDeliveryFee, seller_email sellerEmail
 	from seller
 </select>
 <!-- 판매자상세정보 -->
@@ -39,12 +39,18 @@ SELLER_NUM sellerNum, SELLER_ID sellerId, SELLER_PW sellerPw, SELLER_NAME seller
 	from seller
 	where seller_num = #{sellerNum}
 </select>
+<!-- 판매자상세정보(아이디로 찾기) -->
+<select id="selectNum" parameterType="string" resultType="sellerDTO">
+	select <include refid="baseColumns" />
+	from seller
+	where seller_id = #{sellerId}
+</select>
 <!-- 판매자정보수정 -->
 <update id="sellerUpdate" parameterType="sellerDTO">
 	update seller
 	set seller_tel = #{sellerTel}, seller_addr1 = #{sellerAddr1}, seller_addr2 = #{sellerAddr2}
 		, seller_Postcode = #{sellerPostcode}, seller_wallet_addr = #{sellerWalletAddr}
-		, min_delivery_fee = #{minDeliveryFee} 
+		, min_delivery_fee = #{minDeliveryFee}, seller_email = #{sellerEmail} 
 	where seller_num = #{sellerNum}
 </update>
 <!-- 판매자정보삭제 -->

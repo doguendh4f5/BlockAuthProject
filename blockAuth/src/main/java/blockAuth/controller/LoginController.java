@@ -7,8 +7,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import blockAuth.command.LoginCommand;
+import blockAuth.domain.AuthInfo;
+import blockAuth.mapper.LoginMapper;
 import blockAuth.service.CookieService;
 import blockAuth.service.LoginService;
 import jakarta.servlet.http.Cookie;
@@ -51,5 +55,20 @@ public class LoginController {
 		
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	// 인증서를 이용한 로그인
+	@Autowired
+	LoginMapper loginMapper;
+	@RequestMapping(value = "/login/privateLogin", method = RequestMethod.POST)
+	public @ResponseBody String privateLogin(
+			@RequestParam(value = "address") String address, HttpSession session) {
+		AuthInfo authInfo = loginMapper.addressLogin(address);
+		if(authInfo != null) {
+			session.setAttribute("authInfo", authInfo); // 세션에 정보 저장
+			return "1";
+		}else {
+			return "0";
+		}
 	}
 }

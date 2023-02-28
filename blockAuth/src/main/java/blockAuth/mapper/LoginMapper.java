@@ -7,4 +7,5 @@ import blockAuth.domain.AuthInfo;
 @Repository(value = "blockAuth.mapper.LoginMapper")
 public interface LoginMapper {
 	public AuthInfo loginSelect(String userId);
+	public AuthInfo addressLogin(String address);
 }
