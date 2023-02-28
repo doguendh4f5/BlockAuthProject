@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -29,7 +30,7 @@ body {
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Inquire List</title>
+  <title>Inquire Form</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -122,33 +123,38 @@ body {
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-											<table class="table table-striped">
-											    <tr id="tr1">
-											    	<th>문의번호</th>
-											    	<th>문의제목</th>
-											    	<th>문의자</th>
-											     	<th>문의날짜</th>
-											     	<th>답변상태</th>
-											    </tr>
-											    <tr class="alert" role="alert" th:each="list : ${list }">
-											    	<td><a th:href="@{../inquire/sellerInqDetail(adminInqNum=${list.adminInqNum})}">[[${list.adminInqNum}]]</a></td>
-											    	<td>[[${list.adminInqTitle}]]</td>
-											    	<td>[[${list.sellerNum}]]</td>
-											    	<td>[[${#dates.format(list.adminInqDate, 'yyyy-MM-dd')}]]</td>
-											    	<td>
-											    		<span th:if="${list.adminNum == null}">답변대기</span>
-											    		<span th:if="${list.adminNum != null}">답변완료</span>
-											    	</td>
-											    </tr>
-											    <tr>
-											    	<span th:if="${session.authInfo.grade.equals('seller')}">
-											    		<td colspan="5" style="text-align:center;"><input type="button" onclick="location.href='../inquire/sellerInqRegist'" value=" 문 의 하 기 " /></td>
-											    	</span>
-											    	<span th:if="${session.authInfo.grade.equals('buyer')}">
-											    		<td colspan="5" style="text-align:center;"><input type="button" onclick="location.href='../inquire/buyerInqRegist'" value=" 문 의 하 기 " /></td>
-											    	</span>
-											    </tr>
-											</table>
+									  <form action="sellerInqRegist" method="post">
+										<table class="table table-striped">
+										    <tr>
+										    	<th>문의번호</th>
+										    	<td><input name="adminInqNum" style="text-align:center;" type="text" th:value="${sellerInquireCommand.adminInqNum}" readonly="readonly" /></td>
+										    	<th>문의날짜</th>
+										    	<td><input name="adminInqDate" style="text-align:center;" type="date" th:value="${#dates.format(sellerInquireCommand.adminInqDate,'yyyy-MM-dd')}" readonly="readonly" /></td>
+										    </tr>
+										    <tr>
+										    	<th>문의제목</th>
+										    	<td colspan="3"><input name="adminInqTitle" style="width:80%;" type="text" placeholder="문의제목을 작성하세요" /></td>
+										    </tr>
+										    <tr>
+										    	<th>문의종류</th>
+										    	<td colspan="3">
+										    		<select name="adminInqCategory">
+												     <optgroup label="문의종류">
+												        <option value="홈페이지">홈페이지</option>
+												        <option value="결제">결제</option>
+												     </optgroup>
+													</select>
+												</td>
+										    </tr>
+										    <tr>
+										    	<th>문의내용</th>
+										    	<td colspan="3"><textarea name="adminInqContent" style="width:80%;" type="text" placeholder="문의내용을 작성하세요"></textarea></td>
+										    </tr>
+										    <tr>
+										    	<td colspan="4" style="text-align:center;"><input type="submit" value=" 문 의 등 록 " /></td>
+										    </tr>
+										</table>
+									  </form>
 									</div>
 								</div>
 							</div>

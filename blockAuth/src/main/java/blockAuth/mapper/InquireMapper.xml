@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blockAuth.mapper.InquireMapper">
+<sql id="baseColumns">
+	ADMIN_INQ_NUM adminInqNum, SELLER_NUM sellerNum, BUYER_NUM buyerNum
+	, ADMIN_INQ_TITLE adminInqTitle, ADMIN_INQ_CONTENT adminInqContent
+	, ADMIN_INQ_DATE adminInqDate, ADMIN_INQ_CATEGORY adminInqCategory
+	, ADMIN_NUM adminNum, ADMIN_REPLY_CONTENT adminReplyContent
+	, ADMIN_REPLY_DATE adminReplyDate
+</sql>
+<select id="sellerInqNumGenerate" resultType="string">
+	select concat('Inq',nvl(max(substr(ADMIN_INQ_NUM,4)),100000)+ 1)
+	from admin_Inquire
+</select>
+<insert id="insertInq">
+	insert into admin_inquire (ADMIN_INQ_NUM, SELLER_NUM
+		, ADMIN_INQ_TITLE, ADMIN_INQ_CONTENT
+		, ADMIN_INQ_DATE, ADMIN_INQ_CATEGORY)
+	values (#{adminInqNum}, #{sellerNum}
+		, #{adminInqTitle}, #{adminInqContent}
+		, #{adminInqDate}, #{adminInqCategory})	
+</insert>
+<select id="inqList" resultType="adminInquireDTO">
+	select <include refid="baseColumns" />
+	from admin_inquire
+	order by admin_inq_num desc
+</select>
+<select id="inqSelcetOne" parameterType="string" resultType="adminInquireDTO">
+select <include refid="baseColumns" />
+from admin_inquire
+where admin_inq_num = #{adminInqNum}
+</select>
+<update id="inquireUpdate" parameterType="adminInquireDTO">
+	update admin_inquire
+	<trim prefix="set" suffixOverrides="," >
+		ADMIN_INQ_TITLE = #{adminInqTitle}, ADMIN_INQ_CONTENT = #{adminInqContent}
+		, ADMIN_INQ_DATE = #{adminInqDate}, ADMIN_INQ_CATEGORY = #{adminInqCategory}
+		, 
+		<if test="adminReplyContent != null" >
+			ADMIN_NUM = "admin00001" , ADMIN_REPLY_CONTENT = #{adminReplyContent}
+			, ADMIN_REPLY_DATE = #{adminReplyDate},
+		</if>
+	</trim>
+	<trim prefix="where" prefixOverrides="AND | OR">
+		and ADMIN_INQ_NUM = #{adminInqNum}
+	</trim>
+</update>
+</mapper>
