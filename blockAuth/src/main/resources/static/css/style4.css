@@ -4634,7 +4634,7 @@ input[type="button"].btn-block {
   text-shadow: 0 1px 0 #fff;
   opacity: .5; }
   .close:hover {
-    color: #000;
+    color: #c0c0c0;
     text-decoration: none; }
   .close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {
     opacity: .75; }
@@ -8191,7 +8191,7 @@ h1, h2, h3, h4, h5,
   -moz-box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);
   box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29); }
   .table thead.thead-primary {
-    background: #8EA8DB; }
+    background: #9b9d9d; }
   .table thead th {
     border: none;
     padding: 30px;
@@ -8272,7 +8272,7 @@ h1, h2, h3, h4, h5,
 
 /* Style the checkmark/indicator */
 .checkbox-primary {
-  color: #C4DEFF; }
+  color: rgb(0, 0, 0); }
   .checkbox-primary input:checked ~ .checkmark:after {
-    color: #C4DEFF;
+    color: rgb(0, 0, 0);
     /*color: #99b19c;*/ }

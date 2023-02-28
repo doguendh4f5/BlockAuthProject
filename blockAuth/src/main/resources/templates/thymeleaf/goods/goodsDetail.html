@@ -38,6 +38,74 @@ body {
 
   <title>Block-Auth</title>  
 
+<style>
+table{
+width:650px;
+}
+
+#td1{
+background-color : #FFD8D8;
+color : red;
+font-size:12px;
+}
+
+#tb1{
+border:1px solid #D5D5D5;
+border-collapse : collapse;
+font-size:10px;
+width:650px;
+height:100px;
+}
+
+#td2{
+background-color : #F6F6F6;
+align:center;
+border : 1px solid #D5D5D5;
+}
+
+#tr1{
+border : 1px solid #D5D5D5;
+}
+#sp1{
+font-size:10px;
+font-weight:bold;
+align:left;
+}
+
+#tb2{
+	font-size:10px;
+	font-weight:bold;
+}
+</style>
+
+<script type="text/javascript">
+$(function(){
+	$("#cartAdd").click(function(){
+		
+		$.ajax({
+			type : "post",
+			url : "/cartAdd",
+			dataType : "text",
+			data : {"goodsNum" : "[[${goodsCommand.goodsNum}]]", "goodsStock" : $("#qty").val()},
+			success : function(result){
+				if(result.trim() == "1"){
+					if(confirm("상품이 담겼습니다. \n장바구니로 이동하시겠습니까?")){
+						location.href="/cartList";
+					}
+				}else{
+					alert("장바구니에 담기지 않았습니다. \n다시 시도해주세요.")
+				}
+			},
+			error : function(){
+				alert("에러ㅠㅠ");
+				return;
+			}
+		});
+	})
+})
+	
+</script>
+
 </head>
 
 <body>
@@ -57,7 +125,7 @@ body {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">장바구니</a>
+            <a class="nav-link" href="../cartList">장바구니</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/mypage">마이페이지</a>
@@ -86,20 +154,21 @@ body {
     <div class="row">
 
       <div class="col-lg-3">
-
+		
         <h1 class="my-4">Block-Auth</h1>
         <div class="list-group">
-         <a href="#" class="list-group-item">상품 관리</a>
-          <a href="#" class="list-group-item">상품 문의</a>
-          <a href="#" class="list-group-item">송장정보 입력</a>
-          <a href="#" class="list-group-item">내 정보 수정</a>
+         <a href="#" class="list-group-item">패션의류</a>
+          <a href="#" class="list-group-item">전자제품</a>
+          <a href="#" class="list-group-item">식품</a>
+        
+          
         </div>
 
       </div>
       <!-- /.col-lg-3 -->
-
+      <span th:if="${session.authInfo != null}">
       <div class="col-lg-9">
-		 
+		 <span th:if="${session.authInfo.grade == 'seller'}">
           <div class="card">
               <div class="card-body">
                   <div class="row">
@@ -192,8 +261,113 @@ body {
               </div>
           
       </div>
+      </span>
+		</span>
 		
+		
+		<span th:if="${session.authInfo != null}">
+		<span th:if="${session.authInfo.grade == 'buyer'}">
+<table>
+<tr><td>
 
+<span id="sp1">상품 상세정보</span><br/><br/>
+<img src="/view/goods/upload"/><br />
+</td></tr>
+</table>
+
+<form action="purchaseList">
+
+<table >
+<tr>
+	<td id="tb2" align="right" >수량
+		<input type="number" name="goodsStock" id="qty" min="1" step="1" value="1">
+	</td>
+</tr>
+<tr>
+	<td id="tb2" align="right">
+		<input type="button" id="cartAdd" value="장바구니 담기">
+		<input type="submit" value="바로구매">
+	</td>
+</tr>
+</table>
+</form>
+
+<table id="tb1" >
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;상품명</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsName }]]</td></tr>
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;상품의 크기</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsSize}]]</td></tr>
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;상품 가격</td><td>&nbsp;&nbsp;&nbsp;[[${#numbers.formatCurrency(goodsCommand.goodsPrice)}]]원</td></tr>
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;제조국</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsCountry}]]</td></tr>
+</table>
+<br/>
+<table>
+<tr>
+<td id="td1" height="30px">
+&nbsp;&nbsp;판매자가 현금거래를 요구하면 거부하시고 즉시 사기 거래 신고센터 (02-2621-4699)에 신고하시기 바랍니다.
+</td>
+</tr>
+
+<td align="center">
+<br/><br/>
+[[${goodsCommand.goodsContent}]]<br/><br/><br/>
+
+
+</td></tr>
+
+</table>
+	</span>
+	</span>
+	
+	
+	<span th:if="${session.authInfo == null}">
+		
+<table>
+<tr><td>
+
+<span id="sp1">상품 상세정보</span><br/><br/>
+<img src="/view/goods/upload"/><br />
+</td></tr>
+</table>
+
+<form action="purchaseList">
+<table >
+<tr>
+	<td id="tb2" align="right" >수량
+		<input type="number" name="goodsStock" id="qty" min="1" step="1" value="1">
+	</td>
+</tr>
+<tr>
+	<td id="tb2" align="right">
+		<input type="button" id="cartAdd" value="장바구니 담기">
+		<input type="submit" value="바로구매">
+	</td>
+</tr>
+</table>
+</form>
+
+<table id="tb1" >
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;상품명</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsName }]]</td></tr>
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;상품의 크기</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsSize}]]</td></tr>
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;상품 가격</td><td>&nbsp;&nbsp;&nbsp;[[${#numbers.formatCurrency(goodsCommand.goodsPrice)}]]원</td></tr>
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;제조국</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsCountry}]]</td></tr>
+</table>
+<br/>
+<table>
+<tr>
+<td id="td1" height="30px">
+&nbsp;&nbsp;판매자가 현금거래를 요구하면 거부하시고 즉시 사기 거래 신고센터 (02-2621-4699)에 신고하시기 바랍니다.
+</td>
+</tr>
+
+<td align="center">
+<br/><br/>
+[[${goodsCommand.goodsContent}]]<br/><br/><br/>
+
+
+</td></tr>
+
+</table>
+	</span>
+	
 	
       </div>
       <!-- /.col-lg-9 -->

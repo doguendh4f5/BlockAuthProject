@@ -77,6 +77,8 @@ public class GoodsController {
 		return "thymeleaf/goods/goodsDetail";
 	}
 	
+	
+	
 	//상품수정정보입력페이지
 	@RequestMapping(value = "goodsModify", method = RequestMethod.GET)
 	public String goodsModify(
