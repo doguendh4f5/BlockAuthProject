@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blockAuth.mapper.CartMapper">
+<insert id="cartAdd" parameterType="cartDTO">
+	merge into cart c
+      using(select goods_num from goods where goods_num=#{goodsNum}) g
+      on (c.goods_num = g.goods_num and c.buyer_num=#{buyerNum})
+      when matched then 
+         update set c.qty = c.qty + #{goodsStock}
+      when not matched then
+         insert (c.buyer_num, c.goods_num, c.qty)
+         values (#{buyerNum}, #{goodsNum}, #{goodsStock})
+</insert>
+<resultMap type="cartGoodsDTO" id="GoodsCartResultMap" >
+	<result column="total_price" jdbcType="BIGINT" property="totalPrice"/>
+	<association property="goodsDTO"  javaType="GoodsDTO">
+		<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+		<id column="goods_main" jdbcType="VARCHAR" property="goodsMain"/>
+		<id column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+		<id column="goods_delivery_fee" jdbcType="VARCHAR" property="goodsDeliveryFee"/>
+	</association>
+	<association property="cartDTO" javaType="CartDTO">
+		<id column="qty" jdbcType="BIGINT" property="qty"/>
+	</association>
+</resultMap>
+<select id="cartList" parameterType="string" resultMap="GoodsCartResultMap">
+	select goods_main, g.goods_num, goods_name, goods_delivery_fee, qty, qty * goods_price total_price
+	from goods g, cart c
+	where g.goods_num = c.goods_num and buyer_num = #{buyerNum}
+</select>
+</mapper>

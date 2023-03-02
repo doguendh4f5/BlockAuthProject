@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" href="/static/css/style3.css">
+<script type="text/javascript" src="/static/js/vote.js"></script>
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+.ftco-section{
+	padding-top : 50px;
+	padding-bottom : 50px;
+}
+#btn1{
+    background-color : #007bff;
+    border : none;
+    border-color : #007bff;
+    width : 100px;
+    height : 40px;
+    color : white;
+    border-radius : 5px;
+}  
+
+#btn2{
+    background-color : #FFBA85;
+    border : none;
+    border-color : #FFBA85;
+    color : white;
+    border-radius : 5px;
+} 
+ 
+#ip1{
+	width : 420px;
+	display : inline-block;
+}
+</style>
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>관리자 페이지</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+   
+<style type="text/css">
+   th, td{
+      text-align : center;   
+   }
+   #div1{
+   text-align : center;
+   margin-right:150px;
+   }
+   .table{
+       word-break : break-all;
+   }
+   th{
+   width:200px;
+   }
+</style>
+
+<script type="text/javascript">
+function reg(){
+   location.href="voteWrite";
+}
+</script>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin/adminList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+          <a href="/buyer/buyerList" class="list-group-item">구매자 관리</a>
+          <a href="/seller/sellerList" class="list-group-item">판매자 관리</a>
+          <a href="/goods/goodsList" class="list-group-item">상품 관리</a>
+          <a href="/contract/contractList" class="list-group-item">계약 관리</a>
+          <a href="/vote/voteList" class="list-group-item">투표 관리</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+
+<div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h4>투표 등록</h4>
+                          <hr>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <form action="voteRegist" method="post" th:object="${voteCommand}" enctype="multipart/form-data" >
+                              <div class="form-group row">
+                                <label for="username" class="col-4 col-form-label">투표 번호(자동부여)</label> 
+                                <div class="col-8">
+                                  <input type="text" name="voteNum" th:value="${voteCommand.voteNum}"  readonly="readonly" class="form-control here"/>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="name" class="col-4 col-form-label">투표명</label> 
+                                <div class="col-8">
+                                  <input type="text" name="voteName" placeholder="투표명을 작성하세요." value="" class="form-control here"/>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="lastname" class="col-4 col-form-label">투표 후보</label> 
+                                <div class="col-8">
+                                  <input type="text" id="ip1" name="goodsName" placeholder="투표 후보를 추가하세요." readonly="readonly" class="form-control here"/>&nbsp;
+                                <button type="button" id="btn2" onclick="javascript:candidate();">후보 추가</button>
+                                </div>
+                                
+                              </div>
+                              <div class="form-group row">
+                                <label for="newpass" class="col-4 col-form-label">투표 이미지</label> 
+                                <div class="col-8">
+                                  <input type="file" name="voteImg" class="form-control here"/>
+                                </div>
+                              </div> 
+                              <div class="form-group row" id="div1">
+                                <div class="offset-4 col-8" id="div1">
+                                  <button name="submit" type="submit" class="btn btn-primary" id="btn1">투표 등록</button>
+                                </div>
+                              </div>
+                            </form>
+                      </div>
+                  </div>
+                  
+              </div>
+          
+      </div>
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+</body>
+</html>

@@ -4,15 +4,15 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="blockAuth.mapper.LoginMapper">
 <select id="loginSelect" parameterType="string" resultType="authInfo">
-	select buyer_id userId, buyer_pw userPw, 'buyer' grade, membership membership
+	select buyer_id userId, buyer_pw userPw, 'buyer' grade, membership membership, buyer_wallet_addr walletAddr
 	from buyer
 	where buyer_id = #{buyerId}
 	union
-	select seller_id userId, seller_pw userPw, 'seller', 'none'
+	select seller_id userId, seller_pw userPw, 'seller', 'none', 'none'
 	from seller
 	where seller_id = #{sellerId}
 	union
-	select admin_id userId, admin_pw userPw, 'admin', 'none'
+	select admin_id userId, admin_pw userPw, 'admin', 'none', 'none'
 	from admin1
 	where admin_id = #{adminId}
 </select>

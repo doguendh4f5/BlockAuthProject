@@ -21,6 +21,7 @@ import blockAuth.service.goods.GoodsListService;
 import blockAuth.service.goods.GoodsModifyService;
 import blockAuth.service.goods.GoodsNumberService;
 import blockAuth.service.goods.GoodsRegistService;
+import blockAuth.service.wish.GoodsWishCheckService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -68,12 +69,15 @@ public class GoodsController {
 	}
 	
 	//상품상세페이지
+	@Autowired
+	GoodsWishCheckService goodsWishCheckService;
 	@RequestMapping("goodsDetail")
 	public String goodsDetail(
 			@RequestParam(value = "goodsNum") String goodsNum,
 			Model model, HttpSession session) {
 		model.addAttribute("newLineChar", '\n'); 
 		goodsDetailService.execute(model, goodsNum);
+		goodsWishCheckService.execute(goodsNum, session, model);
 		return "thymeleaf/goods/goodsDetail";
 	}
 	

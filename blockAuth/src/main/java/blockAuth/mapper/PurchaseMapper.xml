@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blockAuth.mapper.PurchaseMapper">
+<resultMap type="cartGoodsDTO" id="GoodsCartResultMap">
+	<result column="total_price" jdbcType="BIGINT" property="totalPrice"/>
+	<association property="goodsDTO" javaType="goodsDTO">
+		<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+		<result column="goods_main" jdbcType="VARCHAR" property="goodsMain"/>
+		<result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+		<result column="GOODS_DELIVERY_FEE" jdbcType="VARCHAR" property="goodsDeliveryFee"/>
+	</association>
+	<association property="cartDTO">
+		<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+		<result column="qty" jdbcType="BIGINT" property="qty"/>
+	</association>
+</resultMap>
+<select id="orderSheet" parameterType="cartDTO" resultMap="GoodsCartResultMap">
+	select goods_main, g.goods_num, goods_name, GOODS_DELIVERY_FEE, QTY, QTY * goods_price total_price
+	from goods g, cart c
+	where g.goods_num = c.goods_num and buyer_num =#{buyerNum}
+	and c.goods_num in
+	<foreach collection="goodsNums" item="goodsNum" open="(" close=")" index="index" separator=",">
+		#{goodsNum}
+	</foreach>
+</select>
+</mapper>

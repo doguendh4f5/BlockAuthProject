@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="stylesheet" href="/static/css/style3.css">
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+.ftco-section{
+	padding-top : 50px;
+	padding-bottom : 50px;
+}
+#btn1{
+    background-color : #007bff;
+    border : none;
+    border-color : #007bff;
+    width : 100px;
+    height : 40px;
+    color : white;
+    border-radius : 5px;
+}
+</style>
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Block-Auth</title>
+
+  
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+   
+<style type="text/css">
+   th, td{
+      text-align : center;   
+   }
+   #div1{
+   text-align : center;
+   }
+
+   .table{
+       word-break : break-all;
+   }
+   th{
+   width:200px;
+   }
+</style>
+
+<script type="text/javascript">
+function reg(){
+   location.href="goodsRegist";
+}
+</script>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin/adminList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">장바구니</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+          <li class="nav-item">
+            <a class="nav-link" href="#">고객센터</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+         <a href="#" class="list-group-item">상품 관리</a>
+          <a href="#" class="list-group-item">상품 문의</a>
+          <a href="#" class="list-group-item">송장정보 입력</a>
+          <a href="#" class="list-group-item">내 정보 수정</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+      <section class="ftco-section">
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+               <h2 class="heading-section">상품 리스트</h2>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-12">
+                  <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th>상품 번호</th>
+                        <th>상품 이미지</th>
+                        <th >상품명</th>
+                        <th>상품 가격</th>
+                        <th>판매자</th>
+                        <th style="width:5%">&nbsp;</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="alert" role="alert" th:each="goodsCommand : ${list}">
+                        <th scope="row"><a th:href="@{../goods/goodsDetail(goodsNum=${goodsCommand.goodsNum})}">[[${goodsCommand.goodsNum}]]</a></th>
+                        <td><img th:src="|/goods/upload/${goodsCommand.goodsMain}|" width="30px"></td>
+                        <td>[[${goodsCommand.goodsName}]]</td>
+                        <td>[[${goodsCommand.goodsPrice}]]</td>
+                        <td>[[${goodsCommand.goodsCompany}]]</td>
+                        <td>
+                           <a th:href="|../goods/goodsDelete/${goodsCommand.goodsNum}|" class="close" data-dismiss="alert" aria-label="Close">
+                           <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                         </a>
+                       </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div id="div1">
+                   <button type="button" onclick="reg()" id="btn1">상품 등록</button>
+                  </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+
+</body>
+
+</html>

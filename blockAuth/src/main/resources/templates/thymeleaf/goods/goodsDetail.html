@@ -106,6 +106,38 @@ $(function(){
 	
 </script>
 
+<script type="text/javascript">
+$(function(){
+	$("#wishBtn").click(function(){
+		if([[${session.authInfo == null}]]){
+			window.open("/login/item.login", "login", "width=400, height=400, top=100, left=100");
+		}else{
+			$.ajax({
+				type : "post",
+				url : "../goodsWishAdd",
+				dataType : "text",
+				data : {"goodsNum" : "[[${goodsCommand.goodsNum}]]"},
+				success : function(result){
+					if(result.trim() == "1"){
+						$("#wishBtn").attr("src", "/static/images/1.png");
+						alert("관심상품에서 등록되었습니다.");
+					}else if(result.trim() == "0"){
+						$("#wishBtn").attr("src", "/static/images/0.png");
+						alert("관심상품에서 삭제되었습니다.")
+					}
+				},
+				error : function(){
+					alert("로그아웃 되었습니다.\n다시 로그인 해주세요.");
+					location.href="/";
+					return false;
+				}
+			});
+		}
+	});
+})
+	
+</script>
+
 </head>
 
 <body>
@@ -278,6 +310,17 @@ $(function(){
 <form action="purchaseList">
 
 <table >
+<tr>
+	<td width="300">
+		관심상품
+		<th:block th:if="${#strings.trim(wish) == '0'}">
+			<img src="/static/images/0.png" width="30" id="wishBtn"/>
+		</th:block>
+		<th:block th:if="${#strings.trim(wish) == '1'}">
+			<img src="/static/images/1.png" width="30" id="wishBtn"/>
+		</th:block>
+	</td>
+</tr>
 <tr>
 	<td id="tb2" align="right" >수량
 		<input type="number" name="goodsStock" id="qty" min="1" step="1" value="1">

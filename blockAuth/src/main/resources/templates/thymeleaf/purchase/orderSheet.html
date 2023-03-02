@@ -3,6 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <title>주문서</title>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = '(' + extraRoadAddr + ')';
+                }
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample4_postcode').value = data.zonecode;
+                document.getElementById("sample4_roadAddress").value = roadAddr;                
+                
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                } else {
+                    document.getElementById("sample4_extraAddress").value = '';
+                }
+                /*
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+                */
+            }
+        }).open();
+    }
+</script>
 </head>
 <body>
  <table width="700" align="center">
@@ -15,54 +65,65 @@
 <p>
 <table width="700" align="center">
 	<tr><td>주문 상품 정보</td>	<td>수량/상품금액</td><td>배송비</td></tr>
-	<tr  >
+	<tr th:each="dto : ${list}">
 		<td>
-		<img src="|/goods/upload/${dto.goodsDTO.goodsMain}|" height="60" />
-		상품이름
+		<img th:src="|/goods/upload/${dto.goodsDTO.goodsMain}|" height="60" />
+		[[${dto.goodsDTO.goodsName}]]
 		</td>
-		<td>개<br />
-			원</td>
+		<td>[[${dto.cartDTO.qty}]]개<br />
+			[[${dto.totalPrice}]]원</td>
 		<td>
-			<span ></span>
-			<span  ></span>
+			<span th:if="${dto.goodsDTO.goodsDeliveryFee == 0}" th:text="무료배송"></span>
+			<span th:if="${dto.goodsDTO.goodsDeliveryFee > 0}" th:text="${dto.goodsDTO.goodsDeliveryFee + '원'}"></span>
 		</td>
 	</tr>
 </table>
 </p>
 <p>
 <form action="purchase" method="post">
-<input type="hidden" name="goodsNums" >
-<input type="hidden" name="totalPrice" > 
-<input type="hidden" name="goodsDeliveryFee" >  
-<input type="hidden" name="totalPrice" >
+<input type="hidden" name="goodsNums" th:value="${goodsNums}">
+<input type="hidden" name="goodsTotalPrice" th:value="${goodsTotalPrice}"> 
+<input type="hidden" name="goodsTotalDelivery" th:value="${goodsTotalDelivery}">  
+<input type="hidden" name="totalPrice" th:value="${goodsTotalPrice + goodsTotalDelivery}">
 <table width="700"  align="center" method="post">
 	<tr>
 		<td alignt="left">
-			<table width="350">
+			<table width="350" >
 				<tr><th colspan=2>2. 배송지 정보 입력</th></tr>
 				<tr><td>받는 사람</td>
-					<td><input type="text" name="recieveName" /></td></tr>
-				<tr><td>받는 주소</td>
-					<td><input type="text" name="purchaseAddr" /></td></tr>		
+					<td><input type="text" name="RECEIVER_NAME" /></td></tr>
+				<tr>
+            <td>주소</td>
+            
+                  <td><input type="text" name="buyerAddr1" 
+                  id="sample4_roadAddress" 
+                  style="width: 65%; background-image:url('img/search.png'); 
+                  background-repeat:no-repeat; background-position:right; background-size:20px 20px; width:171px;" 
+                  onclick="sample4_execDaumPostcode();" readonly="readonly" placeholder="주소"/><br />
+                  
+                  
+                  <input type="text" name="buyerAddr2"  id="sample4_extraAddress"  placeholder="상세주소"/><br />
+                  
+                 
+                  <input type="text" name="buyerPostcode" 
+                  id="sample4_postcode" readonly="readonly" placeholder="우편번호"/>
+                  
+                  </td>
+         </tr>
+						
 				<tr><td>받는 사람 연락처</td>
-					<td><input type="text" name="purchasePhone" /></td></tr>
+					<td><input type="text" name="RECEIVER_PHONE" /></td></tr>
 				<tr><td>주문메세지</td>
-					<td><input type="text" name="message" /></td></tr>
-				<tr><td>결제 방법</td>
-					<td>
-						<select name="purchaseMethod">
-							<option>카드</option>
-							<option>카카오페이</option>
-						</select>
-					</td></tr>
+					<td><input type="text" name="DELIVERY_REQ" /></td></tr>
+				
 			</table>
 		</td>
 		<td alignt="right">
 			<table width="300">
 				<tr><th colspan=2>3.결제금액</th></tr>
-				<tr><td align="left">상품금액 : </td><td align = "right"> 원</td></tr>
-				<tr><td align="left">배송비 : </td><td align = "right"> 원</td></tr>
-				<tr><td align="left">총 결제 금액 : </td><td align = "right"> 원</td></tr>
+				<tr><td align="left">상품금액 : [[${#numbers.formatCurrency(goodsTotalPrice)}]]</td><td align = "right"> 원</td></tr>
+				<tr><td align="left">배송비 : [[${#numbers.formatCurrency(goodsTotalDelivery)}]]</td><td align = "right"> 원</td></tr>
+				<tr><td align="left">총 결제 금액 : [[${#numbers.formatCurrency(goodsTotalPrice + goodsTotalDelivery)}]]</td><td align = "right"> 원</td></tr>
 				<tr><td align="center"  colspan=2><input type="submit" value="결제하기"/></td></tr>
 			</table>
 		</td>

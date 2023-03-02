@@ -3,11 +3,75 @@
 
 <mapper namespace="blockAuth.mapper.VotingMapper">
 <insert id="insertCandidate" parameterType="candidatesDTO">
-	insert into candidates(vote_num, goods_name, vote)
-	values(concat('GoodsVote',vote_seq.nextval), #{goodsName}, 0)
+	insert into candidates(vote_num, goods_name, vote, regi_date)
+	values(#{voteNum}, #{goodsName}, 0, sysdate)
 </insert>
-<select id="getVoteList" resultType="CandidatesDTO">
-	select vote_num voteNum, idx, goods_name goodsName, vote
+<select id="getVoteList" resultType="voteListDTO">
+	select vote_num voteNum, vote_name voteName, regi_date regiDate 
+	from vote_list
+</select>
+<select id="generateVoteNum" resultType="string">
+	select concat('vote', nvl(max(substr(vote_num, 5)), 10000) + 1)
+	from vote_list
+</select>
+<select id="insertVoteInfo" parameterType="voteListDTO">
+	insert into vote_list(vote_num, vote_name, vote_img, vote_img_org, regi_date)
+	values(#{voteNum}, #{voteName}, #{voteImg}, #{voteImgOrg}, sysdate)
+</select>
+
+
+<resultMap type="candidateVoteGoodsDTO" id="candidateVoteGoodsMap">
+
+<association property="goodsDTO" javaType="goodsDTO">
+	<id column="GOODS_NUM" jdbcType="VARCHAR" property="goodsNum"/>
+	<result column="GOODS_NAME" jdbcType="VARCHAR" property="goodsName"/>
+	<result column="GOODS_MAIN" jdbcType="VARCHAR" property="goodsMain"/>
+	<result column="GOODS_COMPANY" jdbcType="VARCHAR" property="goodsCompany"/>
+</association>
+
+<association property="candidatesDTO" javaType="candidatesDTO">
+	<result column="VOTE_NUM" jdbcType="VARCHAR" property="voteNum"/>
+	<result column="IDX" jdbcType="BIGINT" property="idx"/>
+	<result column="VOTE" jdbcType="BIGINT" property="vote"/>
+</association>
+
+<association property="voteListDTO" javaType="voteListDTO" >
+	<result column="VOTE_NUM" jdbcType="VARCHAR" property="voteNum"/>
+	<result column="VOTE_IMG" jdbcType="VARCHAR" property="voteImg"/>
+</association>
+
+</resultMap>
+
+<select id="selectVoteInfo" resultMap="candidateVoteGoodsMap" parameterType="string">
+	select g.goods_num, g.goods_name, g.goods_main, g.goods_company
+	, v.vote_img, c.idx, c.vote
+	from goods g join candidates c
+	on g.goods_num = c.goods_name join vote_list v
+	on c.vote_num = v.vote_num
+	where v.vote_num = #{voteNum}
+</select>
+
+<select id="selectVotingSum" resultType="int">
+	select nvl(sum(VOTE), 0) 
 	from candidates
 </select>
+
+<select id="selectVoteImg" resultType="string" parameterType="string">
+	select vote_img voteImg
+	from vote_list
+	where vote_num = #{voteNum}
+</select>
+<select id="buyerVoteAccount" parameterType="string" resultType="int">
+	select count(*) from voters
+	where buyer_wallet_addr = #{account}
+</select>
+<update id="candidatesUpdate" parameterType="int">
+	update candidates
+	set vote = vote + 1
+	where idx = #{idx}
+</update>
+<insert id="voteInsert" parameterType="votersDTO">
+	insert into voters(vote_num, buyer_wallet_addr, vote_date, candidates_idx, tx_id)
+	values(#{voteNum}, #{buyerWalletAddr}, sysdate, #{candidatesIdx}, #{txId})
+</insert>
 </mapper>

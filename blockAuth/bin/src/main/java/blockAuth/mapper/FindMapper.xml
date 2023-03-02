@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blockAuth.mapper.FindMapper">
+<select id="findId" parameterType="blockAuth.command.FindIdCommand" resultType="authInfo">
+	select buyer_id userId, buyer_phone phone, buyer_email email
+	from buyer
+	where buyer_email = #{email}
+	union
+	select seller_id userId, seller_tel phone, seller_email email
+	from seller
+	where seller_email = #{email}
+</select>
+<select id="findPw" parameterType="blockAuth.command.FindIdCommand" resultType="string">
+	select 'buyer' from buyer
+	where buyer_id = #{userId}
+	and buyer_phone = #{userPhone}
+	and buyer_email = #{userEmail}
+	union
+	select 'seller' from seller
+	where seller_id = #{userId}
+	and seller_tel = #{userPhone}
+	and seller_email = #{userEmail}
+</select>
+<update id="changePw" parameterType="pwChangeDTO">
+	update ${tableName}
+	set ${userPwColumn} = #{userPw}
+	where ${userIdColumn} = #{userId}
+</update>
+</mapper>

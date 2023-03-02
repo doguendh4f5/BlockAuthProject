@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>구매자 상세페이지</title>
+</head>
+<body>
+<strong>[[${buyerCommand.buyerName}]] 님의 정보</strong><br>
+<table border="1">
+	<tr><th>구매자 번호</th><td>[[${buyerCommand.buyerNum}]]</td></tr>
+	<tr><th>구매자 아이디</th><td>[[${buyerCommand.buyerId}]]</td></tr>
+	<tr><th>구매자 이름</th><td>[[${buyerCommand.buyerName}]]</td></tr>
+	<tr><th>구매자 연락처</th><td>[[${buyerCommand.buyerPhone}]]</td></tr>
+	<tr><th>구매자 주소</th><td>[[${buyerCommand.buyerAddr1}]]</td></tr>
+	<tr><th>구매자 상세주소</th><td>[[${buyerCommand.buyerAddr2}]]</td></tr>
+	<tr><th>구매자 우편번호</th><td>[[${buyerCommand.buyerPostcode}]]</td></tr>
+	<tr><th>구매자 생일</th><td><span th:text="${#dates.format(buyerCommand.buyerBirth, 'yyyy-MM-dd')}"></span></td></tr>
+	<tr><th>구매자 이메일</th><td>[[${buyerCommand.buyerEmail}]]</td></tr>
+	<tr><th>멤버십</th><td>[[${buyerCommand.membership}]]</td></tr>
+	<tr><th>구매자 포인트</th><td>[[${buyerCommand.buyerPoint}]]</td></tr>
+	<tr><th>구매자 지갑주소</th><td>[[${buyerCommand.buyerWalletAddr}]]</td></tr>
+	<tr><th colspan="2">
+	<a th:href="|../buyerModify?buyerNum=${buyerCommand.buyerNum}|">구매자 수정</a>|
+	<a th:href="|../buyerDelete?buyerNum=${buyerCommand.buyerNum}|">구매자 삭제</a>|
+	<a href="/buyer/buyerList">리스트로 가기</a>
+	</th></tr>
+</table>
+</body>
+</html>

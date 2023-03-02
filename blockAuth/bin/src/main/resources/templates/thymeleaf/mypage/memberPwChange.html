@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = '(' + extraRoadAddr + ')';
+                }
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample4_postcode').value = data.zonecode;
+                document.getElementById("sample4_roadAddress").value = roadAddr;                
+                
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                } else {
+                    document.getElementById("sample4_extraAddress").value = '';
+                }
+                /*
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+                */
+            }
+        }).open();
+    }
+</script>
+<style type="text/css">
+   .col-md-9{
+      margin : auto;
+      
+   }
+   input {
+	  width: 400px;
+	  height: 32px;
+	  font-size: 15px;
+	  border: 0;
+	  border-radius: 7px;
+	  outline: none;
+	  padding-left: 10px;
+	  background-color: rgb(240, 240, 240);
+	}
+	button {
+	  width: 70px;
+	  height: 32px;
+	  font-size: 15px;
+	  color: white;
+	  border: 0;
+	  border-radius: 7px;
+	  outline: none;
+	  padding-left: 10px;
+	  background-color: lightSkyBlue;
+	  margin:auto;
+	}
+</style>
+<script>
+  function PwSubmit(obj) {
+
+	  
+	  var pw1 = document.getElementById( 'userPw' ).value;
+      var pw2 = document.getElementById( 'userPwCon' ).value;
+	  var num = pw1.search(/[0-9]/g);
+	  var eng = pw1.search(/[a-z]/ig);
+	  var spe = pw1.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+	  
+	  console.log('pw1 = ' + pw1)
+	  if(pw1.length < 8 || pw1.length > 20){
+
+		  alert("8자리 ~ 20자리 이내로 입력해주세요.");
+		  return false;
+	  }else if(pw1.search(/\s/) != -1){
+		  alert("비밀번호는 공백 없이 입력해주세요.");
+		  return false;
+	  }else if(num < 0 || eng < 0 || spe < 0 ){
+		  alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
+		  return false;
+	  }
+	   
+      if ( pw1 == pw2 ) {
+    	  
+    	//validation check 
+    	
+        alert( '비밀번호가 변경되었습니다.');
+        return true;
+      }
+      else{
+    	  alert( '비밀번호 확인이 틀립니다. 다시 입력하세요.');
+    	  return false;
+      }
+  }
+</script>
+
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+   
+</style>
+<link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Block-Auth</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin/adminList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">장바구니</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+          <li class="nav-item">
+            <a class="nav-link" href="#">고객센터</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+       <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+          <a href="/mypage/membershipInfo" class="list-group-item">블록어스클럽 가입</a>
+          <a href="/mypage/buyerMyInfoEdit" class="list-group-item">내 정보 수정</a>
+          <a href="/mypage/memberPwCheck" class="list-group-item">비밀번호 변경</a>
+          <a href="#" class="list-group-item">찜한 상품</a>
+          <a href="#" class="list-group-item">구매리스트</a>
+          <a href="/mypage/withdrawal" class="list-group-item">회원 탈퇴</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+		
+          <div class="card">
+              <div class="card-body" style="height:550px;">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h5>비밀번호 변경</h5>
+                          <hr>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <form class="form-horizontal" onsubmit="PwSubmit(this);" action="memberPwChangeComplete" method="post" id="contact_form" th:object="${passwordChangeCommand}">
+                             <div >
+	                            <label for="userPw" >&nbsp새로운 비밀번호 입력 :&nbsp</label> 
+	                            <input type="password" name="userPw" id="userPw" >&nbsp
+                             </div>
+                            <span style="color:red" th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}"></span>
+							<br />
+							<div >
+	                            <label for="userPwCon" >&nbsp새로운 비밀번호 확인 :&nbsp</label> 
+	                            <input type="password" name="userPwCon" id="userPwCon" >&nbsp
+                             </div>
+                            <span style="color:red" th:if="${#fields.hasErrors('userPwCon')}" th:errors="*{userPwCon}"></span>
+                            <br />
+                            <div style="text-align:center">
+                            	<button name="submit" type="submit" >확인</button>
+                            </div>
+                          </form>
+                      </div>
+                  </div>
+                  
+              </div>
+          
+      </div>
+		
+
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

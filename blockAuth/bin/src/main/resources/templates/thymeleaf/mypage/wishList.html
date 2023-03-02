@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="stylesheet" href="/static/css/style3.css">
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+.ftco-section{
+	padding-top : 50px;
+	padding-bottom : 50px;
+}
+#btn1{
+    background-color : #007bff;
+    border : none;
+    border-color : #007bff;
+    width : 100px;
+    height : 40px;
+    color : white;
+    border-radius : 5px;
+}
+</style>
+<style>
+	.btn1{
+		text-align : center;
+		background-color : #8EA8DB;
+		border : none;
+		color : white;
+		font-weight : bold;
+		font-size : 18px;
+		width : 200px;
+		height : 50px;
+		border-radius : 7px;
+		margin : auto;
+		display : block;
+	}
+	.ftco-section{
+		padding-bottom : 60px;
+	}
+	</style>
+	<style>
+#tr1{
+	color : black;
+	background-color : #FFCBCB;
+}
+th, td{
+	width:20%;
+	text-align:center;
+}
+</style>
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>관리자 페이지</title>
+
+  
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+   
+<style type="text/css">
+   th, td{
+      text-align : center;   
+   }
+   #div1{
+   text-align : center;
+   }
+
+   .table{
+       word-break : break-all;
+   }
+   th{
+   width:200px;
+   }
+</style>
+
+<script type="text/javascript">
+function reg(){
+   location.href="sellerRegist";
+}
+</script>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin/adminList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+          <a href="mypage/membershipInfo" class="list-group-item">블록어스클럽 가입</a>
+          <a href="#" class="list-group-item">내 정보 수정</a>
+          <a href="#" class="list-group-item">찜한 상품</a>
+          <a href="#" class="list-group-item">구매리스트</a>
+          <a href="mypage/withdrawal" class="list-group-item">회원 탈퇴</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">찜한 목록</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+						<table class="table">
+						  <thead>
+						    <tr id="tr1">
+						      <th style="width:5%;">&nbsp;</th>
+						      <th>번호</th>
+						      <th>이미지</th>
+						      <th>상품명</th>
+						      <th>상품 금액</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						  	  <th></th>
+						      <th scope="row"><a href="#">1001</a></th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						    </tr>
+
+						    <tr>
+						   	 <th></th>
+						      <th scope="row">1002</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						    </tr>
+
+						    <tr>
+						    <th></th>
+						      <th scope="row">1003</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+	</section>
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+
+</body>
+
+</html>

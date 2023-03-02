@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>장바구니 리스트</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="static/css/style4.css">
+	<link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+	<style>
+	.btn1{
+		text-align : center;
+		background-color : #9b9d9d;
+		border : none;
+		color : white;
+		font-weight : bold;
+		font-size : 18px;
+		width : 200px;
+		height : 50px;
+		border-radius : 7px;
+		margin : auto;
+		display : block;
+	}
+	.ftco-section{
+		padding-bottom : 60px;
+	}
+	th, td{
+	text-align:center;
+	font-size:20px;
+}
+.table{
+padding-top:0;
+}
+
+	</style>
+	
+<script type="text/javascript">
+$(function(){
+	$("#checkBoxs").click(function(){
+		if($("#checkBoxs").prop("checked")){
+			$("input[name=prodCk]").prop("checked", true);
+		}else{
+			$("input[name=prodCk]").prop("checked", false);
+		}
+	});
+	
+	$("input[name=prodCk]").click(function(){
+		var tot = $("input[name=prodCk]").length;
+		var checked = $("input[name=prodCk]:checked").length;
+		if(tot != checked) $("#checkBoxs").prop("checked", false);
+		else $("#checkBoxs").prop("checked", true);
+	});
+});
+</script>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin/adminList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../cartList">장바구니</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+          <li class="nav-item">
+            <a class="nav-link" href="inquireList">고객센터</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  
+<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-4">
+					<h2 class="heading-section">장바구니 목록</h2><br/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+				<form action="/purchase/orderSheet" method="post" >
+						<table class="table table-striped">
+						  <thead class="thead-primary">
+						    <tr id="tr1">
+						   
+						    	<th style="width:5%;"><label class="checkbox-wrap checkbox-primary">
+										  <input type="checkbox" id="checkBoxs" checked="checked">
+										  <span class="checkmark" id="checkBoxs"></span>
+										</label></th>
+						    	<th style="width:5%;">이미지</th>
+						    	<th>상품명</th>
+						     	 <th>합계금액</th>
+						      	<th style="width:10%;">수량</th>
+						      <th>배송비</th>
+						      <th style="width:5%;">&nbsp;</th>
+						      
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr th:each="cartGoodsDTO : ${list} " class="alert" role="alert">
+						    	<td>
+						    		<label class="checkbox-wrap checkbox-primary">
+										  <input type="checkbox" name="prodCk" checked="checked" id="prodCk"
+										  	th:value="${cartGoodsDTO.goodsDTO.goodsNum}">
+										  <span class="checkmark" id="prodCk"></span>
+										</label>
+						    	</td>
+						    	<td>
+						    		<div class="img" style="background-image: url(images/product-1.png);" src="|/view/goods/upload/${cartGoodsDTO.goodsDTO.goodsMain}|"></div>
+						    	</td>
+						      <td>
+						      	<div class="">
+						      		<span>[[${cartGoodsDTO.goodsDTO.goodsName}]]</span>
+						      		
+						      	</div>
+						      </td>
+						      <td>[[${#numbers.formatCurrency(cartGoodsDTO.totalPrice)}]]</td>
+						      <td class="quantity">
+					        	<div class="input-group">
+				             	<input type="number" name="quantity" value="1" min="1" step="1" 
+				             	th:value="${cartGoodsDTO.cartDTO.qty}" >
+				          	</div>
+				          </td>
+				          <td>[[${#numbers.formatCurrency(cartGoodsDTO.goodsDTO.goodsDeliveryFee)}]]</td>
+						      <td>
+						      	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				            	<span aria-hidden="true"><i class="fa fa-close"></i></span>
+				          	</button>
+				        	</td>
+						    </tr>
+
+						   
+						    
+						  </tbody>
+						</table>
+						<br/>
+						 <input type="submit" class="btn1" value="주 문 하 기">
+				</div>
+			</div>
+		</div>
+	</section>
+	</form>
+	 <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+</body>
+</html>

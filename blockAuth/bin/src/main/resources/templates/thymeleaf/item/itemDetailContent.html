@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>제품 상세페이지</title>
+<style>
+table{
+width:650px;
+}
+
+#td1{
+background-color : #FFD8D8;
+color : red;
+font-size:12px;
+}
+
+#tb1{
+border:1px solid #D5D5D5;
+border-collapse : collapse;
+font-size:10px;
+width:650px;
+height:100px;
+}
+
+#td2{
+background-color : #F6F6F6;
+align:center;
+border : 1px solid #D5D5D5;
+}
+
+#tr1{
+border : 1px solid #D5D5D5;
+}
+#sp1{
+font-size:10px;
+font-weight:bold;
+align:left;
+}
+</style>
+</head>
+<body>
+<table>
+<tr><td>
+<span id="sp1">필수 표기정보</span><br/><br/>
+</td></tr>
+</table>
+<table id="tb1">
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;제품명</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsName }]]</td></tr>
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;생산자 및 소재지</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsCompany }]]</td></tr>
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;상품의 유형</td><td>&nbsp;&nbsp;&nbsp;상품 상세페이지 참조</td></tr>
+</table>
+<br/>
+<table>
+<tr>
+<td id="td1" height="30px">
+&nbsp;<img src="img/alert.png" width="12px"/>&nbsp;판매자가 현금거래를 요구하면 거부하시고 즉시 사기 거래 신고센터 (02-2621-4699)에 신고하시기 바랍니다.
+</td>
+</tr>
+<tr>
+<td align="center">
+<br/><br/>
+[[${goodsCommand.goodsContent}]]<br/><br/><br/>
+
+
+</td></tr>
+
+</table>
+</body>
+</html>

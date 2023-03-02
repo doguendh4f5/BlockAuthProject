@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>장바구니 리스트</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="static/css/style.css">
+	<link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+	<style>
+	.btn1{
+		text-align : center;
+		background-color : #8EA8DB;
+		border : none;
+		color : white;
+		font-weight : bold;
+		font-size : 18px;
+		width : 200px;
+		height : 50px;
+		border-radius : 7px;
+		margin : auto;
+		display : block;
+	}
+	.ftco-section{
+		padding-bottom : 60px;
+	}
+	</style>
+	<style>
+#tr1{
+	color : black;
+	background-color : #B6B5DB;
+}
+th, td{
+	width:20%;
+	text-align:center;
+}
+</style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin/adminList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cartList">장바구니</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+          <li class="nav-item">
+            <a class="nav-link" href="inquireList">고객센터</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">구매 리스트</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+						<table class="table">
+						  <thead>
+						    <tr id="tr1">
+						      <th>주문 번호</th>
+						      <th>상품명</th>
+						      <th>결제 금액</th>
+						      <th>주문 날짜</th>
+						      <th>주문 상태</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th scope="row"><a href="#">1001</a></th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						      <td><a href="#" class="btn btn-success">결제 완료</a></td>
+						    </tr>
+
+						    <tr>
+						      <th scope="row">1002</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						      <td><a href="#" class="btn btn-warning">배송중</a></td>
+						    </tr>
+
+						    <tr>
+						      <th scope="row">1003</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						      <td><a href="#" class="btn btn-danger">결제 취소</a></td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+	</section>
+  
+
+	 <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+</body>
+</html>
