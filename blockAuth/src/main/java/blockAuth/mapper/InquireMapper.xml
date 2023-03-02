@@ -34,17 +34,19 @@ where admin_inq_num = #{adminInqNum}
 </select>
 <update id="inquireUpdate" parameterType="adminInquireDTO">
 	update admin_inquire
-	<trim prefix="set" suffixOverrides="," >
+	set
 		ADMIN_INQ_TITLE = #{adminInqTitle}, ADMIN_INQ_CONTENT = #{adminInqContent}
 		, ADMIN_INQ_DATE = #{adminInqDate}, ADMIN_INQ_CATEGORY = #{adminInqCategory}
-		, 
-		<if test="adminReplyContent != null" >
-			ADMIN_NUM = "admin00001" , ADMIN_REPLY_CONTENT = #{adminReplyContent}
-			, ADMIN_REPLY_DATE = #{adminReplyDate},
-		</if>
-	</trim>
-	<trim prefix="where" prefixOverrides="AND | OR">
-		and ADMIN_INQ_NUM = #{adminInqNum}
-	</trim>
+	where ADMIN_INQ_NUM = #{adminInqNum}
 </update>
+<update id="sellerReplyUpdate" parameterType="adminInquireDTO">
+	update admin_inquire 
+	set 	ADMIN_NUM = 'admin00001' , ADMIN_REPLY_CONTENT = #{adminReplyContent}
+			, ADMIN_REPLY_DATE = #{adminReplyDate}
+	where ADMIN_INQ_NUM = #{adminInqNum}
+</update>
+<delete id="sellerAdminInqDel" parameterType="string">
+	delete from admin_inquire
+	where ADMIN_INQ_NUM = #{adminInqNum}
+</delete>
 </mapper>

@@ -13,4 +13,6 @@ public interface InquireMapper {
 	public List<AdminInquireDTO> inqList();
 	public AdminInquireDTO inqSelcetOne(String adminInqNum);
 	public int inquireUpdate(AdminInquireDTO inquire);
+	public int sellerReplyUpdate(AdminInquireDTO inquire);
+	public int sellerAdminInqDel(String adminInqNum);
 }

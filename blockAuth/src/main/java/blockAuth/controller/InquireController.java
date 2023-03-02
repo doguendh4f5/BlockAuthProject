@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import blockAuth.command.SellerInquireCommand;
+import blockAuth.service.inquire.SellerAdminReplyInsertService;
+import blockAuth.service.inquire.SellerInqDelService;
 import blockAuth.service.inquire.SellerInqDetailService;
 import blockAuth.service.inquire.SellerInqListService;
 import blockAuth.service.inquire.SellerInqModifyService;
@@ -28,11 +31,15 @@ public class InquireController {
 	SellerInqDetailService sellerInqDetailService;
 	@Autowired
 	SellerInqModifyService sellerInqModifyService;
+	@Autowired
+	SellerAdminReplyInsertService sellerAdminReplyInsertService;
+	@Autowired
+	SellerInqDelService sellerInqDelService;
 	
 	@RequestMapping("inquireList")
-	public String inquireList(Model model) {
-		sellerInqListService.execute(model);
-		return "thymeleaf/inquire/inquireList";
+	public String inquireList(Model model, HttpSession session) {
+		String url = sellerInqListService.execute(model, session);
+		return url;
 	}
 	
 	@RequestMapping(value = "sellerInqRegist", method = RequestMethod.GET)
@@ -71,10 +78,19 @@ public class InquireController {
 		sellerInqModifyService.execute(sellerInquireCommand, model, session);
 		return "redirect:sellerInqDetail?adminInqNum="+sellerInquireCommand.getAdminInqNum();
 	}
+
+	@RequestMapping(value = "sellerAdminReplyInsert", method = RequestMethod.POST)
+	public @ResponseBody String sellerAdminReplyInsert(@RequestParam(value = "adminInqNum") String adminInqNum
+				,@RequestParam(value = "adminReplyContent") String adminReplyContent) {
+		String i = sellerAdminReplyInsertService.execute(adminReplyContent, adminInqNum);
+		return i;
+	}
 	
-	
-	
-	
+	@RequestMapping(value = "sellerInqDel")
+	public String sellerInqDel(@RequestParam(value = "adminInqNum") String adminInqNum) {
+		sellerInqDelService.execute(adminInqNum);
+		return "redirect:inquireList";
+	}
 	
 	
 	
