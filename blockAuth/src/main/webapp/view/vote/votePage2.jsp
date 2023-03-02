@@ -2,9 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
+
 <head>
+<link rel="stylesheet" href="/static/css/style3.css">
+<script type="text/javascript" src="/static/js/vote.js"></script>
 <style type="text/css">
    /*!
  * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
@@ -14,41 +18,31 @@
 body {
   padding-top: 56px;
 }
-#con1{
-	width:auto;
-	height:90vh;
-	display: flex;
-justify-content: center;
-align-items: center;
+.ftco-section{
+	padding-top : 50px;
+	padding-bottom : 50px;
 }
-#img{
-	height: 200px;
-	width : 200px;
-}
-#img1{
-	height: 300px;
-	width : 600px;
-}
-#sp1{
-	background-color: #007bff;
-    border: none;
-    border-color: #007bff;
-    width: 85px;
-    height: 27px;
-    color: white;
-    border-radius: 5px;
-}
-#sp1:hover{
-	background-color: #9DCFFF;
-    border: none;
-    border-color: #9DCFFF;
-    width: 85px;
-    height: 27px;
-    color: white;
-    border-radius: 5px;
-}
-#pb1{
-	background-color: #B2CCFF;
+#btn1{
+    background-color : #007bff;
+    border : none;
+    border-color : #007bff;
+    width : 100px;
+    height : 40px;
+    color : white;
+    border-radius : 5px;
+}  
+
+#btn2{
+    background-color : #FFBA85;
+    border : none;
+    border-color : #FFBA85;
+    color : white;
+    border-radius : 5px;
+} 
+ 
+#ip1{
+	width : 420px;
+	display : inline-block;
 }
 </style>
 <link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
@@ -56,26 +50,55 @@ align-items: center;
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-<meta charset="UTF-8">
-<title>Insert title here</title>
 
-<link rel="stylesheet"
-	href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css">
+  <title>관리자 페이지</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 
-<script type="text/javascript"
-	src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/web3@0.19.0/dist/web3.js"></script>
-<script type="text/javascript" src="/static/js/vote.js"></script>
-<script>
-$(function(){
-	var a = "${authInfo.email}"
-	console.log("see : " + a);
-});
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+   
+<style type="text/css">
+   th, td{
+      text-align : center;   
+   }
+   #div1{
+   text-align : center;
+   margin-right:150px;
+   }
+   .table{
+       word-break : break-all;
+   }
+   th{
+   width:200px;
+   }
+   #img{
+	height: 150px;
+	width : 150px;
+}
+#img1{
+	height: 250px;
+	width : 550px;
+}
+#con1{
+	width:auto;
+	height:80vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+</style>
 
+<script type="text/javascript">
+function reg(){
+   location.href="voteWrite";
+}
 </script>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="/">Block-Auth</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,41 +112,46 @@ $(function(){
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../cartList">장바구니</a>
-          </li>
-          <c:if test="${empty authInfo}">
-          <li class="nav-item">
-            <a class="nav-link" href="/login">마이페이지</a>
-          </li>
-          </c:if>
-          <c:if test="${!empty authInfo}">
-          <li class="nav-item">
             <a class="nav-link" href="/mypage">마이페이지</a>
           </li>
-          </c:if>
-          <c:if test="${empty authInfo}">
+          <span th:if="${session.authInfo == null}">
           <li class="nav-item">
             <a class="nav-link" href="/login">로그인</a>
           </li>
-         </c:if>
-          <c:if test="${!empty authInfo}">
+          </span>
+          <span th:if="${session.authInfo != null}">
           <li class="nav-item">
             <a class="nav-link" href="/login/logout">로그아웃</a>
           </li>
-          </c:if>
-          <li class="nav-item">
-            <a class="nav-link" href="inquire/inquireList">고객센터</a>
-          </li>
+          </span>
         </ul>
       </div>
     </div>
   </nav>
-    <!-- Page Content -->
-  <div class="container" id="con1">
-			<div id="div1">
-	<table cellpadding="10" border="1">
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+          <a href="/buyer/buyerList" class="list-group-item">구매자 관리</a>
+          <a href="/seller/sellerList" class="list-group-item">판매자 관리</a>
+          <a href="/goods/goodsList" class="list-group-item">상품 관리</a>
+          <a href="/contract/contractList" class="list-group-item">계약 관리</a>
+          <a href="/vote/voteList" class="list-group-item">투표 관리</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+        <div class="container" id="con1">
+<table cellpadding="10" border="1">
 	<tr><td colspan="2"><img src="/voteImg/${voteImg}" id="img1" /><br/></td></tr>
-	<tr><td colspan="2" style="text-align:center;">원하시는 상품을 투표해주세요 (*^v^*)<br/></td></tr>
 		<c:choose>
 			<c:when test="${lists.size() eq 0 }">
 				<tr>
@@ -162,8 +190,6 @@ $(function(){
 						<span><b>${list.candidatesDTO.vote}</b>표</span>
 					<br/>
 					</c:if>
-					
-						<button id="sp1" onclick="setVote('${list.candidatesDTO.idx}', '${list.goodsDTO.goodsName}', '${authInfo.walletAddr}', '${list.goodsDTO.goodsNum}');" >투표하기</button>
 					<c:if test="${status.count % 3 == 0 }">
 					</td>
 				</c:if>
@@ -172,14 +198,23 @@ $(function(){
 			</c:otherwise>
 		</c:choose>
 	</table>
-	</div>
-	</div>
-	 <!-- Footer -->
+</div>
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
     </div>
     <!-- /.container -->
   </footer>
+
 </body>
 </html>

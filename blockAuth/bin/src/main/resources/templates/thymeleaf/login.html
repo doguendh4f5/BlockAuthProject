@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+<script src="/static/js/login.js"></script>
 <style type="text/css">
 	@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
@@ -149,6 +152,7 @@ $(function(){
 	      </tr>
       </table>
     </form>
+    인증서 로그인 : <input type="file" onchange="onFileSelected(event)" /><!-- ev : 파일 내 정보 가져옴s -->
   </div>
 </div>
 </body>

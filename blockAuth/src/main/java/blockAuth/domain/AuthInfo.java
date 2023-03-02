@@ -18,4 +18,5 @@ public class AuthInfo {
 	String email;
 	
 	String membership;
+	String walletAddr;
 }

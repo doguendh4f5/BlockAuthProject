@@ -42,6 +42,6 @@ public class PaymentTestController {
 	
 	@RequestMapping(value = "signTest")
 	public String signTest() {
-		return "thymeleaf/sign/signTest";
+		return "thymeleaf/testSign";
 	}
 }

@@ -1,806 +1,96 @@
-const MYNFT_ABI = 	[
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "name",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "getApproved",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "approve",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "totalSupply",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "transferFrom",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_owner",
-				"type": "address"
-			},
-			{
-				"name": "_index",
-				"type": "uint256"
-			}
-		],
-		"name": "tokenOfOwnerByIndex",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "safeTransferFrom",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"name": "_symbol",
-				"type": "string"
-			}
-		],
-		"name": "initialize",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "exists",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_index",
-				"type": "uint256"
-			}
-		],
-		"name": "tokenByIndex",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "ownerOf",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_owner",
-				"type": "address"
-			}
-		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "symbol",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "burn",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"name": "_approved",
-				"type": "bool"
-			}
-		],
-		"name": "setApprovalForAll",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			},
-			{
-				"name": "_data",
-				"type": "bytes"
-			}
-		],
-		"name": "safeTransferFrom",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			},
-			{
-				"name": "_tokenURI",
-				"type": "string"
-			}
-		],
-		"name": "registerUniqueToken",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "tokenURI",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_owner",
-				"type": "address"
-			},
-			{
-				"name": "_operator",
-				"type": "address"
-			}
-		],
-		"name": "isApprovedForAll",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"name": "_symbol",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "_by",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "TokenRegistered",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_tokenId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"name": "_timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "Transfer",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"name": "_owner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"name": "_approved",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "Approval",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"name": "_owner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"name": "_operator",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_approved",
-				"type": "bool"
-			}
-		],
-		"name": "ApprovalForAll",
-		"type": "event"
-	}
-];
-
-const CONTRACT_ABI = [
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_repoAddress",
-				"type": "address"
-			},
-			{
-				"name": "_contractId",
-				"type": "uint256"
-			},
-			{
-				"name": "_owner",
-				"type": "address"
-			},
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "finalizeContract",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "sellerContract",
-		"outputs": [
-			{
-				"name": "contractNum",
-				"type": "string"
-			},
-			{
-				"name": "contractDate",
-				"type": "string"
-			},
-			{
-				"name": "expiryDate",
-				"type": "string"
-			},
-			{
-				"name": "metadata",
-				"type": "string"
-			},
-			{
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"name": "repoAddress",
-				"type": "address"
-			},
-			{
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"name": "active",
-				"type": "bool"
-			},
-			{
-				"name": "finalized",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_contractNum",
-				"type": "string"
-			},
-			{
-				"name": "_contractDate",
-				"type": "string"
-			},
-			{
-				"name": "_metadata",
-				"type": "string"
-			},
-			{
-				"name": "_expiryDate",
-				"type": "string"
-			},
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			},
-			{
-				"name": "_repoAddress",
-				"type": "address"
-			}
-		],
-		"name": "createContract",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_owner",
-				"type": "address"
-			}
-		],
-		"name": "getContractCountOfOwner",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "address"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "contractOwner",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_owner",
-				"type": "address"
-			}
-		],
-		"name": "getContractOf",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_contractId",
-				"type": "uint256"
-			}
-		],
-		"name": "getContractById",
-		"outputs": [
-			{
-				"name": "contractNum",
-				"type": "string"
-			},
-			{
-				"name": "contractDate",
-				"type": "string"
-			},
-			{
-				"name": "expiryDate",
-				"type": "string"
-			},
-			{
-				"name": "metadata",
-				"type": "string"
-			},
-			{
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"name": "repoAddress",
-				"type": "address"
-			},
-			{
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"name": "active",
-				"type": "bool"
-			},
-			{
-				"name": "finalized",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getCount",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "fallback"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "_owner",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_contractId",
-				"type": "uint256"
-			}
-		],
-		"name": "ContractCreated",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "_owner",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_contractId",
-				"type": "uint256"
-			}
-		],
-		"name": "ContractFinalized",
-		"type": "event"
-	}
-];
-
-const GAS_AMOUNT = 500000;
-
-const MYNFT_CA = "0xAefc9B26804E039b739B81F0d28c380671779215";
-const CONTRACT_CA = "0xB4bBA1CF4aA9E93a79471DAC07549984Bc073816";
-
 var account;
 var tokenId;
 var cnt;
 
 window.addEventListener("load", function(){ 
-	window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545")); 
+	web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545")); 
 	web3.eth.defaultAccount = account;
-	ciMyNFT =  web3.eth.contract(MYNFT_ABI).at(MYNFT_CA);
-	ciContract = web3.eth.contract(CONTRACT_ABI).at(CONTRACT_CA);
-	getMyContract();
+	ciMyNFT =  new web3.eth.Contract(MYNFT_ABI, MYNFT_CA);
+	ciContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_CA);
 });
 
+let metadata;
+let privateKey;
+let _v;
+let _r;
+let _s;
+
+function onFileSelected(event){
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function(event) {
+    console.log(event.target.result);
+    privateKey = event.target.result;
+	getMyContract();
+  };
+  reader.readAsText(file);
+}
 
 function getMyContract(){ 
 	account = $("#wallet").val();
-	ciContract.getContractOf(account, {from : account, gas : GAS_AMOUNT}, function(error, result){
+	ciContract.methods.getContractOf(account).call()
+			.then(result => {
 		cnt = result.length;
 		result.forEach((num, index, array) => {
+			getSellerAccountById(Number(num));
 			getContractById(Number(num));
 			}); 
 	});
 }
 
+function getSellerAccountById(target){ 
+	ciContract.methods.getSellerAccountById(target).call({ from: account, gas: GAS_AMOUNT }).then(
+		(result) => {
+			 _v = result[0];
+			 _r = result[1];
+			 _s = result[2];
+			
+				});
+}
 
-function getContractById(value){ 
-	ciContract.getContractById(value, {from : account, gas : GAS_AMOUNT}, function(error, result){
-			$("#contractNum").text(result[0]);
-			$("#metadata").text(result[3]);
-			$("#tokenId").text(result[4]['c']);
-			$("#contractDate").text(result[1]);
-			$("#expiryDate").text(result[2]);
-			$("#contractAddress").text(result[5]);
-			$("#owner").text(result[6]);
-			$("#active").text(result[7]);
-			$("#finalized").text(result[8]);
+function getContractById(target){ 
+	ciContract.methods.getContractById(target).call({ from: account, gas: GAS_AMOUNT }).then(
+		(result) => {
+			
+			const privateKey1 = privateKey;
+			const message = result[3];
+			const messageHash = web3.utils.sha3(message); // 받아온 메시지 암호화
+			const signature = web3.eth.accounts.sign(messageHash, privateKey1); // 재서명
+			// 재서명 정보 구조체에
+			const signature1 = {
+				messageHash : signature.messageHash,
+				v : signature.v,
+				r : signature.r,
+				s : signature.s
+			}
+			console.log(_v);
+			console.log(_r);
+			console.log(_s);
+			
+			console.log(signature.v);
+			console.log(signature.r);
+			console.log(signature.s);
+			// 블록체인 내의 디지털 서명과 현재 서명이 일치하는지 확인 후 리커버
+			const signerAddress = web3.eth.accounts.recover(signature1);
+			if(signerAddress == web3.eth.accounts.recover(messageHash, _v, _r, _s)){						
+				$("#contractNum").text(result[0]);
+				$("#metadata").text(result[3]);
+				console.log(result[4]);
+				$("#tokenId").text(result[4]);
+				$("#contractDate").text(result[1]);
+				$("#expiryDate").text(result[2]);
+				$("#contractAddress").text(result[5]);
+				$("#owner").text(result[6]);
+				$("#active").text(result[7]);
+				$("#finalized").text(result[8]);
+			}else{
+				alert("인증서가 일치하지 않습니다. 인증서를 확인해주세요.");
+			}
+
 	});
 }
+
 
 function finalizeContract(){ 
 	ciContract.finalizeContract(CONTRACT_CA, 0, $("#wallet").val(), 371268423,{from : account, gas : GAS_AMOUNT}, function(error, result){

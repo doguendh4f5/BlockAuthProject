@@ -7,11 +7,11 @@ import org.apache.ibatis.type.Alias;
 import lombok.Data;
 
 @Data
-@Alias("candidatesDTO")
-public class CandidatesDTO {
+@Alias(value = "voteListDTO")
+public class VoteListDTO {
 	String voteNum;
-	int idx;
-	String goodsName;
-	int vote;
+	String voteName;
+	String voteImg;
+	String voteImgOrg;
 	Date regiDate;
 }

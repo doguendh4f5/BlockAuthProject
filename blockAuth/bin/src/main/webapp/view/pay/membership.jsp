@@ -190,10 +190,10 @@
          </div>
          </td></tr>
          <tr id="td4"><td colspan="3">
-         <c:if test="${membership.toString().equals('T')}">
+         <c:if test="${membership.toString().equals('F')}">
             <button type="button" id="btn1" onclick="paybtn()">무료체험 신청</button>
             </c:if>
-            <c:if test="${membership eq 'F'}">
+            <c:if test="${membership eq 'T'}">
             <button type="button" id="btn2">멤버십 구독중</button>
             </c:if>
          </td></tr>

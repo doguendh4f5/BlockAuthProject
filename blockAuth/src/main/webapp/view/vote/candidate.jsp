@@ -6,19 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
 function num(val){
-
-	var val = $("#" + val).text();
-	console.log(val);
-
-	$("#candi").val(val);
+	var data = $('#ip1', opener.document).val();
+	$(opener.document).find("#ip1").val(data + val + ',');
+	window.self.close();
 }
 </script>
 </head>
 <body>
 	<table border="1">
+	<caption>후보자 추가</caption>
 		<tr>
 			<th>상품 번호</th>
 			<th>상품명</th>
@@ -32,9 +31,5 @@ function num(val){
 		</tr>
 </c:forEach>
 	</table>
-	<form action="candidateOk">
-		후보 상품번호 : <input type="text" name="name" id="candi"/><br /> 
-		<input type="submit" value="후보 상품 등록" />
-	</form>
 </body>
 </html>

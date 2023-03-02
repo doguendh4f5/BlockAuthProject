@@ -1,153 +1,157 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.inicis.std.util.ParseUtil"%>
-<%@ page import="com.inicis.std.util.SignatureUtil"%>
-<%@ page import="com.inicis.std.util.HttpUtil"%>
-<%@ page import="java.util.*"%>
-<% 
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.inicis.std.util.SignatureUtil"%>
+<%@page import="java.util.*"%>
+<%
 
-	Map<String, String> resultMap = new HashMap<String, String>();
+	String mid					= "INIpayTest";		                    // 상점아이디					
+	String signKey			    = "SU5JTElURV9UUklQTEVERVNfS0VZU1RS";	// 웹 결제 signkey
+	
+	String mKey = SignatureUtil.hash(signKey, "SHA-256");
 
-	try{
-
-		//#############################
-		// 인증결과 파라미터 일괄 수신
-		//#############################
-		request.setCharacterEncoding("UTF-8");
-
-		Map<String,String> paramMap = new Hashtable<String,String>();
-
-		Enumeration elems = request.getParameterNames();
-
-		String temp = "";
-
-		while(elems.hasMoreElements())
-		{
-			temp = (String) elems.nextElement();
-			paramMap.put(temp, request.getParameter(temp));
-		}
-		
-		System.out.println("paramMap : "+ paramMap.toString());
-		
-		
-		if("0000".equals(paramMap.get("resultCode"))){
-
-			System.out.println("####인증성공/승인요청####");
-
-			//############################################
-			// 1.전문 필드 값 설정(***가맹점 개발수정***)
-			//############################################
-			
-			String mid 		= paramMap.get("mid");
-			String timestamp= SignatureUtil.getTimestamp();
-			String charset 	= "UTF-8";
-			String format 	= "JSON";
-			String authToken= paramMap.get("authToken");
-			String authUrl	= paramMap.get("authUrl");
-			String netCancel= paramMap.get("netCancelUrl");	
-			String merchantData = paramMap.get("merchantData");
-			
-			//#####################
-			// 2.signature 생성
-			//#####################
-			Map<String, String> signParam = new HashMap<String, String>();
-
-			signParam.put("authToken",	authToken);		// 필수
-			signParam.put("timestamp",	timestamp);		// 필수
-
-			// signature 데이터 생성 (모듈에서 자동으로 signParam을 알파벳 순으로 정렬후 NVP 방식으로 나열해 hash)
-			String signature = SignatureUtil.makeSignature(signParam);
+	String timestamp			= SignatureUtil.getTimestamp();			// util에 의해서 자동생성
+	String orderNumber			= mid+"_"+SignatureUtil.getTimestamp();	// 가맹점 주문번호(가맹점에서 직접 설정)
+	String price				= "1000";								// 상품가격(특수기호 제외, 가맹점에서 직접 설정)
 
 
-			//#####################
-			// 3.API 요청 전문 생성
-			//#####################
-			Map<String, String> authMap = new Hashtable<String, String>();
+	Map<String, String> signParam = new HashMap<String, String>();
 
-			authMap.put("mid"			,mid);			// 필수
-			authMap.put("authToken"		,authToken);	// 필수
-			authMap.put("signature"		,signature);	// 필수
-			authMap.put("timestamp"		,timestamp);	// 필수
-			authMap.put("charset"		,charset);		// default=UTF-8
-			authMap.put("format"		,format);	    // default=XML
+	signParam.put("oid", orderNumber);
+	signParam.put("price", price);
+	signParam.put("timestamp", timestamp);
 
-
-			HttpUtil httpUtil = new HttpUtil();
-
-			try{
-				//#####################
-				// 4.API 통신 시작
-				//#####################
-
-				String authResultString = "";
-
-				authResultString = httpUtil.processHTTP(authMap, authUrl);
-				
-				//############################################################
-				//5.API 통신결과 처리(***가맹점 개발수정***)
-				//############################################################
-				
-				String test = authResultString.replace(",", "&").replace(":", "=").replace("\"", "").replace(" ","").replace("\n", "").replace("}", "").replace("{", "");
-				
-							
-				resultMap = ParseUtil.parseStringToMap(test); //문자열을 MAP형식으로 파싱
-				
-				
-			  // 수신결과를 파싱후 resultCode가 "0000"이면 승인성공 이외 실패
-
-			  //throw new Exception("강제 Exception");
-			} catch (Exception ex) {
-
-				//####################################
-				// 실패시 처리(***가맹점 개발수정***)
-				//####################################
-
-				//---- db 저장 실패시 등 예외처리----//
-				System.out.println(ex);
-
-				//#####################
-				// 망취소 API
-				//#####################
-				String netcancelResultString = httpUtil.processHTTP(authMap, netCancel);	// 망취소 요청 API url(고정, 임의 세팅 금지)
-
-				out.println("## 망취소 API 결과 ##");
-
-				// 취소 결과 확인
-				out.println("<p>"+netcancelResultString.replaceAll("<", "&lt;").replaceAll(">", "&gt;")+"</p>");
-			}
-
-		}else{
-			
-			resultMap.put("resultCode", paramMap.get("resultCode"));
-			resultMap.put("resultMsg", paramMap.get("resultMsg"));
-		}
-
-	}catch(Exception e){
-
-		System.out.println(e);
-	}
+	String signature = SignatureUtil.makeSignature(signParam);
+	
 %>
 <!DOCTYPE html>
 <html lang="ko">
+
     <head>
         <meta charset="UTF-8">
-		<script language="javascript" type="text/javascript" src="https://stdpay.inicis.com/stdjs/INIStdPay.js" charset="UTF-8"></script>
-   <script>
-   var log = "<%= resultMap.get("resultMsg") %>";
-   if(log == '정상처리되었습니다.'){
-	   alert("멤버십 결제가 완료되었습니다.\n메인 페이지로 이동합니다.")
-	   location.href="/paymentTest/membershipReturn";
-   }else{
-	   alert("결제에 오류가 발생했습니다. 다시 시도해주세요!");
-	   location.href="/";
-   }
-   </script>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>KG이니시스 결제샘플</title>
+        <link rel="stylesheet" href="/static/css/ini_style.css">
+		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+		
+		<!--테스트 JS--><script language="javascript" type="text/javascript" src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js" charset="UTF-8"></script>
+        <script type="text/javascript">
+            function paybtn() {
+                INIStdPay.pay('SendPayForm_id');
+            }
+        </script>
     </head>
 
-    <body>
-                    <form name="" id="result" method="post" class="mt-5">
-                    <input type="hidden" value="<%= resultMap.get("resultMsg") %>"/>
-                </form>
+    <body class="wrap">
 
+        <!-- 본문 -->
+        <main class="col-8 cont" id="bill-01">
+            <!-- 페이지타이틀 -->
+            <section class="mb-5">
+                <div class="tit">
+                    <h2>일반결제</h2>
+                    <p>KG이니시스 결제창을 호출하여 다양한 지불수단으로 안전한 결제를 제공하는 서비스</p>
+                </div>
+            </section>
+            <!-- //페이지타이틀 -->
+
+
+            <!-- 카드CONTENTS -->
+            <section class="menu_cont mb-5">
+                <div class="card">
+                    <div class="card_tit">
+                        <h3>PC 일반결제</h3>
+                    </div>
+
+                    <!-- 유의사항 -->
+                    <div class="card_desc">
+                        <h4>※ 유의사항</h4>
+                        <ul>
+                            <li>테스트MID 결제시 실 승인되며, 당일 자정(24:00) 이전에 자동으로 취소처리 됩니다.</li>
+							<li>가상계좌 채번 후 입금할 경우 자동환불되지 않사오니, 가맹점관리자 내 "입금통보테스트" 메뉴를 이용부탁드립니다.<br>(실 입금하신 경우 별도로 환불요청해주셔야 합니다.)</li>
+							<li>국민카드 정책상 테스트 결제가 불가하여 오류가 발생될 수 있습니다. 국민, 카카오뱅크 외 다른 카드로 테스트결제 부탁드립니다.</li>
+                        </ul>
+                    </div>
+                    <!-- //유의사항 -->
+
+
+                    <form name="" id="SendPayForm_id" method="post" class="mt-5">
+                        <div class="row g-3 justify-content-between" style="--bs-gutter-x:0rem;">
+				    
+                            <!--label class="col-10 col-sm-2 gap-2 input param" style="border:none;">version</label>
+                            <label class="col-10 col-sm-9 input"-->
+                                <input type="hidden" name="version" value="1.0">
+                            <!--/label-->
+				    
+                            <label class="col-10 col-sm-2 input param" style="border:none;">gopaymethod</label>
+                            <label class="col-10 col-sm-9 input">
+                                <input type="text" name="gopaymethod" value="Card:Directbank:vbank">
+                            </label>
+				    		
+				    		<label class="col-10 col-sm-2 input param" style="border:none;">mid</label>
+                            <label class="col-10 col-sm-9 input">
+                                <input type="text" name="mid" value="<%=mid%>">
+                            </label>
+				    
+                            <label class="col-10 col-sm-2 input param" style="border:none;">oid</label>
+                            <label class="col-10 col-sm-9 input">
+                                <input type="text" name="oid" value="<%=orderNumber%>">
+                            </label>
+				    		
+				    		<label class="col-10 col-sm-2 input param" style="border:none;">price</label>
+                            <label class="col-10 col-sm-9 input">
+                                <input type="text" name="price" value="<%=price%>">
+                            </label>
+				    		
+				    		<label class="col-10 col-sm-2 input param" style="border:none;">timestamp</label>
+                            <label class="col-10 col-sm-9 input">
+                                <input type="text" name="timestamp" value="<%=timestamp%>">
+                            </label>
+				    
+				    
+                            <input type="hidden" name="signature" value="<%=signature%>">
+				    		<input type="hidden" name="mKey" value="<%=mKey%>">
+                            <input type="hidden" name="currency" value="WON">
+				    		
+				    		
+				    		<label class="col-10 col-sm-2 input param" style="border:none;">goodname</label>
+                            <label class="col-10 col-sm-9 input">
+                                <input type="text" name="goodname" value="이름">
+                            </label>
+				    		
+				    		<label class="col-10 col-sm-2 input param" style="border:none;">buyername</label>
+                            <label class="col-10 col-sm-9 input">
+                                <input type="text" name="buyername" value="테스터">
+                            </label>
+				    		
+				    		<label class="col-10 col-sm-2 input param" style="border:none;">buyertel</label>
+                            <label class="col-10 col-sm-9 input">
+                                <input type="text" name="buyertel" value="01012345678">
+                            </label>
+				    		
+				    		<label class="col-10 col-sm-2 input param" style="border:none;">buyeremail</label>
+                            <label class="col-10 col-sm-9 input">
+                                <input type="text" name="buyeremail" value="test@test.com">
+                            </label>
+				    		
+				    		<input type="hidden" name="returnUrl" value="http://localhost:8080/paymentTest/paymentReturn">
+                            <input type="hidden" name="closeUrl" value="http://localhost:8080/paymentTest/paymentClose">
+                            
+				    		<label class="col-10 col-sm-2 input param" style="border:none;">acceptmethod</label>
+                            <label class="col-10 col-sm-9 input">
+                                <input type="text" name="acceptmethod" value="HPP(1):below1000:va_receipt">
+                            </label>
+							
+                        </div>
+                    </form>
+				
+				    <button onclick="paybtn()" class="btn_solid_pri col-6 mx-auto btn_lg" style="margin-top:50px">결제 요청</button>
+					
+                </div>
+            </section>
+			
+        </main>
 		
     </body>
 </html>
