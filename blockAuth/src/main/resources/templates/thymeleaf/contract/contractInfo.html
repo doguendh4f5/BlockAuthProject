@@ -1,8 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style type="text/css">
+   .col-md-9{
+      margin : auto;
+      
+   }
+   #submit1{
+       background-color: #FFA7A7;
+    border-color: #FFA7A7;
+   }
+      #submit2{
+       background-color: #FFBB00;
+    border-color: #FFBB00;
+   }
+</style>
+
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+#submit2{
+       background-color: #FFBB00;
+    border-color: #FFBB00;
+   }   
+</style>
+<link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Block-Auth</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  
 <script type="text/javascript" src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/web3@0.19.0/dist/web3.js"></script>
 <script type="text/javascript" src="/static/js/adminContractList.js"></script>
@@ -15,25 +58,168 @@ function contractInfo(){
 }
 </script>
 </head>
+
 <body>
 <input type="hidden" id="wallet" th:value="${sellerWalletAddr}" />
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'admin'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          </span>
+          </span>
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'buyer'}">
+          <li class="nav-item">
+            <a class="nav-link" href="../cartList">장바구니</a>
+          </li>
+          </span></span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">마이페이지</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <span th:if="${session.authInfo.grade == 'buyer' || session.authInfo.grade == 'seller'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          </span>
+          </span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+           <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/inquire/inquireList">고객센터</a>
+          </li>
+          </span>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-<table border="1">
-<caption><h4>계약 상세 정보</h4></caption>
-<tr th:onchange="getAuctionById(this)">
-<td>계약번호</td><td><span id="contractNum"></span></td></tr>
-<tr><td>계약서 메타데이터</td><td><span id="metadata"></span></td></tr>
-<tr><td>토큰 아이디</td><td><span id="tokenId"></span></td></tr>
-<tr><td>계약일</td><td><span id="contractDate"></span></td></tr>
-<tr><td>종료일</td><td><span id="expiryDate"></span></td></tr>
-<tr><td>계약 컨트랙트 주소</td><td><span id="contractAddress"></span></td></tr>
-<tr><td>토큰 소유자</td><td><span id="owner"></span></td></tr>
-<tr><td>토큰 활성여부</td><td><span id="active"></span></td></tr>
-<tr><td>계약 만료여부</td><td><span id="finalized"></span><br/></td></tr>
-<tr><td>계약서 사본 조회</td><td><button type="button" onclick="contractInfo();">조회</button></td></tr>
-</table>
-<br/><br/>
-<a href="javascript:history.back();">계약 목록</a>
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+          <a href="/buyer/buyerList" class="list-group-item">구매자 관리</a>
+          <a href="/seller/sellerList" class="list-group-item">판매자 관리</a>
+          <a href="/goods/goodsList" class="list-group-item">상품 관리</a>
+          <a href="/contract/contractList" class="list-group-item">계약 관리</a>
+          <a href="/vote/voteList" class="list-group-item">투표 관리</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+      
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h4>계약 상세정보</h4>
+                          <hr>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                             <div class="form-group row">
+                               <label for="contractNum" class="col-4 col-form-label">계약번호</label> 
+                               <div class="col-8">
+                                 <p id="contractNum" name="contractNum" class="form-control here"></p>
+                               </div>
+                             
+                               <label for="metadata" class="col-4 col-form-label">계약서 메타데이터</label> 
+                               <div class="col-8">
+                                 <p id="metadata" name="metadata" class="form-control here"></p>
+                               </div>
+                               <label for="tokenId" class="col-4 col-form-label">토큰 아이디</label> 
+                               <div class="col-8">
+                                 <p id="tokenId" name="tokenId" class="form-control here"></p>
+                               </div>
+                               <label for="contractDate" class="col-4 col-form-label">계약일</label> 
+                               <div class="col-8">
+                                 <p id="contractDate" name="contractDate" class="form-control here"></p>
+                               </div>
+                               <label for="expiryDate" class="col-4 col-form-label">종료일</label> 
+                               <div class="col-8">
+                                 <p id="expiryDate" name="expiryDate" class="form-control here"></p>
+                               </div>
+                               <label for="contractAddress" class="col-4 col-form-label">계약 컨트랙트 주소</label> 
+                               <div class="col-8">
+                                 <p id="contractAddress" name="contractAddress" class="form-control here"></p>
+                               </div>
+                               <label for="owner" class="col-4 col-form-label">토큰 소유자</label> 
+                               <div class="col-8">
+                                 <p id="owner" name="owner" class="form-control here"></p>
+                               </div>
+                               <label for=active class="col-4 col-form-label">토큰 활성여부</label> 
+                               <div class="col-8">
+                                 <p id="active" name="active" class="form-control here"></p>
+                               </div>
+                               <label for=finalized class="col-4 col-form-label">계약 만료여부</label> 
+                               <div class="col-8">
+                                 <p id="finalized" name="finalized" class="form-control here"></p>
+                               </div>
+                               <label for=contractInfo class="col-4 col-form-label">계약서 사본 조회</label> 
+                               <div class="col-8">
+                                <button id="submit2" type="button" onclick="contractInfo();" class="btn btn-primary">조회</button>
+                               </div>
+                             </div>
+                              <div class="form-group row">
+                                <div class="offset-4 col-8">
+                                  <button name="submit" type="button" onclick="javascript:history.back();" class="btn btn-primary">계약 리스트</button>
+                                </div>
+                      </div>
+                  </div>
+              </div>
+      </div>
+     </div>
+    <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+</div>
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

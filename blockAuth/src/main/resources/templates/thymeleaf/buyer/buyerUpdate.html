@@ -1,8 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>구매자 수정페이지</title>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style type="text/css">
+   .col-md-9{
+      margin : auto;
+      
+   }
+   #submit1{
+       background-color: #FFA7A7;
+    border-color: #FFA7A7;
+   }
+      #submit2{
+       background-color: #FFBB00;
+    border-color: #FFBB00;
+   }
+</style>
+
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+   
+</style>
+
+<link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>구매자 수정페이지</title>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -53,74 +90,202 @@
         }).open();
     }
 </script>
-</head>
-<body>
-<strong>[[${buyerCommand.buyerName}]] 님의 수정페이지</strong><br>
-<form action="buyerModify" method="post" th:object=${buyerCommand}>
-<input type="hidden" name="buyerNum" th:value="${buyerCommand.buyerNum}">
-<input type="hidden" name="buyerPw" value="1111aaaa!">
-<input type="hidden" name="buyerPwCon" value="1111aaaa!">
-<input type="hidden" name="buyerWalletAddr" value="1234">
+  
 
-<table border="1">
-	<tr><th>구매자 번호</th><td>[[${buyerCommand.buyerNum}]]</td></tr>
-	<tr><th>구매자 아이디</th>
-	<td>
-		<input type="text" name="buyerId" th:value="${buyerCommand.buyerId}">
-		<span style="color:red" th:if="${#fields.hasErrors('buyerId')}" th:errors="*{buyerId}"></span>
-	</td>
-	</tr>
-	<tr>
-	<th>구매자 이름</th>
-	<td>
-		<input type="text" name="buyerName" th:value="${buyerCommand.buyerName}">
-		<span style="color:red" th:if="${#fields.hasErrors('buyerName')}" th:errors="*{buyerName}"></span>
-	</td>
-	</tr>
-	<tr>
-	<th>구매자 연락처</th>
-	<td>
-		<input type="tel" name="buyerPhone" th:value="${buyerCommand.buyerPhone}">
-		<span style="color:red" th:if="${#fields.hasErrors('buyerPhone')}" th:errors="*{buyerPhone}"></span>
-	</td>
-	</tr>
-	<tr>
-	<th>구매자 주소</th>
-	<td>
-                  <input type="text" name="buyerAddr1" th:value="${buyerCommand.buyerAddr1}"
-                  id="sample4_roadAddress" 
-                  style="width: 65%; background-image:url('img/search.png'); 
-                  background-repeat:no-repeat; background-position:right; background-size:20px 20px; width:171px;" 
-                  onclick="sample4_execDaumPostcode();" readonly="readonly" placeholder="주소"/>
-                  <span style="color:red" th:if="${#fields.hasErrors('buyerAddr1')}" th:errors="*{buyerAddr1}"></span>
-                  <br>
-                  
-                  <input type="text" name="buyerAddr2" id="sample4_extraAddress" th:value="${buyerCommand.buyerAddr2}" placeholder="상세주소"/>
-                  <span style="color:red" th:if="${#fields.hasErrors('buyerAddr2')}" th:errors="*{buyerAddr2}"></span>
-                  <br>
-                  
-                  <input type="text" name="buyerPostcode" th:value="${buyerCommand.buyerPostcode}"
-                  id="sample4_postcode" readonly="readonly" placeholder="우편번호"/>
-                  <span style="color:red" th:if="${#fields.hasErrors('buyerPostcode')}" th:errors="*{buyerPostcode}"></span>
-                  
-    </td>
-	</tr>
-	<tr>
-	<th>구매자 생일</th>
-	<td>
-		<input type="date" name="buyerBirth" th:value="${#dates.format(buyerCommand.buyerBirth, 'yyyy-MM-dd')}">
-		<span style="color:red" th:if="${#fields.hasErrors('buyerBirth')}" th:errors="*{buyerBirth}"></span>
-	</td>
-	</tr>
-	<tr>
-	<th>구매자 이메일</th>
-	<td>
-	<input type="email" name="buyerEmail" th:value="${buyerCommand.buyerEmail}">
-	<span style="color:red" th:if="${#fields.hasErrors('buyerEmail')}" th:errors="*{buyerEmail}"></span>
-	</td>
-	</tr>
-	<tr><th colspan="2"><input type="submit" value="수정완료"></th></tr>
-</table>
-</form>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'admin'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          </span>
+          </span>
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'buyer'}">
+          <li class="nav-item">
+            <a class="nav-link" href="../cartList">장바구니</a>
+          </li>
+          </span></span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">마이페이지</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <span th:if="${session.authInfo.grade == 'buyer' || session.authInfo.grade == 'seller'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          </span>
+          </span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+           <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/inquire/inquireList">고객센터</a>
+          </li>
+          </span>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+          <a href="/buyer/buyerList" class="list-group-item">구매자 관리</a>
+          <a href="/seller/sellerList" class="list-group-item">판매자 관리</a>
+          <a href="/goods/goodsList" class="list-group-item">상품 관리</a>
+          <a href="/contract/contractList" class="list-group-item">계약 관리</a>
+          <a href="/vote/voteList" class="list-group-item">투표 관리</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+      
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h4>[[${buyerCommand.buyerName}]] 님의 수정페이지</h4>
+                          <hr>
+                      </div>
+                  </div>
+<div class="row">
+                      <div class="col-md-12">
+                          <form action="buyerModify" method="post" th:object=${buyerCommand}>
+							<input type="hidden" name="buyerPw" value="1111aaaa!">
+							<input type="hidden" name="buyerPwCon" value="1111aaaa!">
+							<input type="hidden" name="buyerWalletAddr" value="1234">
+                              
+                                                          <div class="form-group row">
+                                <label for="buyerNum" class="col-4 col-form-label">구매자 번호</label> 
+                                <div class="col-8">
+                                  <input id="buyerNum" name="buyerNum" th:value="${buyerCommand.buyerNum}" 
+                                      class="form-control here" type="text" readonly="readonly">
+                                      
+                                </div>
+                                </div>
+                                 <div class="form-group row">
+                                  <label for="buyerId" class="col-4 col-form-label">구매자 아이디</label> 
+                                <div class="col-8">
+                                  <input id="buyerId" name="buyerId" th:value="${buyerCommand.buyerId}" 
+                                      class="form-control here" type="text">
+                                      <span style="color:red" th:if="${#fields.hasErrors('buyerId')}" th:errors="*{buyerId}"></span>
+                                      
+                                </div>
+                                </div>
+                                 <div class="form-group row">
+                                          <label for="buyerName" class="col-4 col-form-label">구매자 이름</label> 
+                                <div class="col-8">
+                                  <input id="buyerName" name="buyerName" th:value="${buyerCommand.buyerName}" 
+                                      class="form-control here" type="text">
+                                      <span style="color:red" th:if="${#fields.hasErrors('buyerName')}" th:errors="*{buyerName}"></span>
+                                    </div>  
+                                </div>
+                                
+                                
+                            
+                              <div class="form-group row">
+                                <label for="buyerPhone" class="col-4 col-form-label">구매자 연락처</label> 
+                                <div class="col-8">
+                                  <input id="buyerPhone" name="buyerPhone" th:value="${buyerCommand.buyerPhone}" 
+                                      class="form-control here" type="text">
+                                      <span style="color:red" th:if="${#fields.hasErrors('buyerPhone')}" th:errors="*{buyerPhone}"></span>
+                                      
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="text" class="col-4 col-form-label">구매자 주소</label> 
+                                <div class="col-8">
+                                  <input type="text" name="buyerAddr1" th:value="${buyerCommand.buyerAddr1}" class="form-control here"
+					                  id="sample4_roadAddress" placeholder="주소"
+					                  onclick="sample4_execDaumPostcode();" readonly="readonly" />
+					                   <span style="color:red" th:if="${#fields.hasErrors('buyerAddr1')}" th:errors="*{buyerAddr1}"></span>
+					              <input type="text" name="buyerPostcode" th:value="${buyerCommand.buyerPostcode}"
+					              	  class="form-control here" placeholder="우편번호"
+					                  id="sample4_postcode" readonly="readonly"/>
+					                 <span style="color:red" th:if="${#fields.hasErrors('buyerPostcode')}" th:errors="*{buyerPostcode}"></span>
+					              <input type="text" name="buyerAddr2" id="sample4_extraAddress" placeholder="상세주소"
+					                  class="form-control here" th:value="${buyerCommand.buyerAddr2}" />
+					                   <span style="color:red" th:if="${#fields.hasErrors('buyerAddr2')}" th:errors="*{buyerAddr2}"></span>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="buyerBirth" class="col-4 col-form-label">구매자 생일</label> 
+                                <div class="col-8">
+                                  <input id="buyerBirth" name="buyerBirth" placeholder="yyyy-MM-dd"
+                                      th:value="${#dates.format(buyerCommand.buyerBirth, 'yyyy-MM-dd')}" class="form-control here" required="required" type="date">
+                                <span style="color:red" th:if="${#fields.hasErrors('buyerBirth')}" th:errors="*{buyerBirth}"></span>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="buyerEmail" class="col-4 col-form-label">구매자 이메일</label> 
+                                <div class="col-8">
+                                  <input id="buyerEmail" name="buyerEmail" placeholder="email@email" th:value="${buyerCommand.buyerEmail}" class="form-control here" type="email">
+                                <span style="color:red" th:if="${#fields.hasErrors('buyerEmail')}" th:errors="*{buyerEmail}"></span>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <div class="offset-4 col-8">
+                                  <button name="submit" type="submit" class="btn btn-primary">수정 완료</button>
+                                </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+      </div>
+     </div>
+    <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

@@ -38,7 +38,7 @@ body {
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="/">Block-Auth</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,23 +46,32 @@ body {
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'admin'}">
           <li class="nav-item">
-            <a class="nav-link" href="admin/adminList">관리자페이지
+            <a class="nav-link" href="/buyer/buyerList">관리자페이지
               <span class="sr-only">(current)</span>
             </a>
           </li>
+          </span>
+          </span>
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'buyer'}">
           <li class="nav-item">
-            <a class="nav-link" href="#">장바구니</a>
+            <a class="nav-link" href="../cartList">장바구니</a>
           </li>
+          </span></span>
           <span th:if="${session.authInfo == null}">
           <li class="nav-item">
             <a class="nav-link" href="/login">마이페이지</a>
           </li>
           </span>
           <span th:if="${session.authInfo != null}">
+          <span th:if="${session.authInfo.grade == 'buyer' || session.authInfo.grade == 'seller'}">
           <li class="nav-item">
             <a class="nav-link" href="/mypage">마이페이지</a>
           </li>
+          </span>
           </span>
           <span th:if="${session.authInfo == null}">
           <li class="nav-item">
@@ -74,9 +83,11 @@ body {
             <a class="nav-link" href="/login/logout">로그아웃</a>
           </li>
           </span>
+           <span th:if="${session.authInfo != null}">
           <li class="nav-item">
             <a class="nav-link" href="/inquire/inquireList">고객센터</a>
           </li>
+          </span>
         </ul>
       </div>
     </div>

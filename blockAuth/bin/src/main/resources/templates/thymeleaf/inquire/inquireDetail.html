@@ -24,7 +24,7 @@ body {
 }
    
 </style>
-<link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -33,7 +33,31 @@ body {
   <title>Inquire Form</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+  <script type="text/javascript">
+	  function sellerAdminReplyInsert(adminInqNum){
+		  var adminReplyContent = $("#adminReplyContent").val();
+		  $.ajax({
+				type:"post",
+				dataType:"text",
+				url: "/inquire/sellerAdminReplyInsert",
+				data : {"adminInqNum": adminInqNum
+						, "adminReplyContent" : adminReplyContent},
+				success:function(result){
+					if(result = "1"){
+						alert("답변작성을 완료했습니다.");
+						location.reload();
+					}else{
+						alert("답변작성에 실패했습니다.");
+					}
+				},
+				error:function(result){
+					alert("오류입니다.");
+					return false;
+				}
+			});
+		}
+  </script>
 </head>
 
 <body>
@@ -123,35 +147,70 @@ body {
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-									 <form action="sellerInquireUpdate" method="get" th:object="${sellerInq}" enctype="multipart/form-data">
 									  <table class="table table-striped">
+									   <form action="sellerInquireUpdate" method="get" th:object="${sellerInq}" enctype="multipart/form-data">
 										    <tr>
-										    	<th>문의번호</th>
+										    	<th style="width:15%;">문의번호</th>
 										    	<td><input name="adminInqNum" th:value="${sellerInq.adminInqNum}" class="form-control here" readonly="readonly" type="text" /></td>
-										    	<th>문의날짜</th>
+										    	<th style="width:10%;">문의자</th>
+										    	<td><input name="sellerNum" th:value="${sellerInq.sellerNum}" class="form-control here" readonly="readonly" type="text" /></td>
+										    	<th style="width:15%;">문의날짜</th>
 										    	<td><input name="adminInqDate" th:value="${#dates.format(sellerInq.adminInqDate, 'yyyy-MM-dd')}" class="form-control here" readonly="readonly" type="text" /></td>
 										    </tr>
 										    <tr>
 										    	<th>문의제목</th>
-										    	<td><input name="adminInqTitle" th:value="${sellerInq.adminInqTitle}" class="form-control here" readonly="readonly" type="text" /></td>
+										    	<td colspan="3"><input name="adminInqTitle" th:value="${sellerInq.adminInqTitle}" class="form-control here" readonly="readonly" type="text" /></td>
 										    	<th>문의종류</th>
-										    	<td><input name="adminInqCategory" th:value="${sellerInq.adminInqCategory}" class="form-control here" readonly="readonly" type="text" /></td>
+										    	<td ><input name="adminInqCategory" th:value="${sellerInq.adminInqCategory}" class="form-control here" readonly="readonly" type="text" /></td>
 										    </tr>
 										    <tr>
 										    	<th>문의내용</th>
-										    	<td colspan="3">
-										    		<textarea name="adminInqContent" th:value="${sellerInq.adminInqContent}" class="form-control here" readonly="readonly" type="text">[[${sellerInq.adminInqContent}]]</textarea>
+										    	<td colspan="5">
+										    		<textarea name="adminInqContent" th:value="${sellerInq.adminInqContent}" class="form-control here" readonly="readonly">[[${sellerInq.adminInqContent}]]</textarea>
 										    	</td>
 										    </tr>
-										    <tr>
-										    	<td colspan="4" style="text-align:center;">
-										    		<input type="submit" value="수정하기" />
-										    		<input type="button" value="삭제하기" onclick="location.href='/sellerInqDel';" />
-										    		<input type="button" value="리스트로 돌아가기" onclick="location.href='/inquire/inquireList';" />
-										    	</td>
-										    </tr>
+										    </span>
+										    <span th:if="${session.authInfo.grade.equals('admin') && sellerInq.adminReplyContent == null}">
+										       <tr>
+											    	<th>관리자 답변</th>
+											    	<td colspan="5">
+											    		<textarea name="adminReplyContent" id="adminReplyContent" class="form-control here"></textarea>
+											    	</td>
+											    </tr>
+											    <tr>
+											    	<td colspan="6" style="text-align:center;">
+											    		<input type="button"  th:attr="onclick=|sellerAdminReplyInsert('${sellerInq.adminInqNum}');|" value="답변하기">
+											    		<input type="button" value="리스트로 돌아가기" onclick="location.href='/inquire/inquireList';" />
+											    	</td>
+											    </tr>
+										    </span>
+										    <span th:if="${sellerInq.adminReplyContent != null}">
+											    <tr>
+											    	<th>관리자 답변</th>
+											    	<td colspan="5">
+											    		<textarea name="adminReplyContent" th:value="${sellerInq.adminReplyContent}" class="form-control here" readonly="readonly">[[${sellerInq.adminReplyContent}]]</textarea>
+											    	</td>
+											    </tr>
+										    </span>
+										    <span th:if="${session.authInfo.grade.equals('seller')}">
+											    <tr>
+											    	<td colspan="6" style="text-align:center;">
+											    		<input type="submit" value="수정하기" />
+											    		<input type="button" value="삭제하기" th:onclick="|location.href='@{../inquire/sellerInqDel(adminInqNum=${sellerInq.adminInqNum})}'|" />
+											    		<input type="button" value="리스트로 돌아가기" onclick="location.href='/inquire/inquireList';" />
+											    	</td>
+											    </tr>
+											 </form>
+											</span>
+											<span th:if="${session.authInfo.grade.equals('admin') && sellerInq.adminReplyContent != null}">
+											    <tr>
+											    	<td colspan="6" style="text-align:center;">
+											    		<input type="button" value="리스트로 돌아가기" onclick="location.href='/inquire/inquireList';" />
+											    	</td>
+											    </tr>
+											 </form>
+											</span>
 										</table>
-									 </form>
 									</div>
 								</div>
 							</div>
@@ -178,8 +237,6 @@ body {
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

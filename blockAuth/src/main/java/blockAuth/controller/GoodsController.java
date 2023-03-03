@@ -43,7 +43,15 @@ public class GoodsController {
 	@RequestMapping("goodsList")
 	public String goodsList(Model model) {
 		goodsListService.execute(model);
-		return "thymeleaf/goods/goodsList";
+		// return "thymeleaf/goods/goodsList";
+		return "thymeleaf/goods/sellerGoodsList";
+	}
+	
+	//상품리스트 페이지
+	@RequestMapping("sellerGoodsList")
+	public String sellerGoodsList(Model model) {
+		goodsListService.execute(model);
+		return "thymeleaf/goods/sellerGoodsList";
 	}
 	
 	//상품정보입력페이지
@@ -81,6 +89,16 @@ public class GoodsController {
 		return "thymeleaf/goods/goodsDetail";
 	}
 	
+	//판매자 상품상세페이지
+	@RequestMapping("goodsSellerDetail")
+	public String goodsSellerDetail(
+			@RequestParam(value = "goodsNum") String goodsNum,
+			Model model, HttpSession session) {
+		model.addAttribute("newLineChar", '\n'); 
+		goodsDetailService.execute(model, goodsNum);
+		return "thymeleaf/goods/goodsSellerDetail";
+	}
+	
 	
 	
 	//상품수정정보입력페이지
@@ -104,6 +122,10 @@ public class GoodsController {
 			model.addAttribute("error", "필수항목을 모두 입력해 주세요.");
 			session.removeAttribute("fileList");
 			return "thymeleaf/goods/goodsUpdate";
+		}
+		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+		if(authInfo.getGrade().equals("seller") || authInfo.getGrade().equals("admin")) {
+			return "redirect:goodsSellerDetail?goodsNum="+goodsCommand.getGoodsNum();
 		}
 		return "redirect:goodsDetail/"+goodsCommand.getGoodsNum();
 	}

@@ -126,14 +126,16 @@ body {
 									  <form action="sellerInqModify" method="post"  th:object="${sellerInq}">
 										<table class="table table-striped">
 										    <tr>
-										    	<th style="text-align:center;">문의번호</th>
-										    	<td><input name="adminInqNum" style="text-align:center;" type="text" class="form-control here" th:value="${sellerInq.adminInqNum}" readonly="readonly" /></td>
-										    	<th>문의날짜</th>
-										    	<td><input name="adminInqDate" style="text-align:center;" type="date" class="form-control here" th:value="${#dates.format(sellerInq.adminInqDate,'yyyy-MM-dd')}" readonly="readonly" /></td>
+										    	<th style="width:15%;">문의번호</th>
+										    	<td><input name="adminInqNum" type="text" class="form-control here" th:value="${sellerInq.adminInqNum}" readonly="readonly" /></td>
+										    	<th style="width:10%;">문의자</th>
+										    	<td><input name="sellerNum" th:value="${sellerInq.sellerNum}" class="form-control here" readonly="readonly" type="text" /></td>
+										    	<th style="width:15%;">문의날짜</th>
+										    	<td><input name="adminInqDate" type="date" class="form-control here" th:value="${#dates.format(sellerInq.adminInqDate,'yyyy-MM-dd')}" readonly="readonly" /></td>
 										    </tr>
 										    <tr>
 										    	<th>문의제목</th>
-										    	<td><input name="adminInqTitle" style="width:80%;" type="text" class="form-control here" placeholder="문의제목을 작성하세요" th:value="${sellerInq.adminInqTitle}" /></td>
+										    	<td colspan="3"><input name="adminInqTitle" type="text" class="form-control here" placeholder="문의제목을 작성하세요" th:value="${sellerInq.adminInqTitle}" /></td>
 										    	<th>문의종류</th>
 										    	<td>
 										    		<select class="form-control here" name="adminInqCategory">
@@ -146,10 +148,10 @@ body {
 										    </tr>
 										    <tr>
 										    	<th>문의내용</th>
-										    	<td colspan="3"><textarea name="adminInqContent" type="text" class="form-control here" placeholder="문의내용을 작성하세요" th:value="${sellerInq.adminInqContent}">[[${sellerInq.adminInqContent}]]</textarea></td>
+										    	<td colspan="5"><textarea name="adminInqContent" type="text" class="form-control here" placeholder="문의내용을 작성하세요" th:value="${sellerInq.adminInqContent}">[[${sellerInq.adminInqContent}]]</textarea></td>
 										    </tr>
 										    <tr>
-										    	<td colspan="4" style="text-align:center;"><input type="submit" value=" 수 정 완 료 " /></td>
+										    	<td colspan="6" style="text-align:center;"><input type="submit" value=" 수 정 완 료 " /></td>
 										    </tr>
 										</table>
 									  </form>

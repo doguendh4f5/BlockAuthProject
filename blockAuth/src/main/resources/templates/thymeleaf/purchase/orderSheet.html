@@ -2,7 +2,74 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주문서</title>
+<title>Insert title here</title>
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+<style>
+#div1{
+	background-color : white;
+	width : 860px;
+	height : auto;
+	padding : 80px;
+}
+#div2{
+	font-size : 13px;
+}
+#div3{
+	border : 2px solid #ccc;
+	background-color : #FFEAEA;
+	padding-top : 25px;
+	padding-right : 25px;
+	padding-left : 25px;
+	padding-bottom : 10px;
+	font-size : 13px;
+}
+#div4{
+	border : 2px solid #ccc;
+	background-color : #EAEAEA;
+	padding-top : 25px;
+	padding-right : 25px;
+	padding-left : 25px;
+	padding-bottom : 10px;
+	font-size : 13px;
+}
+#div5{
+	font-size : 14px;
+}
+#sp1{
+	font-size : 15px;
+	color : #FF6C6C;
+	font-weight : bold;
+}
+#sp2{
+	font-size : 10px;
+}
+#sp3{
+	font-size : 14px;
+}
+#sp4{
+	font-size : 13px;
+}
+#btn1{
+	border : none;
+	background-color : #FF8383;
+	color : white;
+	width : 150px;
+	height : 50px;
+	font-weight : bold;
+	font-size : 17px;
+	margin : auto;
+	border-radius : 5px;
+	display : block;
+	}
+.row{
+ justify-content : center;
+ margin-top: 50px;
+}
+</style>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -55,7 +122,66 @@
 </script>
 </head>
 <body>
- <table width="700" align="center">
+<!-- Navigation -->
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'admin'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          </span>
+          </span>
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'buyer'}">
+          <li class="nav-item">
+            <a class="nav-link" href="../cartList">장바구니</a>
+          </li>
+          </span></span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">마이페이지</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <span th:if="${session.authInfo.grade == 'buyer' || session.authInfo.grade == 'seller'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          </span>
+          </span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+           <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/inquire/inquireList">고객센터</a>
+          </li>
+          </span>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <div class="row">
+    <div id="div1">
+<table width="700" align="center">
 <tr><td>
 <strong>주문서</strong>
 <hr />
@@ -124,12 +250,22 @@
 				<tr><td align="left">상품금액 : [[${#numbers.formatCurrency(goodsTotalPrice)}]]</td><td align = "right"> 원</td></tr>
 				<tr><td align="left">배송비 : [[${#numbers.formatCurrency(goodsTotalDelivery)}]]</td><td align = "right"> 원</td></tr>
 				<tr><td align="left">총 결제 금액 : [[${#numbers.formatCurrency(goodsTotalPrice + goodsTotalDelivery)}]]</td><td align = "right"> 원</td></tr>
-				<tr><td align="center"  colspan=2><input type="submit" value="결제하기"/></td></tr>
+				<tr><td align="center"  colspan=2><br/><button type="submit">결제하기</button></td></tr>
 			</table>
 		</td>
 	</tr>
 </table>
 </form>
 </p>
+
+</div>
+</div></div>
+ <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
 </body>
 </html>

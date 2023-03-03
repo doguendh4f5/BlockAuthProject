@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 <link rel="stylesheet" href="/static/css/style3.css">
-<script type="text/javascript" src="/static/js/vote.js"></script>
 <style type="text/css">
    /*!
  * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
@@ -25,19 +24,6 @@ body {
     height : 40px;
     color : white;
     border-radius : 5px;
-}  
-
-#btn2{
-    background-color : #FFBA85;
-    border : none;
-    border-color : #FFBA85;
-    color : white;
-    border-radius : 5px;
-} 
- 
-#ip1{
-	width : 420px;
-	display : inline-block;
 }
 </style>
 <link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
@@ -46,8 +32,10 @@ body {
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>관리자 페이지</title>
-  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+  <title>Block-Auth</title>
+
+  
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
    
@@ -58,8 +46,8 @@ body {
    }
    #div1{
    text-align : center;
-   margin-right:150px;
    }
+
    .table{
        word-break : break-all;
    }
@@ -70,7 +58,7 @@ body {
 
 <script type="text/javascript">
 function reg(){
-   location.href="voteWrite";
+   location.href="goodsRegist";
 }
 </script>
 </head>
@@ -78,7 +66,7 @@ function reg(){
 <body>
 
   <!-- Navigation -->
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="/">Block-Auth</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,67 +130,68 @@ function reg(){
 
         <h1 class="my-4">Block-Auth</h1>
         <div class="list-group">
+                 <span th:if="${session.authInfo.grade == 'seller'}">
+         <a href="/goods/goodsList" class="list-group-item">상품 관리</a>
+          <a href="#" class="list-group-item">상품 문의</a>
+          <a href="#" class="list-group-item">송장정보 입력</a>
+          <a href="/mypage/sellerMyInfoEdit" class="list-group-item">내 정보 수정</a>
+          </span>
+          <span th:if="${session.authInfo.grade == 'admin'}">
           <a href="/buyer/buyerList" class="list-group-item">구매자 관리</a>
           <a href="/seller/sellerList" class="list-group-item">판매자 관리</a>
           <a href="/goods/goodsList" class="list-group-item">상품 관리</a>
           <a href="/contract/contractList" class="list-group-item">계약 관리</a>
-          <a href="/vote/voteList" class="list-group-item">투표 관리</a>
+          </span>
         </div>
 
       </div>
       <!-- /.col-lg-3 -->
 
       <div class="col-lg-9">
-
-<div class="card">
-              <div class="card-body">
-                  <div class="row">
-                      <div class="col-md-12">
-                          <h4>투표 등록</h4>
-                          <hr>
-                      </div>
+      <section class="ftco-section">
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+               <h2 class="heading-section">상품 리스트</h2>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-12">
+                  <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th>상품 번호</th>
+                        <th>상품 이미지</th>
+                        <th >상품명</th>
+                        <th>상품 가격</th>
+                        <th>판매자</th>
+                        <th style="width:5%">&nbsp;</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="alert" role="alert" th:each="goodsCommand : ${list}">
+                        <th scope="row"><a th:href="@{../goods/goodsSellerDetail(goodsNum=${goodsCommand.goodsNum})}">[[${goodsCommand.goodsNum}]]</a></th>
+                        <td><img th:src="|/goods/upload/${goodsCommand.goodsMain}|" width="30px"></td>
+                        <td>[[${goodsCommand.goodsName}]]</td>
+                        <td>[[${goodsCommand.goodsPrice}]]</td>
+                        <td>[[${goodsCommand.goodsCompany}]]</td>
+                        <td>
+                           <a th:href="|../goods/goodsDelete/${goodsCommand.goodsNum}|" class="close" data-dismiss="alert" aria-label="Close">
+                           <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                         </a>
+                       </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div id="div1">
+                   <button type="button" onclick="reg()" id="btn1">상품 등록</button>
                   </div>
-                  <div class="row">
-                      <div class="col-md-12">
-                          <form action="voteRegist" method="post" th:object="${voteCommand}" enctype="multipart/form-data" >
-                              <div class="form-group row">
-                                <label for="username" class="col-4 col-form-label">투표 번호(자동부여)</label> 
-                                <div class="col-8">
-                                  <input type="text" name="voteNum" th:value="${voteCommand.voteNum}"  readonly="readonly" class="form-control here"/>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="name" class="col-4 col-form-label">투표명</label> 
-                                <div class="col-8">
-                                  <input type="text" name="voteName" placeholder="투표명을 작성하세요." value="" class="form-control here"/>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="lastname" class="col-4 col-form-label">투표 후보</label> 
-                                <div class="col-8">
-                                  <input type="text" id="ip1" name="goodsName" placeholder="투표 후보를 추가하세요." readonly="readonly" class="form-control here"/>&nbsp;
-                                <button type="button" id="btn2" onclick="javascript:candidate();">후보 추가</button>
-                                </div>
-                                
-                              </div>
-                              <div class="form-group row">
-                                <label for="newpass" class="col-4 col-form-label">투표 이미지</label> 
-                                <div class="col-8">
-                                  <input type="file" name="voteImg" class="form-control here"/>
-                                </div>
-                              </div> 
-                              <div class="form-group row" id="div1">
-                                <div class="offset-4 col-8" id="div1">
-                                  <button name="submit" type="submit" class="btn btn-primary" id="btn1">투표 등록</button>
-                                </div>
-                              </div>
-                            </form>
-                      </div>
-                  </div>
-                  
-              </div>
-          
+            </div>
+         </div>
       </div>
+   </section>
+
+
       </div>
       <!-- /.col-lg-9 -->
 
@@ -220,5 +209,7 @@ function reg(){
     <!-- /.container -->
   </footer>
 
+
 </body>
+
 </html>

@@ -98,7 +98,7 @@ function reg(){
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="/">Block-Auth</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,24 +106,48 @@ function reg(){
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
+        <c:if test="${authInfo != null}">
+        <c:if test="${authInfo.grade == 'admin'}">
           <li class="nav-item">
-            <a class="nav-link" href="admin/adminList">관리자페이지
+            <a class="nav-link" href="/buyer/buyerList">관리자페이지
               <span class="sr-only">(current)</span>
             </a>
           </li>
+          </c:if>
+         </c:if>
+         <c:if test="${authInfo != null}">
+        <c:if test="${authInfo.grade == 'buyer'}">
+          <li class="nav-item">
+            <a class="nav-link" href="../cartList">장바구니</a>
+          </li>
+          </c:if></c:if>
+         <c:if test="${authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">마이페이지</a>
+          </li>
+          </c:if>
+          <c:if test="${authInfo != null}">
+          <c:if test="${authInfo.grade == 'buyer' || authInfo.grade == 'seller'}">
           <li class="nav-item">
             <a class="nav-link" href="/mypage">마이페이지</a>
           </li>
-          <span th:if="${session.authInfo == null}">
+          </c:if>
+          </c:if>
+          <c:if test="${authInfo == null}">
           <li class="nav-item">
             <a class="nav-link" href="/login">로그인</a>
           </li>
-          </span>
-          <span th:if="${session.authInfo != null}">
+          </c:if>
+          <c:if test="${authInfo != null}">
           <li class="nav-item">
             <a class="nav-link" href="/login/logout">로그아웃</a>
           </li>
-          </span>
+          </c:if>
+           <c:if test="${authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/inquire/inquireList">고객센터</a>
+          </li>
+          </c:if>
         </ul>
       </div>
     </div>
