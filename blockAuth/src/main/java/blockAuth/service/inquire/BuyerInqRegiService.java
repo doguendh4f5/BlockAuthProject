@@ -6,32 +6,32 @@ import org.springframework.stereotype.Service;
 import blockAuth.command.InquireCommand;
 import blockAuth.domain.AdminInquireDTO;
 import blockAuth.domain.AuthInfo;
-import blockAuth.domain.SellerDTO;
+import blockAuth.domain.BuyerDTO;
+import blockAuth.mapper.BuyerMapper;
 import blockAuth.mapper.InquireMapper;
-import blockAuth.mapper.SellerMapper;
 import jakarta.servlet.http.HttpSession;
 
 @Service
-public class SellerInqRegiService {
+public class BuyerInqRegiService {
 	@Autowired
 	InquireMapper inquireMapper;
 	@Autowired
-	SellerMapper sellerMapper;
+	BuyerMapper buyerMapper;
 	public void execute(InquireCommand inquireCommand
 							, HttpSession session) {
 		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
-		SellerDTO seller = sellerMapper.selectNum(authInfo.getUserId());
+		BuyerDTO buyer = buyerMapper.selectOneId(authInfo.getUserId());
 		AdminInquireDTO inquire = new AdminInquireDTO();
 		inquire.setAdminInqNum(inquireCommand.getAdminInqNum());
 		inquire.setAdminInqDate(inquireCommand.getAdminInqDate());
 		inquire.setAdminInqTitle(inquireCommand.getAdminInqTitle());
 		inquire.setAdminInqContent(inquireCommand.getAdminInqContent());
 		inquire.setAdminInqCategory(inquireCommand.getAdminInqCategory());
-		inquire.setSellerNum(seller.getSellerNum());
+		inquire.setBuyerNum(buyer.getBuyerNum());
 		
 		int i = inquireMapper.insertInq(inquire);
 		if(i == 1) {
-			System.out.println("관리자 문의에 판매자가 문의했습니다");
+			System.out.println("관리자 문의에 구매자가 문의했습니다");
 		}
 	}
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -30,7 +29,7 @@ body {
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Inquire Update</title>
+  <title>Inquire List</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -39,7 +38,7 @@ body {
 <body>
 
   <!-- Navigation -->
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="/">Block-Auth</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,14 +103,14 @@ body {
         <h1 class="my-4">고객센터</h1>
         <div class="list-group">
           <span th:if="${session.authInfo.grade.equals('admin')}">
-	          <a href="#" class="list-group-item">판매자 문의하기</a>
-	          <a href="#" class="list-group-item">구매자 문의하기</a>
+	          <a href="/inquire/inquireListAdmin/seller" class="list-group-item">판매자 문의하기</a>
+	          <a href="/inquire/inquireListAdmin/buyer" class="list-group-item">구매자 문의하기</a>
           </span>
           <span th:if="${session.authInfo.grade.equals('seller')}">
-	          <a href="#" class="list-group-item">관리자 문의하기</a>
+	          <a href="/inquire/inquireList" class="list-group-item">관리자 문의하기</a>
           </span>
           <span th:if="${session.authInfo.grade.equals('buyer')}">
-	          <a href="#" class="list-group-item">관리자 문의하기</a>
+	          <a href="/inquire/inquireList" class="list-group-item">관리자 문의하기</a>
           </span>
         </div>
 
@@ -134,38 +133,43 @@ body {
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-									  <form action="sellerInqModify" method="post"  th:object="${inquireCommand}">
-										<table class="table table-striped">
-										    <tr>
-										    	<th style="width:15%;">문의번호</th>
-										    	<td><input name="adminInqNum" type="text" class="form-control here" th:value="${inquireCommand.adminInqNum}" readonly="readonly" /></td>
-										    	<th style="width:10%;">문의자</th>
-										    	<td><input name="sellerNum" th:value="${inquireCommand.sellerNum}" class="form-control here" readonly="readonly" type="text" /></td>
-										    	<th style="width:15%;">문의날짜</th>
-										    	<td><input name="adminInqDate" type="date" class="form-control here" th:value="${#dates.format(inquireCommand.adminInqDate,'yyyy-MM-dd')}" readonly="readonly" /></td>
-										    </tr>
-										    <tr>
-										    	<th>문의제목</th>
-										    	<td colspan="3"><input name="adminInqTitle" type="text" class="form-control here" placeholder="문의제목을 작성하세요" th:value="${inquireCommand.adminInqTitle}" /></td>
-										    	<th>문의종류</th>
-										    	<td>
-										    		<select class="form-control here" name="adminInqCategory">
-												     <optgroup label="문의종류">
-												        <option value="홈페이지">홈페이지</option>
-												        <option value="결제">결제</option>
-												     </optgroup>
-													</select>
-												</td>
-										    </tr>
-										    <tr>
-										    	<th>문의내용</th>
-										    	<td colspan="5"><textarea name="adminInqContent" type="text" class="form-control here" placeholder="문의내용을 작성하세요" th:value="${inquireCommand.adminInqContent}">[[${inquireCommand.adminInqContent}]]</textarea></td>
-										    </tr>
-										    <tr>
-										    	<td colspan="6" style="text-align:center;"><input type="submit" value=" 수 정 완 료 " /></td>
-										    </tr>
-										</table>
-									  </form>
+											<table class="table table-striped">
+											    <tr id="tr1">
+											    	<th>문의번호</th>
+											    	<th>문의제목</th>
+											    	<th>문의자</th>
+											     	<th>문의날짜</th>
+											     	<th>답변상태</th>
+											    </tr>
+											    <span th:if="${value.equals('0')}">
+											    <tr class="alert" role="alert" th:each="inquireCommand : ${list }">
+											      <span th:if="${inquireCommand.sellerNum != null && inquireCommand.buyerNum == null}">
+											    	<td><a th:href="@{../inquire/sellerInqDetail(adminInqNum=${inquireCommand.adminInqNum})}">[[${inquireCommand.adminInqNum}]]</a></td>
+											    	<td>[[${inquireCommand.adminInqTitle}]]</td>
+											    	<td>[[${inquireCommand.sellerNum}]]</td>
+											    	<td>[[${#dates.format(inquireCommand.adminInqDate, 'yyyy-MM-dd')}]]</td>
+											    	<td>
+											    		<span th:if="${inquireCommand.adminNum == null}">답변대기</span>
+											    		<span th:if="${inquireCommand.adminNum != null}">답변완료</span>
+											    	</td>
+											      </span>
+											    </tr>
+											   </span>
+											   <span th:if="${value.equals('1')}">
+											    <tr class="alert" role="alert" th:each="inquireCommand : ${list }">
+											     <span th:if="${inquireCommand.sellerNum == null && inquireCommand.buyerNum != null}">
+											    	<td><a th:href="@{../inquire/sellerInqDetail(adminInqNum=${inquireCommand.adminInqNum})}">[[${inquireCommand.adminInqNum}]]</a></td>
+											    	<td>[[${inquireCommand.adminInqTitle}]]</td>
+											    	<td>[[${inquireCommand.buyerNum}]]</td>
+											    	<td>[[${#dates.format(inquireCommand.adminInqDate, 'yyyy-MM-dd')}]]</td>
+											    	<td>
+											    		<span th:if="${inquireCommand.adminNum == null}">답변대기</span>
+											    		<span th:if="${inquireCommand.adminNum != null}">답변완료</span>
+											    	</td>
+											      </span>
+											    </tr>
+											   </span>
+											</table>
 									</div>
 								</div>
 							</div>

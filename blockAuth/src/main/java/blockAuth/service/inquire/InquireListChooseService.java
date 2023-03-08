@@ -16,33 +16,29 @@ import blockAuth.mapper.SellerMapper;
 import jakarta.servlet.http.HttpSession;
 
 @Service
-public class SellerInqListService {
+public class InquireListChooseService {
 	@Autowired
 	InquireMapper inquireMapper;
 	@Autowired
 	SellerMapper sellerMapper;
 	@Autowired
 	BuyerMapper buyerMapper;
-	public String execute(Model model, HttpSession session) {
+	public String execute(Model model, HttpSession session, String str) {
 		List<AdminInquireDTO> list = inquireMapper.inqList();
 		model.addAttribute("list", list);
 		
 		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
 		
-		if(authInfo.getGrade().equals("seller")) {
-			SellerDTO seller = new SellerDTO();
-			seller = sellerMapper.selectNum(authInfo.getUserId());
-			String sellerNum = seller.getSellerNum();
-			model.addAttribute("sellerNum", sellerNum);
-			return "thymeleaf/inquire/inquireListSeller";
-		}else if(authInfo.getGrade().equals("buyer")) {
-			BuyerDTO buyer = new BuyerDTO();
-			buyer = buyerMapper.selectOneId(authInfo.getUserId());
-			String buyerNum = buyer.getBuyerNum();
-			model.addAttribute("buyerNum", buyerNum);
-			return "thymeleaf/inquire/inquireListBuyer";
-		}else{
-			return "thymeleaf/inquire/inquireList";
+		String value = "";
+		
+		if(str.equals("seller") && authInfo.getGrade().equals("admin")) {
+			value = "0";
+			model.addAttribute("value", value);
+			return "thymeleaf/inquire/inquireListChoose";
+		}else {
+			value = "1";
+			model.addAttribute("value", value);
+			return "thymeleaf/inquire/inquireListChoose";
 		}
 	}
 }

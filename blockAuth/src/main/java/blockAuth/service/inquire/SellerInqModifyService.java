@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import blockAuth.command.SellerInquireCommand;
+import blockAuth.command.InquireCommand;
 import blockAuth.domain.AdminInquireDTO;
 import blockAuth.domain.AuthInfo;
 import blockAuth.domain.BuyerDTO;
@@ -24,7 +24,7 @@ public class SellerInqModifyService {
 	BuyerMapper buyerMapper;
 	@Autowired
 	InquireMapper inquireMapper;
-	public void execute(SellerInquireCommand sellerInquireCommand, Model model, HttpSession session) {
+	public void execute(InquireCommand sellerInquireCommand, Model model, HttpSession session) {
 		AdminInquireDTO inquire = new AdminInquireDTO();
 		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
 		SellerDTO seller = new SellerDTO();

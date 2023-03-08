@@ -159,29 +159,33 @@ body {
 								<div class="row">
 									<div class="col-md-12">
 									  <table class="table table-striped">
-									   <form action="sellerInquireUpdate" method="get" th:object="${sellerInq}" enctype="multipart/form-data">
+									   <form action="inquireUpdate" method="get" th:object="${inquireCommand}" enctype="multipart/form-data">
 										    <tr>
 										    	<th style="width:15%;">문의번호</th>
-										    	<td><input name="adminInqNum" th:value="${sellerInq.adminInqNum}" class="form-control here" readonly="readonly" type="text" /></td>
+										    	<td><input name="adminInqNum" th:value="${inquireCommand.adminInqNum}" class="form-control here" readonly="readonly" type="text" /></td>
 										    	<th style="width:10%;">문의자</th>
-										    	<td><input name="sellerNum" th:value="${sellerInq.sellerNum}" class="form-control here" readonly="readonly" type="text" /></td>
+										    	<span th:if="${session.authInfo.grade.equals('seller')}">
+										    	<td><input name="sellerNum" th:value="${inquireCommand.sellerNum}" class="form-control here" readonly="readonly" type="text" /></td>
+										    	</span>
+										    	<span th:if="${session.authInfo.grade.equals('buyer')}">
+										    	<td><input name="buyerNum" th:value="${inquireCommand.buyerNum}" class="form-control here" readonly="readonly" type="text" /></td>
+										    	</span>
 										    	<th style="width:15%;">문의날짜</th>
-										    	<td><input name="adminInqDate" th:value="${#dates.format(sellerInq.adminInqDate, 'yyyy-MM-dd')}" class="form-control here" readonly="readonly" type="text" /></td>
+										    	<td><input name="adminInqDate" th:value="${#dates.format(inquireCommand.adminInqDate, 'yyyy-MM-dd')}" class="form-control here" readonly="readonly" type="text" /></td>
 										    </tr>
 										    <tr>
 										    	<th>문의제목</th>
-										    	<td colspan="3"><input name="adminInqTitle" th:value="${sellerInq.adminInqTitle}" class="form-control here" readonly="readonly" type="text" /></td>
+										    	<td colspan="3"><input name="adminInqTitle" th:value="${inquireCommand.adminInqTitle}" class="form-control here" readonly="readonly" type="text" /></td>
 										    	<th>문의종류</th>
-										    	<td ><input name="adminInqCategory" th:value="${sellerInq.adminInqCategory}" class="form-control here" readonly="readonly" type="text" /></td>
+										    	<td ><input name="adminInqCategory" th:value="${inquireCommand.adminInqCategory}" class="form-control here" readonly="readonly" type="text" /></td>
 										    </tr>
 										    <tr>
 										    	<th>문의내용</th>
 										    	<td colspan="5">
-										    		<textarea name="adminInqContent" th:value="${sellerInq.adminInqContent}" class="form-control here" readonly="readonly">[[${sellerInq.adminInqContent}]]</textarea>
+										    		<textarea name="adminInqContent" th:value="${inquireCommand.adminInqContent}" class="form-control here" readonly="readonly">[[${inquireCommand.adminInqContent}]]</textarea>
 										    	</td>
 										    </tr>
-										    </span>
-										    <span th:if="${session.authInfo.grade.equals('admin') && sellerInq.adminReplyContent == null}">
+										    <span th:if="${session.authInfo.grade.equals('admin') && inquireCommand.adminReplyContent == null}">
 										       <tr>
 											    	<th>관리자 답변</th>
 											    	<td colspan="5">
@@ -190,30 +194,30 @@ body {
 											    </tr>
 											    <tr>
 											    	<td colspan="6" style="text-align:center;">
-											    		<input type="button"  th:attr="onclick=|sellerAdminReplyInsert('${sellerInq.adminInqNum}');|" value="답변하기">
+											    		<input type="button"  th:attr="onclick=|sellerAdminReplyInsert('${inquireCommand.adminInqNum}');|" value="답변하기">
 											    		<input type="button" value="리스트로 돌아가기" onclick="location.href='/inquire/inquireList';" />
 											    	</td>
 											    </tr>
 										    </span>
-										    <span th:if="${sellerInq.adminReplyContent != null}">
+										    <span th:if="${inquireCommand.adminReplyContent != null}">
 											    <tr>
 											    	<th>관리자 답변</th>
 											    	<td colspan="5">
-											    		<textarea name="adminReplyContent" th:value="${sellerInq.adminReplyContent}" class="form-control here" readonly="readonly">[[${sellerInq.adminReplyContent}]]</textarea>
+											    		<textarea name="adminReplyContent" th:value="${inquireCommand.adminReplyContent}" class="form-control here" readonly="readonly">[[${inquireCommand.adminReplyContent}]]</textarea>
 											    	</td>
 											    </tr>
 										    </span>
-										    <span th:if="${session.authInfo.grade.equals('seller')}">
+										    <span th:if="${session.authInfo.grade.equals('seller') || session.authInfo.grade.equals('buyer')}">
 											    <tr>
 											    	<td colspan="6" style="text-align:center;">
 											    		<input type="submit" value="수정하기" />
-											    		<input type="button" value="삭제하기" th:onclick="|location.href='@{../inquire/sellerInqDel(adminInqNum=${sellerInq.adminInqNum})}'|" />
+											    		<input type="button" value="삭제하기" th:onclick="|location.href='@{../inquire/sellerInqDel(adminInqNum=${inquireCommand.adminInqNum})}'|" />
 											    		<input type="button" value="리스트로 돌아가기" onclick="location.href='/inquire/inquireList';" />
 											    	</td>
 											    </tr>
 											 </form>
 											</span>
-											<span th:if="${session.authInfo.grade.equals('admin') && sellerInq.adminReplyContent != null}">
+											<span th:if="${session.authInfo.grade.equals('admin') && inquireCommand.adminReplyContent != null}">
 											    <tr>
 											    	<td colspan="6" style="text-align:center;">
 											    		<input type="button" value="리스트로 돌아가기" onclick="location.href='/inquire/inquireList';" />

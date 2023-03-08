@@ -134,13 +134,14 @@ body {
 								</div>
 								<div class="row">
 									<div class="col-md-12">
+									 <span th:if="${session.authInfo.grade.equals('seller')}">
 									  <form action="sellerInqRegist" method="post">
 										<table class="table table-striped">
 										    <tr>
 										    	<th>문의번호</th>
-										    	<td><input name="adminInqNum" style="text-align:center;" type="text" th:value="${sellerInquireCommand.adminInqNum}" readonly="readonly" /></td>
+										    	<td><input name="adminInqNum" style="text-align:center;" type="text" th:value="${inquireCommand.adminInqNum}" readonly="readonly" /></td>
 										    	<th>문의날짜</th>
-										    	<td><input name="adminInqDate" style="text-align:center;" type="date" th:value="${#dates.format(sellerInquireCommand.adminInqDate,'yyyy-MM-dd')}" readonly="readonly" /></td>
+										    	<td><input name="adminInqDate" style="text-align:center;" type="date" th:value="${#dates.format(inquireCommand.adminInqDate,'yyyy-MM-dd')}" readonly="readonly" /></td>
 										    </tr>
 										    <tr>
 										    	<th>문의제목</th>
@@ -166,6 +167,41 @@ body {
 										    </tr>
 										</table>
 									  </form>
+									 </span>
+									 <span th:if="${session.authInfo.grade.equals('buyer')}">
+									  <form action="buyerInqRegist" method="post">
+										<table class="table table-striped">
+										    <tr>
+										    	<th>문의번호</th>
+										    	<td><input name="adminInqNum" style="text-align:center;" type="text" th:value="${inquireCommand.adminInqNum}" readonly="readonly" /></td>
+										    	<th>문의날짜</th>
+										    	<td><input name="adminInqDate" style="text-align:center;" type="date" th:value="${#dates.format(inquireCommand.adminInqDate,'yyyy-MM-dd')}" readonly="readonly" /></td>
+										    </tr>
+										    <tr>
+										    	<th>문의제목</th>
+										    	<td colspan="3"><input name="adminInqTitle" style="width:80%;" type="text" placeholder="문의제목을 작성하세요" /></td>
+										    </tr>
+										    <tr>
+										    	<th>문의종류</th>
+										    	<td colspan="3">
+										    		<select name="adminInqCategory">
+												     <optgroup label="문의종류">
+												        <option value="홈페이지">홈페이지</option>
+												        <option value="결제">결제</option>
+												     </optgroup>
+													</select>
+												</td>
+										    </tr>
+										    <tr>
+										    	<th>문의내용</th>
+										    	<td colspan="3"><textarea name="adminInqContent" style="width:80%;" type="text" placeholder="문의내용을 작성하세요"></textarea></td>
+										    </tr>
+										    <tr>
+										    	<td colspan="4" style="text-align:center;"><input type="submit" value=" 문 의 등 록 " /></td>
+										    </tr>
+										</table>
+									  </form>
+									 </span>
 									</div>
 								</div>
 							</div>

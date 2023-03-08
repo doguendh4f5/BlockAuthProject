@@ -102,15 +102,8 @@ body {
 
         <h1 class="my-4">고객센터</h1>
         <div class="list-group">
-          <span th:if="${session.authInfo.grade.equals('admin')}">
-	          <a href="#" class="list-group-item">판매자 문의하기</a>
-	          <a href="#" class="list-group-item">구매자 문의하기</a>
-          </span>
-          <span th:if="${session.authInfo.grade.equals('seller')}">
-	          <a href="#" class="list-group-item">관리자 문의하기</a>
-          </span>
           <span th:if="${session.authInfo.grade.equals('buyer')}">
-	          <a href="#" class="list-group-item">관리자 문의하기</a>
+	          <a href="/inquire/inquireList" class="list-group-item">관리자 문의하기</a>
           </span>
         </div>
 
@@ -141,23 +134,32 @@ body {
 											     	<th>문의날짜</th>
 											     	<th>답변상태</th>
 											    </tr>
-											    <tr class="alert" role="alert" th:each="list : ${list }">
-											    	<td><a th:href="@{../inquire/sellerInqDetail(adminInqNum=${list.adminInqNum})}">[[${list.adminInqNum}]]</a></td>
-											    	<td>[[${list.adminInqTitle}]]</td>
-											    	<td>[[${list.sellerNum}]]</td>
-											    	<td>[[${#dates.format(list.adminInqDate, 'yyyy-MM-dd')}]]</td>
+											    <tr class="alert" role="alert" th:each="inquireCommand : ${list }">
+											    <span th:if="${buyerNum.equals(inquireCommand.buyerNum)}">
+											    	<td><a th:href="@{../inquire/buyerInqDetail(adminInqNum=${inquireCommand.adminInqNum})}">[[${inquireCommand.adminInqNum}]]</a></td>
+											    	<td>[[${inquireCommand.adminInqTitle}]]</td>
+											    	<td>[[${inquireCommand.buyerNum}]]</td>
+											    	<td>[[${#dates.format(inquireCommand.adminInqDate, 'yyyy-MM-dd')}]]</td>
 											    	<td>
-											    		<span th:if="${list.adminNum == null}">답변대기</span>
-											    		<span th:if="${list.adminNum != null}">답변완료</span>
+											    		<span th:if="${inquireCommand.adminNum == null}">답변대기</span>
+											    		<span th:if="${inquireCommand.adminNum != null}">답변완료</span>
 											    	</td>
+											    </span>
+											    </tr>
+											    <tr class="alert" role="alert" th:each="inquireCommand : ${list }">
+											    <span th:if="${session.authInfo.grade == 'admin'}">
+											    	<td><a th:href="@{../inquire/buyerInqDetail(adminInqNum=${inquireCommand.adminInqNum})}">[[${inquireCommand.adminInqNum}]]</a></td>
+											    	<td>[[${inquireCommand.adminInqTitle}]]</td>
+											    	<td>[[${inquireCommand.buyerNum}]]</td>
+											    	<td>[[${#dates.format(inquireCommand.adminInqDate, 'yyyy-MM-dd')}]]</td>
+											    	<td>
+											    		<span th:if="${inquireCommand.adminNum == null}">답변대기</span>
+											    		<span th:if="${inquireCommand.adminNum != null}">답변완료</span>
+											    	</td>
+											    </span>
 											    </tr>
 											    <tr>
-											    	<span th:if="${session.authInfo.grade.equals('seller')}">
-											    		<td colspan="5" style="text-align:center;"><input type="button" onclick="location.href='../inquire/sellerInqRegist'" value=" 문 의 하 기 " /></td>
-											    	</span>
-											    	<span th:if="${session.authInfo.grade.equals('buyer')}">
-											    		<td colspan="5" style="text-align:center;"><input type="button" onclick="location.href='../inquire/buyerInqRegist'" value=" 문 의 하 기 " /></td>
-											    	</span>
+											    	<td colspan="5" style="text-align:center;"><input type="button" onclick="location.href='../inquire/buyerInqRegist'" value=" 문 의 하 기 " /></td>
 											    </tr>
 											</table>
 									</div>

@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Data
-public class SellerInquireCommand {
+public class InquireCommand {
 	String adminInqNum;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date adminInqDate;

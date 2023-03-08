@@ -15,11 +15,23 @@
 	from admin_Inquire
 </select>
 <insert id="insertInq">
-	insert into admin_inquire (ADMIN_INQ_NUM, SELLER_NUM
-		, ADMIN_INQ_TITLE, ADMIN_INQ_CONTENT
+	insert into admin_inquire (ADMIN_INQ_NUM, 
+		<if test="sellerNum != null" >
+			 SELLER_NUM,
+		</if>
+		<if test="buyerNum != null" >
+			 BUYER_NUM,
+		</if>
+		ADMIN_INQ_TITLE, ADMIN_INQ_CONTENT
 		, ADMIN_INQ_DATE, ADMIN_INQ_CATEGORY)
-	values (#{adminInqNum}, #{sellerNum}
-		, #{adminInqTitle}, #{adminInqContent}
+	values (#{adminInqNum}, 
+		<if test="sellerNum != null" >
+			 #{sellerNum},
+		</if>
+		<if test="buyerNum != null" >
+			 #{buyerNum},
+		</if>
+		#{adminInqTitle}, #{adminInqContent}
 		, #{adminInqDate}, #{adminInqCategory})	
 </insert>
 <select id="inqList" resultType="adminInquireDTO">

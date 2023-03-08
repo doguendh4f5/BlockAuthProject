@@ -8,12 +8,12 @@ import blockAuth.domain.AdminInquireDTO;
 import blockAuth.mapper.InquireMapper;
 
 @Service
-public class SellerInqDetailService {
+public class InqDetailService {
 	@Autowired
 	InquireMapper inquireMapper;
 	public AdminInquireDTO execute(Model model, String adminInqNum) {
 		AdminInquireDTO inquire = inquireMapper.inqSelcetOne(adminInqNum);
-		model.addAttribute("sellerInq", inquire);
+		model.addAttribute("inquireCommand", inquire);
 		return inquire;
 	}
 }

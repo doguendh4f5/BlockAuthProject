@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import blockAuth.command.InquireCommand;
-import blockAuth.domain.AdminInquireDTO;
 import blockAuth.mapper.InquireMapper;
 
 @Service
-public class SellerInqNumberService {
+public class BuyerInqNumberService {
 	@Autowired
 	InquireMapper inquireMapper;
 	public void execute(InquireCommand inquireCommand) {
