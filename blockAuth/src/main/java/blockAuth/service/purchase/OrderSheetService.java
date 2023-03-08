@@ -20,7 +20,7 @@ public class OrderSheetService {
 	BuyerMapper buyerMapper;
 	@Autowired
 	PurchaseMapper purchaseMapper;
-	public void execute(String [] prodCk, HttpSession session, Model model) {
+	public long execute(String [] prodCk, HttpSession session, Model model) {
 		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
 		BuyerDTO buyerDTO = buyerMapper.selectOneId(authInfo.getUserId());
 		
@@ -46,6 +46,10 @@ public class OrderSheetService {
 		model.addAttribute("goodsTotalPrice", goodsTotalPrice);
 		model.addAttribute("goodsTotalDelivery", goodsTotalDelivery);
 		model.addAttribute("goodsNums", goodsNums);
+		
+		long totalPrice = goodsTotalPrice + goodsTotalDelivery;
+		
+		return totalPrice;
 		
 	}
 }

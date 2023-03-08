@@ -4,32 +4,78 @@
 <%@page import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-
-	String mid					= "INIpayTest";		                    // 상점아이디					
-	String signKey			    = "SU5JTElURV9UUklQTEVERVNfS0VZU1RS";	// 웹 결제 signkey
-	
-	String mKey = SignatureUtil.hash(signKey, "SHA-256");
-
-	String timestamp			= SignatureUtil.getTimestamp();			// util에 의해서 자동생성
-	String orderNumber			= mid+"_"+SignatureUtil.getTimestamp();	// 가맹점 주문번호(가맹점에서 직접 설정)
-	String price				= "49";								// 상품가격(특수기호 제외, 가맹점에서 직접 설정)
-
-
-	Map<String, String> signParam = new HashMap<String, String>();
-
-	signParam.put("oid", orderNumber);
-	signParam.put("price", price);
-	signParam.put("timestamp", timestamp);
-
-	String signature = SignatureUtil.makeSignature(signParam);
-	
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+<style>
+#div1{
+	background-color : white;
+	width : 860px;
+	height : auto;
+	padding : 80px;
+}
+#div2{
+	font-size : 13px;
+}
+#div3{
+	border : 2px solid #ccc;
+	background-color : #FFEAEA;
+	padding-top : 25px;
+	padding-right : 25px;
+	padding-left : 25px;
+	padding-bottom : 10px;
+	font-size : 13px;
+}
+#div4{
+	border : 2px solid #ccc;
+	background-color : #EAEAEA;
+	padding-top : 25px;
+	padding-right : 25px;
+	padding-left : 25px;
+	padding-bottom : 10px;
+	font-size : 13px;
+}
+#div5{
+	font-size : 14px;
+}
+#sp1{
+	font-size : 15px;
+	color : #FF6C6C;
+	font-weight : bold;
+}
+#sp2{
+	font-size : 10px;
+}
+#sp3{
+	font-size : 14px;
+}
+#sp4{
+	font-size : 13px;
+}
+#btn1{
+	border : none;
+	background-color : #FF8383;
+	color : white;
+	width : 150px;
+	height : 50px;
+	font-weight : bold;
+	font-size : 17px;
+	margin : auto;
+	border-radius : 5px;
+	display : block;
+	}
+.row{
+ justify-content : center;
+ margin-top: 50px;
+}
+</style>
 <!--테스트 JS--><script language="javascript" type="text/javascript" src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js" charset="UTF-8"></script>
         <script type="text/javascript">
             function paybtn() {
@@ -93,12 +139,12 @@
 <form name="" id="SendPayForm_id" method="post" class="mt-5">
                                 <input type="hidden" name="version" value="1.0">
                                 <input type="hidden" name="gopaymethod" value="Card:Directbank:vbank">				    	
-                                <input type="hidden" name="mid" value="<%=mid%>">                     				   
-                                <input type="hidden" name="oid" value="<%=orderNumber%>">                     				    
-                                <input type="hidden" name="price" value="<%=price%>">                            
-                                <input type="hidden" name="timestamp" value="<%=timestamp%>">       				    				    
-                                <input type="hidden" name="signature" value="<%=signature%>">
-				    		    <input type="hidden" name="mKey" value="<%=mKey%>">
+                                <input type="hidden" name="mid" value="${mid}">                     				   
+                                <input type="hidden" name="oid" value="${orderNumber}">                     				    
+                                <input type="hidden" name="price" value="${totalPrice}">                            
+                                <input type="hidden" name="timestamp" value="${timestamp}">       				    				    
+                                <input type="hidden" name="signature" value="${signature}">
+				    		    <input type="hidden" name="mKey" value="${mKey}">
                                 <input type="hidden" name="currency" value="WON">				    		
                                 <input type="hidden" name="goodname" value="블록어스 상품 결제">
                                 <input type="hidden" name="buyername" value="${buyerCommand.buyerName }">                       
@@ -108,6 +154,69 @@
                                 <input type="hidden" name="closeUrl" value="http://localhost:8080/paymentTest/paymentClose">                           
                                 <input type="hidden" name="acceptmethod" value="HPP(1):below1000:va_receipt">
                     </form>
+                    
+                    
+         <!-- Navigation -->
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'admin'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          </span>
+          </span>
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'buyer'}">
+          <li class="nav-item">
+            <a class="nav-link" href="../cartList">장바구니</a>
+          </li>
+          </span></span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">마이페이지</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <span th:if="${session.authInfo.grade == 'buyer' || session.authInfo.grade == 'seller'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          </span>
+          </span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+           <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/inquire/inquireList">고객센터</a>
+          </li>
+          </span>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+
+    <div class="row">
+    <div id="div1">           
+                    
+                    
 <table width="700" align="center">
 <tr><td>
 <strong>주문서</strong>
@@ -186,12 +295,21 @@
 				<tr><td align="left">상품금액 : <fmt:formatNumber type="currency" value="${goodsTotalPrice }" /></td><td align = "right"> 원</td></tr>
 				<tr><td align="left">배송비 : <fmt:formatNumber type="currency" value="${goodsTotalDelivery }" /></td><td align = "right"> 원</td></tr>
 				<tr><td align="left">총 결제 금액 : <fmt:formatNumber type="currency" value="${goodsTotalPrice + goodsTotalDelivery }" /></td><td align = "right"> 원</td></tr>
-				<tr><td align="center" colspan=2><button type="button" onclick="paybtn()">결제하기</button></td></tr>
+				<tr><td align="center" colspan=2><button type="button" onclick="paybtn();">결제하기</button></td></tr>
 			</table>
 		</td>
 	</tr>
 </table>
 </form>
 </p>
+</div>
+</div></div>
+ <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
 </body>
 </html>
