@@ -25,4 +25,44 @@
 		#{goodsNum}
 	</foreach>
 </select>
+<select id="selectNum" resultType="string">
+	select nvl(max(substr(PURCHASE_NUM,5)), 100000)+ 1
+	from purchase
+</select>
+<select id="selectPayNum" resultType="string">
+	select nvl(max(substr(PAYMENT_NUM,6)), 100000)+ 1
+	from payment
+</select>
+<insert id="purchaseInsert" parameterType="purchaseDTO">
+	insert into purchase(PURCHASE_NUM, TOTAL_PRICE, DELIVERY_ADDR, DELIVERY_ADDR_2, DELIVERY_POSTCODE, 
+						RECEIVER_PHONE, RECEIVER_NAME, BUYER_NUM, DELIVERY_REQ )
+	values(#{purchaseNum}, #{totalPrice}, #{deliveryAddr}, #{deliveryAddr2}, #{deliveryPostcode}, 
+			#{receiverPhone}, #{receiverName}, #{buyerNum}, #{deliveryReq})
+</insert>
+<insert id="purchaseListInsert" parameterType="purchaseListDTO">
+	insert into purchase_list(PURCHASE_NUM, GOODS_NUM, BUYER_NUM,
+	GOODS_QTY, PURCHASE_DATE)
+	select #{purchaseNum}, g.GOODS_NUM, c.BUYER_NUM, QTY, sysdate
+	from cart c , goods g
+	where c.GOODS_NUM = g.GOODS_NUM
+	and c.GOODS_NUM = #{goodsNum}
+	and c.BUYER_NUM = #{buyerNum}
+</insert>
+<delete id="cartGoodsDels" parameterType="cartDTO">
+		delete from cart
+		<trim prefix="where" suffixOverrides="AND | OR" prefixOverrides="AND | OR">
+			and BUYER_NUM =  #{buyerNum} and 
+			<if test="goodsNums != null">
+				 GOODS_NUM in
+				<foreach collection="goodsNums" item="goodsNum" index="index"
+					open="(" close=")" separator=",">
+					#{goodsNum}
+				</foreach>
+			</if>	
+		</trim>
+</delete>
+<insert id="paymentInsert" parameterType="paymentDTO">
+insert into payment(PAYMENT_NUM, PURCHASE_NUM, PAYMENT_METHOD, PAYMENT_DATE, OK_DATE, CARD_COMPANY, OK_NUM, CREDIT_NUM)
+values(#{paymentNum}, #{purchaseNum}, #{paymentMethod}, #{paymentDate}, #{okDate}, #{cardCompany}, #{okNum}, #{creditNum})
+</insert>
 </mapper>

@@ -1,29 +1,208 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>구매자 상세페이지</title>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style type="text/css">
+   .col-md-9{
+      margin : auto;
+      
+   }
+   #submit1{
+       background-color: #FFA7A7;
+    border-color: #FFA7A7;
+   }
+      #submit2{
+       background-color: #FFBB00;
+    border-color: #FFBB00;
+   }
+</style>
+
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+   
+</style>
+<link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Block-Auth</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  
+
 </head>
+
 <body>
-<strong>[[${buyerCommand.buyerName}]] 님의 정보</strong><br>
-<table border="1">
-	<tr><th>구매자 번호</th><td>[[${buyerCommand.buyerNum}]]</td></tr>
-	<tr><th>구매자 아이디</th><td>[[${buyerCommand.buyerId}]]</td></tr>
-	<tr><th>구매자 이름</th><td>[[${buyerCommand.buyerName}]]</td></tr>
-	<tr><th>구매자 연락처</th><td>[[${buyerCommand.buyerPhone}]]</td></tr>
-	<tr><th>구매자 주소</th><td>[[${buyerCommand.buyerAddr1}]]</td></tr>
-	<tr><th>구매자 상세주소</th><td>[[${buyerCommand.buyerAddr2}]]</td></tr>
-	<tr><th>구매자 우편번호</th><td>[[${buyerCommand.buyerPostcode}]]</td></tr>
-	<tr><th>구매자 생일</th><td><span th:text="${#dates.format(buyerCommand.buyerBirth, 'yyyy-MM-dd')}"></span></td></tr>
-	<tr><th>구매자 이메일</th><td>[[${buyerCommand.buyerEmail}]]</td></tr>
-	<tr><th>멤버십</th><td>[[${buyerCommand.membership}]]</td></tr>
-	<tr><th>구매자 포인트</th><td>[[${buyerCommand.buyerPoint}]]</td></tr>
-	<tr><th>구매자 지갑주소</th><td>[[${buyerCommand.buyerWalletAddr}]]</td></tr>
-	<tr><th colspan="2">
-	<a th:href="|../buyerModify?buyerNum=${buyerCommand.buyerNum}|">구매자 수정</a>|
-	<a th:href="|../buyerDelete?buyerNum=${buyerCommand.buyerNum}|">구매자 삭제</a>|
-	<a href="/buyer/buyerList">리스트로 가기</a>
-	</th></tr>
-</table>
+
+  <!-- Navigation -->
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'admin'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          </span>
+          </span>
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'buyer'}">
+          <li class="nav-item">
+            <a class="nav-link" href="../cartList">장바구니</a>
+          </li>
+          </span></span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">마이페이지</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <span th:if="${session.authInfo.grade == 'buyer' || session.authInfo.grade == 'seller'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          </span>
+          </span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+           <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/inquire/inquireList">고객센터</a>
+          </li>
+          </span>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+          <a href="/buyer/buyerList" class="list-group-item">구매자 관리</a>
+          <a href="/seller/sellerList" class="list-group-item">판매자 관리</a>
+          <a href="/goods/goodsList" class="list-group-item">상품 관리</a>
+          <a href="/contract/contractList" class="list-group-item">계약 관리</a>
+          <a href="/vote/voteList" class="list-group-item">투표 관리</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+      
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h4>[[${buyerCommand.buyerName}]] 님의 정보</h4>
+                          <hr>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                             <div class="form-group row">
+                               <label for="buyerNum" class="col-4 col-form-label">구매자 번호</label> 
+                               <div class="col-8">
+                                 <p id="buyerNum" name="buyerNum" class="form-control here">[[${buyerCommand.buyerNum}]]</p>
+                               </div>
+                             
+                               <label for="buyerId" class="col-4 col-form-label">아이디</label> 
+                               <div class="col-8">
+                                 <p id="buyerId" name="buyerId" class="form-control here">[[${buyerCommand.buyerId}]]</p>
+                               </div>
+                               <label for="buyerPhone" class="col-4 col-form-label">전화번호</label> 
+                               <div class="col-8">
+                                 <p id="buyerPhone" name="buyerPhone" class="form-control here">[[${buyerCommand.buyerPhone}]]</p>
+                               </div>
+                               <label for="buyerAddr1" class="col-4 col-form-label">주소</label> 
+                               <div class="col-8">
+                                 <p id="buyerAddr1" name="buyerAddr1" class="form-control here">[[${buyerCommand.buyerAddr1}]]</p>
+                                 <p id="buyerAddr2" name="buyerAddr2" class="form-control here">[[${buyerCommand.buyerAddr2}]]</p>
+                                 <p id="buyerPostcode" name="buyerPostcode" class="form-control here">[[${buyerCommand.buyerPostcode}]]</p>
+                               </div>
+                               <label for="buyerBirth" class="col-4 col-form-label">생일</label> 
+                               <div class="col-8">
+                                 <p id="buyerBirth" name="buyerBirth" class="form-control here">[[${#dates.format(buyerCommand.buyerBirth, 'yyyy-MM-dd')}]]</p>
+                               </div>
+                               <label for="buyerEmail" class="col-4 col-form-label">이메일</label> 
+                               <div class="col-8">
+                                 <p id="buyerEmail" name="buyerEmail" class="form-control here">[[${buyerCommand.buyerEmail}]]</p>
+                               </div>
+                               <label for="buyerPoint" class="col-4 col-form-label">잔여 포인트</label> 
+                               <div class="col-8">
+                                 <p id="buyerPoint" name="buyerPoint" class="form-control here">[[${buyerCommand.buyerPoint}]] 포인트</p>
+                               </div>
+                               <label for=buyerWalletAddr class="col-4 col-form-label">지갑주소</label> 
+                               <div class="col-8">
+                                 <p id="buyerWalletAddr" name="buyerWalletAddr" class="form-control here">[[${buyerCommand.buyerWalletAddr}]]</p>
+                               </div>
+                             </div>
+                              <div class="form-group row">
+                                <div class="offset-4 col-8">
+                                  <button name="submit" type="button" th:onClick="|location.href='@{../buyerModify(buyerNum=${buyerCommand.buyerNum})}'|" class="btn btn-primary">구매자 수정</button>
+                                  <button id="submit1" type="button" th:onClick="|location.href='@{../buyerDelete(buyerNum=${buyerCommand.buyerNum})}'|" class="btn btn-primary">구매자 삭제</button>
+                                  <button id="submit2" type="button" onClick="location.href='/buyer/buyerList'" class="btn btn-primary">리스트로 가기</button>
+                                </div>
+                      </div>
+                  </div>
+              </div>
+      </div>
+     </div>
+    <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

@@ -337,8 +337,8 @@ $(function(){
 </td></tr>
 </table>
 
-<form action="purchaseList">
-
+<form action="/purchase/orderSheet2">
+<input type="hidden" name="goodsNum" th:value="${goodsCommand.goodsNum}">
 <table >
 <tr>
 	<td width="300">
@@ -418,7 +418,7 @@ $(function(){
 
 <table id="tb1" >
 <tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;상품명</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsName }]]</td></tr>
-<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;상품의 크기</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsSize}]]</td></tr>
+<tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;상품 크기</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsSize}]]</td></tr>
 <tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;상품 가격</td><td>&nbsp;&nbsp;&nbsp;[[${#numbers.formatCurrency(goodsCommand.goodsPrice)}]]원</td></tr>
 <tr id="tr1"><td id="td2">&nbsp;&nbsp;&nbsp;제조국</td><td>&nbsp;&nbsp;&nbsp;[[${goodsCommand.goodsCountry}]]</td></tr>
 </table>

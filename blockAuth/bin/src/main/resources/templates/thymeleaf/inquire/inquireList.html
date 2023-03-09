@@ -46,23 +46,32 @@ body {
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'admin'}">
           <li class="nav-item">
-            <a class="nav-link" href="admin/adminList">관리자페이지
+            <a class="nav-link" href="/buyer/buyerList">관리자페이지
               <span class="sr-only">(current)</span>
             </a>
           </li>
+          </span>
+          </span>
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'buyer'}">
           <li class="nav-item">
-            <a class="nav-link" href="#">장바구니</a>
+            <a class="nav-link" href="../cartList">장바구니</a>
           </li>
+          </span></span>
           <span th:if="${session.authInfo == null}">
           <li class="nav-item">
             <a class="nav-link" href="/login">마이페이지</a>
           </li>
           </span>
           <span th:if="${session.authInfo != null}">
+          <span th:if="${session.authInfo.grade == 'buyer' || session.authInfo.grade == 'seller'}">
           <li class="nav-item">
             <a class="nav-link" href="/mypage">마이페이지</a>
           </li>
+          </span>
           </span>
           <span th:if="${session.authInfo == null}">
           <li class="nav-item">
@@ -74,9 +83,11 @@ body {
             <a class="nav-link" href="/login/logout">로그아웃</a>
           </li>
           </span>
+           <span th:if="${session.authInfo != null}">
           <li class="nav-item">
             <a class="nav-link" href="/inquire/inquireList">고객센터</a>
           </li>
+          </span>
         </ul>
       </div>
     </div>
@@ -92,14 +103,14 @@ body {
         <h1 class="my-4">고객센터</h1>
         <div class="list-group">
           <span th:if="${session.authInfo.grade.equals('admin')}">
-	          <a href="#" class="list-group-item">판매자 문의하기</a>
-	          <a href="#" class="list-group-item">구매자 문의하기</a>
+	          <a href="/inquire/inquireListAdmin/seller" class="list-group-item">판매자 문의하기</a>
+	          <a href="/inquire/inquireListAdmin/buyer" class="list-group-item">구매자 문의하기</a>
           </span>
           <span th:if="${session.authInfo.grade.equals('seller')}">
-	          <a href="#" class="list-group-item">관리자 문의하기</a>
+	          <a href="/inquire/inquireList" class="list-group-item">관리자 문의하기</a>
           </span>
           <span th:if="${session.authInfo.grade.equals('buyer')}">
-	          <a href="#" class="list-group-item">관리자 문의하기</a>
+	          <a href="/inquire/inquireList" class="list-group-item">관리자 문의하기</a>
           </span>
         </div>
 
@@ -130,14 +141,19 @@ body {
 											     	<th>문의날짜</th>
 											     	<th>답변상태</th>
 											    </tr>
-											    <tr class="alert" role="alert" th:each="list : ${list }">
-											    	<td><a th:href="@{../inquire/sellerInqDetail(adminInqNum=${list.adminInqNum})}">[[${list.adminInqNum}]]</a></td>
-											    	<td>[[${list.adminInqTitle}]]</td>
-											    	<td>[[${list.sellerNum}]]</td>
-											    	<td>[[${#dates.format(list.adminInqDate, 'yyyy-MM-dd')}]]</td>
+											    <tr class="alert" role="alert" th:each="inquireCommand : ${list }">
+											    	<td><a th:href="@{../inquire/sellerInqDetail(adminInqNum=${inquireCommand.adminInqNum})}">[[${inquireCommand.adminInqNum}]]</a></td>
+											    	<td>[[${inquireCommand.adminInqTitle}]]</td>
+											    	<span th:if="${inquireCommand.sellerNum != null && inquireCommand.buyerNum == null}">
+											    		<td>[[${inquireCommand.sellerNum}]]</td>
+											    	</span>
+											    	<span th:if="${inquireCommand.sellerNum == null && inquireCommand.buyerNum != null}">
+											    		<td>[[${inquireCommand.buyerNum}]]</td>
+											    	</span>
+											    	<td>[[${#dates.format(inquireCommand.adminInqDate, 'yyyy-MM-dd')}]]</td>
 											    	<td>
-											    		<span th:if="${list.adminNum == null}">답변대기</span>
-											    		<span th:if="${list.adminNum != null}">답변완료</span>
+											    		<span th:if="${inquireCommand.adminNum == null}">답변대기</span>
+											    		<span th:if="${inquireCommand.adminNum != null}">답변완료</span>
 											    	</td>
 											    </tr>
 											    <tr>

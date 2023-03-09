@@ -35,6 +35,11 @@ public class PaymentTestController {
 		return "pay/paymentReturn";
 	}
 	
+	@RequestMapping(value = "paymentReturn2")
+	public String paymentReturn2() {
+		return "pay/paymentReturn2";
+	}
+	
 	@RequestMapping(value = "paymentClose")
 	public String paymentClose() {
 		return "pay/close";

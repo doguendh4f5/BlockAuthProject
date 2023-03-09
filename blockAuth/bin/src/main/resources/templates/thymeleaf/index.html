@@ -98,9 +98,9 @@ function voteRedirect(){
 
         <h1 class="my-4">Block-Auth</h1>
         <div class="list-group">
-          <a href="#" class="list-group-item">패션의류</a>
-          <a href="#" class="list-group-item">전자제품</a>
-          <a href="#" class="list-group-item">식품</a>
+          <a href="/category/fashion" class="list-group-item">패션의류</a>
+          <a href="/category/electronics" class="list-group-item">전자제품</a>
+          <a href="/category/grocery" class="list-group-item">식품</a>
         </div>
 
       </div>
@@ -141,7 +141,7 @@ function voteRedirect(){
 		          <div class="col-lg-4 col-md-6 mb-4">
 		            <div class="card h-100">
 		              <a th:href="@{/goods/goodsDetail(goodsNum=${goodsDTO.goodsNum})}">
-		              <img class="card-img-top" th:src="|/view/goods/upload/${goodsDTO.goodsMain}|" ></a>
+		              <img class="card-img-top" th:src="|/goods/upload/${goodsDTO.goodsMain}|" width="650px" ></a>
 		              <div class="card-body">
 		                <h4 class="card-title">
 		                  <a >[[${goodsDTO.goodsName}]]</a>

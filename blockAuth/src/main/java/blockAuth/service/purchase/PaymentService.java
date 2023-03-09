@@ -3,14 +3,23 @@ package blockAuth.service.purchase;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.inicis.std.util.SignatureUtil;
 
+import blockAuth.domain.AuthInfo;
+import blockAuth.domain.BuyerDTO;
+import blockAuth.mapper.BuyerMapper;
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class PaymentService {
-	public void execute(Long totalPrice, Model model) {
+	@Autowired
+	BuyerMapper buyerMapper;
+	
+	public void execute(String totalPrice, String purchaseNum, Model model, HttpSession session) {
 		String mid					= "INIpayTest";		                    // 상점아이디					
 		String signKey			    = "SU5JTElURV9UUklQTEVERVNfS0VZU1RS";	// 웹 결제 signkey
 		String mKey = "";
@@ -31,7 +40,7 @@ public class PaymentService {
 		Map<String, String> signParam = new HashMap<String, String>();
 
 		signParam.put("oid", orderNumber);
-		signParam.put("price", Long.toString(totalPrice));
+		signParam.put("price", totalPrice);
 		signParam.put("timestamp", timestamp);
 
 		try {
@@ -42,6 +51,13 @@ public class PaymentService {
 			e1.printStackTrace();
 		}
 		
+		AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+		System.out.println("oooooooooooooooooooooooooooooooooooooooooooooooooo : " + authInfo.getUserId());
+		BuyerDTO buyerDTO = buyerMapper.selectOneId(authInfo.getUserId());
+		String buyername = buyerDTO.getBuyerName();
+		String buyertel = buyerDTO.getBuyerPhone();
+		String buyerEmail = buyerDTO.getBuyerEmail();
+		
 		model.addAttribute("mid", mid);
 		model.addAttribute("signKey", signKey);
 		model.addAttribute("mKey", mKey);
@@ -49,5 +65,10 @@ public class PaymentService {
 		model.addAttribute("orderNumber", orderNumber);
 		model.addAttribute("signature", signature);
 		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("buyername", buyername);
+		model.addAttribute("buyertel", buyertel);
+		model.addAttribute("buyerEmail", buyerEmail);
+		model.addAttribute("purchaseNum", purchaseNum);
+		
 	}
 }
