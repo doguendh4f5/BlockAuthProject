@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import blockAuth.service.goods.GoodsDetailService;
 import blockAuth.service.wish.GoodsWishCheckService;
 import blockAuth.service.wish.GoodsWishService;
+import blockAuth.service.wish.WishListService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -34,5 +35,12 @@ public class WishController {
 			HttpSession session) {
 		
 		return goodsWishService.execute(goodsNum, session);
+	}
+	@Autowired
+	WishListService wishListService;
+	@RequestMapping("wish/wishList")
+	public String wishList(Model model, HttpSession session) {
+		wishListService.execute(model, session);
+		return "thymeleaf/wish/wishList";
 	}
 }

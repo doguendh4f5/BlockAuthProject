@@ -405,7 +405,7 @@ body {
 				</table>
 				</p>
 				<p>
-				<form action="purchase" method="post">
+				<form action="purchaseOk" method="post">
 					<input type="hidden" name="goodsNums" th:value="${goodsNums}">
 					<input type="hidden" name="goodsTotalPrice"
 						th:value="${goodsTotalPrice}"> <input type="hidden"
@@ -421,29 +421,29 @@ body {
 									</tr>
 									<tr>
 										<td>받는 사람</td>
-										<td><input type="text" name="RECEIVER_NAME" /></td>
+										<td><input type="text" name="receiverName" /></td>
 									</tr>
 									<tr>
 										<td>주소</td>
 
-										<td><input type="text" name="buyerAddr1"
+										<td><input type="text" name="deliveryAddr"
 											id="sample4_roadAddress"
 											style="width: 65%; background-image: url('img/search.png'); background-repeat: no-repeat; background-position: right; background-size: 20px 20px; width: 171px;"
 											onclick="sample4_execDaumPostcode();" readonly="readonly"
 											placeholder="주소" /><br /> <input type="text"
-											name="buyerAddr2" id="sample4_extraAddress"
+											name="deliveryAddr2" id="sample4_extraAddress"
 											placeholder="상세주소" /><br /> <input type="text"
-											name="buyerPostcode" id="sample4_postcode"
+											name="deliveryPostcode" id="sample4_postcode"
 											readonly="readonly" placeholder="우편번호" /></td>
 									</tr>
 
 									<tr>
 										<td>받는 사람 연락처</td>
-										<td><input type="text" name="RECEIVER_PHONE" /></td>
+										<td><input type="text" name="receiverPhone" /></td>
 									</tr>
 									<tr>
 										<td>주문메세지</td>
-										<td><input type="text" name="DELIVERY_REQ" /></td>
+										<td><input type="text" name="deliveryReq" /></td>
 									</tr>
 
 								</table>

@@ -11,5 +11,5 @@ import lombok.Data;
 public class WishDTO {
 	String goodsNum;
 	String buyerNum;
-	Date wishDate;
+	Date regiDate;
 }
