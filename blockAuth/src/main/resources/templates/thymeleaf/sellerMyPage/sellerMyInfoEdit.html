@@ -101,7 +101,7 @@ body {
          <span th:if="${session.authInfo != null}">
         <span th:if="${session.authInfo.grade == 'admin'}">
           <li class="nav-item">
-            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+            <a class="nav-link" href="/admin/adminList">관리자페이지
               <span class="sr-only">(current)</span>
             </a>
           </li>
@@ -152,12 +152,21 @@ body {
 
        <div class="col-lg-3">
 
-        <h1 class="my-4">Block-Auth</h1>
+         <h1 class="my-4">Block-Auth</h1>
         <div class="list-group">
-          <a href="/mypage/memberPwCheck" class="list-group-item">비밀번호 변경</a>
-          <a href="#" class="list-group-item">찜한 상품</a>
-          <a href="#" class="list-group-item">구매리스트</a>
-          <a href="/mypage/withdrawal" class="list-group-item">회원 탈퇴</a>
+                  <span th:if="${session.authInfo.grade == 'seller'}">
+         <a href="/goods/goodsList" class="list-group-item">상품 관리</a>
+          <a href="#" class="list-group-item">상품 문의</a>
+          <a href="#" class="list-group-item">송장정보 입력</a>
+          <a href="/mypage/sellerMyInfoEdit" class="list-group-item">내 정보 수정</a>
+          </span>
+          <span th:if="${session.authInfo.grade == 'admin'}">
+          <a href="/buyer/buyerList" class="list-group-item">구매자 관리</a>
+          <a href="/seller/sellerList" class="list-group-item">판매자 관리</a>
+          <a href="/goods/goodsList" class="list-group-item">상품 관리</a>
+          <a href="/contract/contractList" class="list-group-item">계약 관리</a>
+          <a href="/vote/voteList" class="list-group-item">투표 관리</a>
+          </span>
         </div>
 
       </div>

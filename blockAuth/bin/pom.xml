@@ -264,7 +264,7 @@
 				<artifactId>INIpaySample</artifactId>
 				<version>1.3</version>
 				<scope>system</scope>
-				<systemPath>C:/Users/hk03-9/eclipse-workspace99/BlockAuthProject/blockAuth/src/main/webapp/WEB-INF/lib/INIpaySample_v1.3.jar</systemPath>
+				<systemPath>C:/Users/hk03-17/eclipse-workspace48/BlockAuthProject/blockAuth/src/main/webapp/WEB-INF/lib/INIpaySample_v1.3.jar</systemPath>
 			</dependency>
 	</dependencies>
 

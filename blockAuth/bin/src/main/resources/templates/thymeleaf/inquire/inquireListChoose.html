@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style type="text/css">
+   .col-md-9{
+      margin : auto;
+      
+   }
+</style>
+
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+   
+</style>
+<link rel="stylesheet" href="webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Inquire List</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'admin'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          </span>
+          </span>
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'buyer'}">
+          <li class="nav-item">
+            <a class="nav-link" href="../cartList">장바구니</a>
+          </li>
+          </span></span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">마이페이지</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <span th:if="${session.authInfo.grade == 'buyer' || session.authInfo.grade == 'seller'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          </span>
+          </span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+           <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/inquire/inquireList">고객센터</a>
+          </li>
+          </span>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">고객센터</h1>
+        <div class="list-group">
+          <span th:if="${session.authInfo.grade.equals('admin')}">
+	          <a href="/inquire/inquireListAdmin/seller" class="list-group-item">판매자 문의하기</a>
+	          <a href="/inquire/inquireListAdmin/buyer" class="list-group-item">구매자 문의하기</a>
+          </span>
+          <span th:if="${session.authInfo.grade.equals('seller')}">
+	          <a href="/inquire/inquireList" class="list-group-item">관리자 문의하기</a>
+          </span>
+          <span th:if="${session.authInfo.grade.equals('buyer')}">
+	          <a href="/inquire/inquireList" class="list-group-item">관리자 문의하기</a>
+          </span>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+      
+          <div class="card">
+              <div class="card-body">
+                  
+                  <div class="row">
+                      <div class="col-md-12">
+                      	<section class="ftco-section">
+							<div class="container">
+								<div class="row justify-content-center">
+									<div class="col-md-6 text-center mb-4">
+										<h2 class="heading-section">관리자에게 문의하기</h2><br/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+											<table class="table table-striped">
+											    <tr id="tr1">
+											    	<th>문의번호</th>
+											    	<th>문의제목</th>
+											    	<th>문의자</th>
+											     	<th>문의날짜</th>
+											     	<th>답변상태</th>
+											    </tr>
+											    <span th:if="${value.equals('0')}">
+											    <tr class="alert" role="alert" th:each="inquireCommand : ${list }">
+											      <span th:if="${inquireCommand.sellerNum != null && inquireCommand.buyerNum == null}">
+											    	<td><a th:href="@{../inquire/sellerInqDetail(adminInqNum=${inquireCommand.adminInqNum})}">[[${inquireCommand.adminInqNum}]]</a></td>
+											    	<td>[[${inquireCommand.adminInqTitle}]]</td>
+											    	<td>[[${inquireCommand.sellerNum}]]</td>
+											    	<td>[[${#dates.format(inquireCommand.adminInqDate, 'yyyy-MM-dd')}]]</td>
+											    	<td>
+											    		<span th:if="${inquireCommand.adminNum == null}">답변대기</span>
+											    		<span th:if="${inquireCommand.adminNum != null}">답변완료</span>
+											    	</td>
+											      </span>
+											    </tr>
+											   </span>
+											   <span th:if="${value.equals('1')}">
+											    <tr class="alert" role="alert" th:each="inquireCommand : ${list }">
+											     <span th:if="${inquireCommand.sellerNum == null && inquireCommand.buyerNum != null}">
+											    	<td><a th:href="@{../inquire/sellerInqDetail(adminInqNum=${inquireCommand.adminInqNum})}">[[${inquireCommand.adminInqNum}]]</a></td>
+											    	<td>[[${inquireCommand.adminInqTitle}]]</td>
+											    	<td>[[${inquireCommand.buyerNum}]]</td>
+											    	<td>[[${#dates.format(inquireCommand.adminInqDate, 'yyyy-MM-dd')}]]</td>
+											    	<td>
+											    		<span th:if="${inquireCommand.adminNum == null}">답변대기</span>
+											    		<span th:if="${inquireCommand.adminNum != null}">답변완료</span>
+											    	</td>
+											      </span>
+											    </tr>
+											   </span>
+											</table>
+									</div>
+								</div>
+							</div>
+						</section>
+              		  </div>
+      			  </div>
+     		   </div>
+     	</div>
+     	</div>
+    <!-- /.col-lg-9 -->
+
+    	</div>
+    <!-- /.row -->
+
+  	</div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

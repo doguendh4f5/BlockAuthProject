@@ -3,7 +3,31 @@
 
 window.addEventListener("load", function() {
 	web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545")); // Ganache
+	// encrypt();
 });
+
+function encrypt() { // 개인키 대신 사용 : 암호문을 개인키 대신 저장(로그인 시 사용)
+	const message = "17523e48dd6eeee019a696b787e1fc61c8e64877a3ce13b7947de7dbb89467d9";
+    const password = "hello blockchain";
+    const salt = CryptoJS.lib.WordArray.random(128 / 8);
+    const key = CryptoJS.PBKDF2(password, salt, { keySize: 256 / 32, iterations: 1000 });
+    const iv = CryptoJS.lib.WordArray.random(128 / 8);
+    const ciphertext = CryptoJS.AES.encrypt(message, key, { iv: iv });
+    const encrypted = salt.toString() + iv.toString() + ciphertext.toString();
+    document.write(encrypted); // 본문에 해당되는 암호문
+}
+// 복호화
+function decrypt(message,pass) { // 암호화된 키와 pw로 복호화
+ 	const encrypted = message;
+    const password = pass;
+    const salt = CryptoJS.enc.Hex.parse(encrypted.substr(0, 32));
+    const iv = CryptoJS.enc.Hex.parse(encrypted.substr(32, 32));
+    const ciphertext = encrypted.substring(64);
+    const key = CryptoJS.PBKDF2(password, salt, { keySize: 256 / 32, iterations: 1000 });
+    const decrypted = CryptoJS.AES.decrypt({ ciphertext: CryptoJS.enc.Base64.parse(ciphertext) }, key, { iv: iv }).toString(CryptoJS.enc.Utf8);
+    //$('#decrypted-message-input').val(decrypted);
+  	return decrypted;
+}
 
 // 자바스크립트를 이용해서 파일 읽어오기
 function onFileSelected(event) {
@@ -11,7 +35,9 @@ function onFileSelected(event) {
 	const reader = new FileReader(); // 파일을 읽어오는 객체
 	reader.onload = function(event) {
 		console.log("파일 내용 : " + event.target.result);
-		const privateKey = event.target.result; // 개인키 정보 저장
+		const file = event.target.result;
+		const privateKey = decrypt(file, "hello blockchain");
+		// const privateKey = event.target.result; // 개인키 정보 저장
 		// 지갑
 		const account = web3.eth.accounts.privateKeyToAccount(privateKey);// 가나슈로부터 지갑(공개키, 개인키...) 가져옴
 		const address = account.address; // 지갑에서 주소만 가져옴

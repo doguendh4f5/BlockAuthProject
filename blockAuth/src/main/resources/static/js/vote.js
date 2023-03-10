@@ -77,7 +77,7 @@ var abi = [
 ];
 
 var isVote = false;
-const contract_address = "0x797915990041363f8AEED0AFB4781Da4b9A9353a";
+const contract_address = "0xDBFD177b75FeB13b0151116be4138BB6C207c593";
 
 
 function candidate() {

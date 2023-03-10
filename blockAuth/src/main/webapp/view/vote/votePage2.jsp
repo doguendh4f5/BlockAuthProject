@@ -109,7 +109,7 @@ function reg(){
         <c:if test="${authInfo != null}">
         <c:if test="${authInfo.grade == 'admin'}">
           <li class="nav-item">
-            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+            <a class="nav-link" href="/admin/adminList">관리자페이지
               <span class="sr-only">(current)</span>
             </a>
           </li>
@@ -214,7 +214,7 @@ function reg(){
 						<span><b>${list.candidatesDTO.vote}</b>표</span>
 					<br/>
 					</c:if>
-					<c:if test="${status.count % 3 == 0 }">
+					<c:if test="${status.count % 2 == 0 }">
 					</td>
 				</c:if>
 				</c:forEach>

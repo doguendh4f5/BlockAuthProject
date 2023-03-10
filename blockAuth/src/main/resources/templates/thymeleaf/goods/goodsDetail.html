@@ -97,8 +97,7 @@ $(function(){
 				}
 			},
 			error : function(){
-				alert("에러ㅠㅠ");
-				return;
+				location.href="/login";
 			}
 		});
 	})
@@ -154,7 +153,7 @@ $(function(){
          <span th:if="${session.authInfo != null}">
         <span th:if="${session.authInfo.grade == 'admin'}">
           <li class="nav-item">
-            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+            <a class="nav-link" href="/admin/adminList">관리자페이지
               <span class="sr-only">(current)</span>
             </a>
           </li>
@@ -331,10 +330,10 @@ $(function(){
 		<span th:if="${session.authInfo != null}">
 		<span th:if="${session.authInfo.grade == 'buyer'}">
 <table>
-<tr><td>
-
+<tr><th>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <img th:src="|/goods/upload/${goodsCommand.goodsMain}|"/><br />
-</td></tr>
+</th></tr>
 </table>
 
 <form action="/purchase/orderSheet2">
@@ -342,7 +341,6 @@ $(function(){
 <table >
 <tr>
 	<td width="300">
-		관심상품
 		<th:block th:if="${#strings.trim(wish) == '0'}">
 			<img src="/static/images/0.png" width="30" id="wishBtn"/>
 		</th:block>

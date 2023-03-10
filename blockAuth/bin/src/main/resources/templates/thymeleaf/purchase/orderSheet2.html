@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/static/css/style5.css">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<style>
+body {
+	margin: 0;
+}
+
+.tst1 {
+	padding-bottom: 3rem !important;
+	padding-top: 3rem !important;
+	background-color: #343a40 !important;
+	display: block;
+	box-sizing: border-box;
+}
+
+.tst2 {
+	max-width: 720px;
+	width: 100vw;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.tst3 {
+	color: #fff !important;
+	text-align: center !important;
+	margin: 0 !important;
+	box-sizing: border-box;
+	display: block;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+}
+
+.tst4 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+        background-color: #343a40!important;
+            flex-flow: row nowrap;
+                justify-content: flex-start;
+                display: flex;
+                align-items: center;
+                    padding: 0.5rem 1rem;
+                    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -webkit-box-pack: start;
+        box-sizing: border-box;
+        height:56px;
+}
+
+.tst5 {
+	padding-right: 0;
+	padding-left: 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	-webkit-box-align: center;
+	-webkit-box-pack: justify;
+	max-width: 720px;
+	width: 100%;
+	margin-right: 0;
+	margin-left: 0;
+	box-sizing: border-box;
+}
+
+.tst6 {
+	color: #fff;
+	display: inline-block;
+	padding-top: 0.3125rem;
+	padding-bottom: 0.3125rem;
+	margin-right: 1rem;
+	font-size: 1.25rem;
+	line-height: inherit;
+	white-space: nowrap;
+	text-decoration: none;
+	background-color: transparent;
+	transition: .3s all ease;
+	cursor: pointer;
+}
+
+.tst7 {
+	cursor: pointer;
+	color: rgba(255, 255, 255, .5);
+	border-color: rgba(255, 255, 255, .1);
+	display: none;
+	padding: 0.25rem 0.75rem;
+	font-size: 1.25rem;
+	line-height: 1;
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-radius: 0.25rem;
+	text-transform: none;
+	margin: 0;
+	font-family: inherit;
+	box-sizing: border-box;
+	writing-mode: horizontal-tb !important;
+	text-rendering: auto;
+	letter-spacing: normal;
+	word-spacing: normal;
+	text-indent: 0px;
+	text-shadow: none;
+	text-align: center;
+}
+
+.tst8 {
+	display: flex !important;
+	flex-basis: auto;
+	-webkit-box-flex: 1;
+	-webkit-box-align: center;
+	-webkit-box-direction: normal;
+	box-sizing: border-box;
+
+}
+
+.tst9 {
+	flex-direction: row;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	display: flex;
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+	margin-top: 0;
+	box-sizing: border-box;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 40px;
+}
+
+.tst10 {
+	box-sizing: border-box;
+	display: list-item;
+	text-align: -webkit-match-parent;
+	-webkit-box-direction: normal;
+	list-style: none;
+}
+
+.nav11 {
+	color: rgba(255, 255, 255, .5);
+	padding-right: 0;
+	padding-left: 0;
+	display: block;
+	padding: 0.5rem 1rem;
+	text-decoration: none;
+	background-color: transparent;
+	transition: .3s all ease;
+	box-sizing: border-box;
+	cursor: pointer;
+	text-align: -webkit-match-parent;
+	list-style: none;
+	-webkit-box-direction: normal;
+}
+
+#div1 {
+	background-color: white;
+	width: 860px;
+	height: auto;
+	padding: 80px;
+}
+
+#div2 {
+	font-size: 13px;
+}
+
+#div3 {
+	border: 2px solid #ccc;
+	background-color: #FFEAEA;
+	padding-top: 25px;
+	padding-right: 25px;
+	padding-left: 25px;
+	padding-bottom: 10px;
+	font-size: 13px;
+}
+
+#div4 {
+	border: 2px solid #ccc;
+	background-color: #EAEAEA;
+	padding-top: 25px;
+	padding-right: 25px;
+	padding-left: 25px;
+	padding-bottom: 10px;
+	font-size: 13px;
+}
+
+#div5 {
+	font-size: 14px;
+}
+
+#sp1 {
+	font-size: 15px;
+	color: #FF6C6C;
+	font-weight: bold;
+}
+
+#sp2 {
+	font-size: 10px;
+}
+
+#sp3 {
+	font-size: 14px;
+}
+
+#sp4 {
+	font-size: 13px;
+}
+
+#btn1 {
+	border: none;
+	background-color: #FF8383;
+	color: white;
+	width: 150px;
+	height: 50px;
+	font-weight: bold;
+	font-size: 17px;
+	margin: auto;
+	border-radius: 5px;
+	display: block;
+}
+
+.row {
+	justify-content: center;
+	margin-top: 50px;
+}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+	function sample4_execDaumPostcode() {
+		new daum.Postcode(
+				{
+					oncomplete : function(data) {
+						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+						// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+						var roadAddr = data.roadAddress; // 도로명 주소 변수
+						var extraRoadAddr = ''; // 참고 항목 변수
+						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+							extraRoadAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가한다.
+						if (data.buildingName !== '' && data.apartment === 'Y') {
+							extraRoadAddr += (extraRoadAddr !== '' ? ', '
+									+ data.buildingName : data.buildingName);
+						}
+						// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+						if (extraRoadAddr !== '') {
+							extraRoadAddr = '(' + extraRoadAddr + ')';
+						}
+						// 우편번호와 주소 정보를 해당 필드에 넣는다.
+						document.getElementById('sample4_postcode').value = data.zonecode;
+						document.getElementById("sample4_roadAddress").value = roadAddr;
+
+						// 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+						if (roadAddr !== '') {
+							document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+						} else {
+							document.getElementById("sample4_extraAddress").value = '';
+						}
+						/*
+						var guideTextBox = document.getElementById("guide");
+						// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+						if(data.autoRoadAddress) {
+						    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+						    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+						    guideTextBox.style.display = 'block';
+						} else {
+						    guideTextBox.innerHTML = '';
+						    guideTextBox.style.display = 'none';
+						}
+						 */
+					}
+				}).open();
+	}
+</script>
+
+</head>
+<body>
+	<!-- Navigation -->
+	<nav class="tst4">
+		<div class="tst5">
+			<a class="tst6" href="/">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Block-Auth</a>
+			<button class="tst7" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse tst8" id="navbarResponsive">
+				<ul class="tst9">
+					<span th:if="${session.authInfo != null}"> <span
+						th:if="${session.authInfo.grade == 'admin'}">
+							<li class="tst10"><a class="nav11"
+								href="/buyer/buyerList">관리자페이지 <span class="sr-only">(current)</span>
+							</a></li>
+					</span>
+					</span>
+					<span th:if="${session.authInfo != null}"> <span
+						th:if="${session.authInfo.grade == 'buyer'}">
+							<li class="tst10"><a class="nav11" href="../cartList">장바구니</a>
+						</li>
+					</span></span>
+					<span th:if="${session.authInfo == null}">
+						<li class="tst10"><a class="nav11" href="/login">마이페이지</a>
+					</li>
+					</span>
+					<span th:if="${session.authInfo != null}"> <span
+						th:if="${session.authInfo.grade == 'buyer' || session.authInfo.grade == 'seller'}">
+							<li class="tst10"><a class="nav11" href="/mypage">마이페이지</a>
+						</li>
+					</span>
+					</span>
+					<span th:if="${session.authInfo == null}">
+						<li class="tst10"><a class="nav11" href="/login">로그인</a>
+					</li>
+					</span>
+					<span th:if="${session.authInfo != null}">
+						<li class="tst10"><a class="nav11" href="/login/logout">로그아웃</a>
+					</li>
+					</span>
+					<span th:if="${session.authInfo != null}">
+						<li class="tst10"><a class="nav11"
+							href="/inquire/inquireList">고객센터</a></li>
+					</span>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<center>
+	<div class="container">
+
+		<div class="row">
+			<div id="div1">
+				<table width="700" align="center">
+					<tr>
+						<td><strong>주문서</strong>
+							<hr /> <strong>1. 주문 상품</strong><br /></td>
+					</tr>
+				</table>
+				<p>
+				<table width="700" align="center">
+					<tr>
+						<td>주문 상품 정보</td>
+						<td>수량/상품금액</td>
+						<td>배송비</td>
+					</tr>
+					<tr th:each="dto : ${list}">
+						<td><img th:src="|/goods/upload/${dto.goodsMain}|"
+							height="60" /> [[${dto.goodsName}]]</td>
+						<td>[[${goodsStock}]]개 / [[${goodsTotalPrice}]]원
+						</td>
+						<td><span th:if="${dto.goodsDeliveryFee == 0}"
+							th:text="무료배송"></span> <span
+							th:if="${dto.goodsDeliveryFee > 0}"
+							th:text="${dto.goodsDeliveryFee + '원'}"></span></td>
+					</tr>
+				</table>
+				</p>
+				<p>
+				<form action="purchaseOk2" method="post">
+					<input type="hidden" name="goodsNums" th:value="${goodsNums}">
+					<input type="hidden" name="goodsTotalPrice"
+						th:value="${goodsTotalPrice}"> <input type="hidden"
+						name="goodsTotalDelivery" th:value="${goodsTotalDelivery}">
+					<input type="hidden" name="totalPrice"
+						th:value="${goodsTotalPrice + goodsTotalDelivery}">
+					<table width="700" align="center" method="post">
+						<tr>
+							<td alignt="left">
+								<table width="350">
+									<tr>
+										<th colspan=2>2. 배송지 정보 입력</th>
+									</tr>
+									<tr>
+										<td>받는 사람</td>
+										<td><input type="text" name="receiverName" /></td>
+									</tr>
+									<tr>
+										<td>주소</td>
+
+										<td><input type="text" name="deliveryAddr"
+											id="sample4_roadAddress"
+											style="background-image: url('img/search.png'); background-repeat: no-repeat; background-position: right; background-size: 20px 20px;"
+											onclick="sample4_execDaumPostcode();" readonly="readonly"
+											placeholder="주소" /><br /> <input type="text"
+											name="deliveryAddr2" id="sample4_extraAddress"
+											placeholder="상세주소" /><br /> <input type="text"
+											name="deliveryPostcode" id="sample4_postcode"
+											readonly="readonly" placeholder="우편번호" /></td>
+									</tr>
+
+									<tr>
+										<td>받는 사람 연락처</td>
+										<td><input type="text" name="receiverPhone" /></td>
+									</tr>
+									<tr>
+										<td>주문메세지</td>
+										<td><input type="text" name="deliveryReq" /></td>
+									</tr>
+
+								</table>
+							</td>
+							<td alignt="right">
+								<table width="300">
+									<tr>
+										<th colspan=2>3.결제금액</th>
+									</tr>
+									<tr>
+										<td align="left">상품금액 :
+											[[${#numbers.formatCurrency(goodsTotalPrice)}]]</td>
+										<td align="right">원</td>
+									</tr>
+									<tr>
+										<td align="left">배송비 :
+											[[${#numbers.formatCurrency(goodsTotalDelivery)}]]</td>
+										<td align="right">원</td>
+									</tr>
+									<tr>
+										<td align="left">총 결제 금액 :
+											[[${#numbers.formatCurrency(goodsTotalPrice +
+											goodsTotalDelivery)}]]</td>
+										<td align="right">원</td>
+									</tr>
+									<tr>
+										<td align="center" colspan=2><br />
+										<button type="submit">결제하기</button></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</form>
+				</p>
+
+			</div>
+		</div>
+	</div>
+	</center>
+	<!-- Footer -->
+	<footer class="tst1">
+		<div class="tst2">
+			<p class="tst3">Copyright © BlockAuth Corp. 2023 All Rights
+				Reserved.</p>
+		</div>
+		<!-- /.container -->
+	</footer>
+</body>
+</html>

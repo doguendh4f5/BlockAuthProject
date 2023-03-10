@@ -48,7 +48,7 @@ function voteRedirect(){
          <span th:if="${session.authInfo != null}">
         <span th:if="${session.authInfo.grade == 'admin'}">
           <li class="nav-item">
-            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+            <a class="nav-link" href="/admin/adminList">관리자페이지
               <span class="sr-only">(current)</span>
             </a>
           </li>
@@ -119,7 +119,7 @@ function voteRedirect(){
 		          <div class="col-lg-4 col-md-6 mb-4">
 		            <div class="card h-100">
 		              <a th:href="@{/goods/goodsDetail(goodsNum=${goodsDTO.goodsNum})}">
-		              <img class="card-img-top" th:src="|/view/goods/upload/${goodsDTO.goodsMain}|" ></a>
+		             <img class="card-img-top" th:src="|/goods/upload/${goodsDTO.goodsMain}|"  width="650px" height="200px"></a>
 		              <div class="card-body">
 		                <h4 class="card-title">
 		                  <a >[[${goodsDTO.goodsName}]]</a>

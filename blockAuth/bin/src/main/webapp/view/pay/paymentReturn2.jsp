@@ -57,7 +57,6 @@
 			// signature 데이터 생성 (모듈에서 자동으로 signParam을 알파벳 순으로 정렬후 NVP 방식으로 나열해 hash)
 			String signature = SignatureUtil.makeSignature(signParam);
 
-
 			//#####################
 			// 3.API 요청 전문 생성
 			//#####################
@@ -131,23 +130,42 @@
     <head>
         <meta charset="UTF-8">
 		<script language="javascript" type="text/javascript" src="https://stdpay.inicis.com/stdjs/INIStdPay.js" charset="UTF-8"></script>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <script>
+   console.log("<%= resultMap.get("goodsName") %>");
    var log = "<%= resultMap.get("resultMsg") %>";
    if(log == '정상처리되었습니다.'){
-	   alert("멤버십 결제가 완료되었습니다.\n메인 페이지로 이동합니다.")
-	   location.href="/paymentTest/membershipReturn";
+	   $(function(){
+		   $.ajax({
+			   type : "post",
+			   url : "/purchase/paymentSave",
+			   dataType : "text",
+			   data : {"purchaseNum" : "<%= resultMap.get("goodsName") %>"
+			   		, "paymentMethod" : "<%= resultMap.get("payMethod") %>",  "paymentDate" : "<%= resultMap.get("applDate") %>", 
+			   		"okDate" : "<%= resultMap.get("applDate") %>", "cardCompany" : "<%= resultMap.get("CARD_PurchaseName") %>",
+				   "okNum" : "<%= resultMap.get("MOID") %>", "creditNum" : "<%= resultMap.get("CARD_Num") %>"},
+			   success : function(result){
+					  alert("고객님의 주문이 완료되었습니다.\n메인 페이지로 이동합니다.")
+					  location.href="/";
+			   },
+			   error : function(){				   
+			   }
+		   });
+	   });
+
    }else{
-	   alert("결제에 오류가 발생했습니다. 다시 시도해주세요!");
+	   alert("결제 오류가 발생했습니다. 다시 시도해주세요!");
 	   location.href="/";
    }
+   
+   
+   
    </script>
     </head>
 
     <body>
                     <form name="" id="result" method="post" class="mt-5">
                     <input type="hidden" value="<%= resultMap.get("resultMsg") %>"/>
-                </form>
-
-		
+                </form>		
     </body>
 </html>

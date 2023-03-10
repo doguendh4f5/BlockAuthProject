@@ -239,8 +239,8 @@ body {
 	margin-top: 50px;
 }
 </style>
-<script
-	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 	function sample4_execDaumPostcode() {
@@ -292,40 +292,9 @@ body {
 				}).open();
 	}
 </script>
-<!--테스트 JS-->
-<script language="javascript" type="text/javascript"
-	src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js" charset="UTF-8"></script>
-<script type="text/javascript">
-	function paybtn() {
-		INIStdPay.pay('SendPayForm_id');
-	}
-</script>
 
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 </head>
 <body>
-	<form name="" id="SendPayForm_id" method="post" class="mt-5">
-		<input type="hidden" name="version" value="1.0"> <input
-			type="hidden" name="gopaymethod" value="Card:Directbank:vbank">
-		<input type="hidden" name="mid" th:value="${mid}"> <input
-			type="hidden" name="oid" th:value="${orderNumber}"> <input
-			type="hidden" name="price" th:value="${totalPrice}"> <input
-			type="hidden" name="timestamp" th:value="${timestamp}"> <input
-			type="hidden" name="signature" th:value="${signature}"> <input
-			type="hidden" name="mKey" th:value="${mKey}"> <input
-			type="hidden" name="currency" value="WON"> <input
-			type="hidden" name="goodname" value="블록어스 상품 결제"> <input
-			type="hidden" name="buyername" th:value="${buyerCommand.buyerName }">
-		<input type="hidden" name="buyertel"
-			th:value="${buyerCommand.buyerPhone}"> <input type="hidden"
-			name="buyeremail" th:value="${buyerCommand.buyerEmail }"> <input
-			type="hidden" name="returnUrl"
-			value="http://localhost:8080/paymentTest/paymentReturn"> <input
-			type="hidden" name="closeUrl"
-			value="http://localhost:8080/paymentTest/paymentClose"> <input
-			type="hidden" name="acceptmethod" value="HPP(1):below1000:va_receipt">
-	</form>
 	<!-- Navigation -->
 	<nav class="tst4">
 		<div class="tst5">
@@ -375,6 +344,7 @@ body {
 			</div>
 		</div>
 	</nav>
+	<center>
 	<div class="container">
 
 		<div class="row">
@@ -395,7 +365,7 @@ body {
 					<tr th:each="dto : ${list}">
 						<td><img th:src="|/goods/upload/${dto.goodsDTO.goodsMain}|"
 							height="60" /> [[${dto.goodsDTO.goodsName}]]</td>
-						<td>[[${dto.cartDTO.qty}]]개<br /> [[${dto.totalPrice}]]원
+						<td>[[${dto.cartDTO.qty}]]개 / [[${dto.totalPrice}]]원
 						</td>
 						<td><span th:if="${dto.goodsDTO.goodsDeliveryFee == 0}"
 							th:text="무료배송"></span> <span
@@ -428,7 +398,7 @@ body {
 
 										<td><input type="text" name="deliveryAddr"
 											id="sample4_roadAddress"
-											style="width: 65%; background-image: url('img/search.png'); background-repeat: no-repeat; background-position: right; background-size: 20px 20px; width: 171px;"
+											style="background-image: url('img/search.png'); background-repeat: no-repeat; background-position: right; background-size: 20px 20px; "
 											onclick="sample4_execDaumPostcode();" readonly="readonly"
 											placeholder="주소" /><br /> <input type="text"
 											name="deliveryAddr2" id="sample4_extraAddress"
@@ -471,7 +441,7 @@ body {
 									</tr>
 									<tr>
 										<td align="center" colspan=2><br />
-										<button type="button" onclick="paybtn()">결제하기</button></td>
+										<button type="submit">결제하기</button></td>
 									</tr>
 								</table>
 							</td>
@@ -483,6 +453,7 @@ body {
 			</div>
 		</div>
 	</div>
+	</center>
 	<!-- Footer -->
 	<footer class="tst1">
 		<div class="tst2">

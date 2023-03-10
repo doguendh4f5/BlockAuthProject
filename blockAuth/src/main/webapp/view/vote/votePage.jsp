@@ -22,12 +22,12 @@ justify-content: center;
 align-items: center;
 }
 #img{
-	height: 200px;
-	width : 200px;
+	height: 100px;
+	width : 100px;
 }
 #img1{
-	height: 300px;
-	width : 600px;
+	height: 200px;
+	width : 500px;
 }
 #sp1{
 	background-color: #007bff;
@@ -86,7 +86,7 @@ $(function(){
         <c:if test="${authInfo != null}">
         <c:if test="${authInfo.grade == 'admin'}">
           <li class="nav-item">
-            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+            <a class="nav-link" href="/admin/adminList">관리자페이지
               <span class="sr-only">(current)</span>
             </a>
           </li>
@@ -175,7 +175,7 @@ $(function(){
 					</c:if>
 					
 						<button id="sp1" onclick="setVote('${list.candidatesDTO.idx}', '${list.goodsDTO.goodsName}', '${authInfo.walletAddr}', '${list.goodsDTO.goodsNum}');" >투표하기</button>
-					<c:if test="${status.count % 3 == 0 }">
+					<c:if test="${status.count % 2 == 0 }">
 					</td>
 				</c:if>
 				</c:forEach>

@@ -3,9 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <title>구매자/판매자 회원가입 페이지</title>
+<style>
+body{
+background-color: #f1f1f1;
+}
+table{
+margin : 150px;
+background-color : white;
+width:450px;
+text-align : center;
+height : 300px;
+border : 1px solid black;
+}
+#btn1{
+border:none;
+background-color : #FFE08C;
+width : 150px;
+height:50px;
+font-size:15px;
+border-radius:5px;
+}
+
+#btn2{
+border:none;
+background-color : #8BBDFF;
+width : 150px;
+height:50px;
+font-size:15px;
+border-radius:5px;
+}
+</style>
+<script>
+function buyerJoin(){
+	location.href="buyerJoin";
+}
+function sellerJoin(){
+	location.href="sellerJoin";
+}
+</script>
 </head>
 <body>
-<a href="buyerJoin">구매자 회원가입</a><br>
-<a href="sellerJoin">판매자 회원가입</a><br>
+<center>
+<table>
+<tr><td><button id = "btn1" onclick="buyerJoin();">구매자 회원가입</button><a href="buyerJoin"></td><td><button id="btn2" onclick="sellerJoin();">판매자 회원가입</button><a href="sellerJoin"></td></tr>
+</table>
+</center>
 </body>
 </html>

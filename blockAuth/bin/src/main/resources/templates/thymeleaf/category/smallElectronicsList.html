@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<style type="text/css">
+   /*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+.col-lg-9{
+	height: 550px;
+	padding : 30px;
+}   
+</style>
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Block-Auth</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  
+<script>
+function voteRedirect(){
+	location.href="vote/votePage?voteNum=vote10001";
+}
+</script>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Block-Auth</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'admin'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          </span>
+          </span>
+         <span th:if="${session.authInfo != null}">
+        <span th:if="${session.authInfo.grade == 'buyer'}">
+          <li class="nav-item">
+            <a class="nav-link" href="../cartList">장바구니</a>
+          </li>
+          </span></span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">마이페이지</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <span th:if="${session.authInfo.grade == 'buyer' || session.authInfo.grade == 'seller'}">
+          <li class="nav-item">
+            <a class="nav-link" href="/mypage">마이페이지</a>
+          </li>
+          </span>
+          </span>
+          <span th:if="${session.authInfo == null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">로그인</a>
+          </li>
+          </span>
+          <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/logout">로그아웃</a>
+          </li>
+          </span>
+           <span th:if="${session.authInfo != null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/inquire/inquireList">고객센터</a>
+          </li>
+          </span>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Block-Auth</h1>
+        <div class="list-group">
+          <a href="/category/largeElectronics" class="list-group-item">대형가전</a>
+          <a href="/category/smallElectronics" class="list-group-item">소형가전</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+        <div class="row">
+
+		                      <div class="col-md-12">
+                          <h4>소형가전</h4>
+                          <hr>
+                      </div>
+         	<th:block th:each="goodsDTO, idx : ${list3}">
+		          <div class="col-lg-4 col-md-6 mb-4">
+		            <div class="card h-100">
+		              <a th:href="@{/goods/goodsDetail(goodsNum=${goodsDTO.goodsNum})}">
+		              <img class="card-img-top" th:src="|/view/goods/upload/${goodsDTO.goodsMain}|" ></a>
+		              <div class="card-body">
+		                <h4 class="card-title">
+		                  <a >[[${goodsDTO.goodsName}]]</a>
+		                </h4>
+		                <h5> [[${#numbers.formatCurrency(goodsDTO.goodsPrice)}]]</h5>
+		                <p class="card-text">[[${goodsDTO.goodsContent}]]</p>
+		              </div>
+		              <div class="card-footer">
+		                <small >[[${goodsDTO.goodsCompany}]]</small>
+		              </div>
+		            </div>
+		          </div>
+         	</th:block>
+         	
+          </div>
+        </div>
+        <!-- /.row -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright © BlockAuth Corp. 2023 All Rights Reserved.</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

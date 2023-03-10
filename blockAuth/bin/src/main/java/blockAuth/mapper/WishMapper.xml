@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blockAuth.mapper.WishMapper">
+<update id="wishAdd">
+	merge into wish w
+	using(select goods_num from goods where goods_num = #{goodsNum}) g
+	on (w.goods_num = g.goods_num and w.buyer_num = #{buyerNum})
+	when matched then
+		update set REGI_DATE = sysdate
+		delete where w.goods_num = #{goodsNum} and w.buyer_num = #{buyerNum}
+	when not matched then
+		insert (w.goods_num, w.buyer_num, w.regi_date)
+		values (#{goodsNum}, #{buyerNum}, sysdate)
+</update>
+<select id="wishCount" parameterType="wishDTO" resultType="string">
+	select count(*) from wish
+	where goods_num = #{goodsNum} and buyer_num = #{buyerNum}
+</select>
+
+<select id="wishList" parameterType="string" resultMap="GoodsWishMap">
+	select g.goods_num, regi_date, goods_price, goods_main, goods_name
+	from wish w join goods g
+	on w.goods_num = g.goods_num
+	where buyer_num = #{buyerNum}
+</select>
+<resultMap type="goodsWishDTO" id="GoodsWishMap">
+	<association property="goodsDTO" javaType="GoodsDTO">
+		<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+		<result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+		<result column="goods_main" jdbcType="VARCHAR" property="goodsMain"/>
+		<result column="goods_price" jdbcType="BIGINT" property="goodsPrice"/>
+	</association>
+	<association property="wishDTO" javaType="WishDTO">
+		<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+		<result column="regi_date" jdbcType="DATE" property="regiDate"/>
+	</association>
+</resultMap>
+</mapper>

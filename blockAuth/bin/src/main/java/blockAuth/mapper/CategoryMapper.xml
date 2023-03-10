@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blockAuth.mapper.CategoryMapper">
+<sql id="baseColumns">
+GOODS_NUM goodsNum, SELLER_NUM sellerNum, GOODS_NAME goodsName, GOODS_PRICE goodsPrice
+			, GOODS_CONTENT goodsContent, GOODS_SIZE goodsSize, GOODS_STOCK goodsStock
+			, GOODS_COUNTRY goodsCountry, GOODS_CATEGORY goodsCategory, GOODS_COMPANY goodsCompany
+			, MODIFY_NUM modifyNum, GOODS_REGI_DATE goodsRegiDate, GOODS_MAIN goodsMain
+			, GOODS_UPT_DATE goodsUptDate, GOODS_DELIVERY_FEE goodsDeliveryFee, WRITER_NUM writerNum
+			, GOODS_MAIN_ORG goodsMainOrg
+</sql>
+	<select id="selectFashion" resultType="goodsDTO">
+	select <include refid="baseColumns" />
+	from goods
+	where goods_category = '여성패션' or goods_category = '남성패션' 
+	</select>
+	
+	<select id="selectWomanFashion" resultType="goodsDTO">
+	select <include refid="baseColumns" />
+	from goods
+	where goods_category = '여성패션'
+	</select>
+	
+	<select id="selectManFashion" resultType="goodsDTO">
+	select <include refid="baseColumns" />
+	from goods
+	where goods_category = '남성패션'
+	</select>
+	
+	<select id="selectElectronics" resultType="goodsDTO">
+	select <include refid="baseColumns" />
+	from goods
+	where goods_category = '대형가전' or goods_category = '소형가전' 
+	</select>
+		
+	<select id="selectLargeElectronics" resultType="goodsDTO">
+	select <include refid="baseColumns" />
+	from goods
+	where goods_category = '대형가전'
+	</select>
+	
+	<select id="selectSmallElectronics" resultType="goodsDTO">
+	select <include refid="baseColumns" />
+	from goods
+	where goods_category = '소형가전' 
+	</select>
+	
+		<select id="selectGrocery" resultType="goodsDTO">
+	select <include refid="baseColumns" />
+	from goods
+	where goods_category = '과일'
+	or goods_category = '채소'
+	or goods_category = '육류'
+	or goods_category = '어류'
+	</select>
+	
+		<select id="selectGroceryFruit" resultType="goodsDTO">
+	select <include refid="baseColumns" />
+	from goods
+	where goods_category = '과일' 
+	</select>
+	
+		<select id="selectGroceryVegetable" resultType="goodsDTO">
+	select <include refid="baseColumns" />
+	from goods
+	where goods_category = '채소' 
+	</select>
+	
+		<select id="selectGroceryMeat" resultType="goodsDTO">
+	select <include refid="baseColumns" />
+	from goods
+	where goods_category = '육류' 
+	</select>
+	
+		<select id="selectGroceryFish" resultType="goodsDTO">
+	select <include refid="baseColumns" />
+	from goods
+	where goods_category = '어류' 
+	</select>
+</mapper>

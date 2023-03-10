@@ -50,7 +50,7 @@ body {
          <span th:if="${session.authInfo != null}">
         <span th:if="${session.authInfo.grade == 'admin'}">
           <li class="nav-item">
-            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+            <a class="nav-link" href="/admin/adminList">관리자페이지
               <span class="sr-only">(current)</span>
             </a>
           </li>
@@ -104,7 +104,7 @@ body {
         <h1 class="my-4">고객센터</h1>
         <div class="list-group">
           <span th:if="${session.authInfo.grade.equals('admin')}">
-	          <a href="#" class="list-group-item">판매자 문의하기</a>
+	          <a href="/inquire/inquireListAdmin/seller" class="list-group-item">판매자 문의하기</a>
 	          <a href="#" class="list-group-item">구매자 문의하기</a>
           </span>
           <span th:if="${session.authInfo.grade.equals('seller')}">

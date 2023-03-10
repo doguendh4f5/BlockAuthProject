@@ -49,7 +49,7 @@ body {
          <span th:if="${session.authInfo != null}">
         <span th:if="${session.authInfo.grade == 'admin'}">
           <li class="nav-item">
-            <a class="nav-link" href="/buyer/buyerList">관리자페이지
+            <a class="nav-link" href="/admin/adminList">관리자페이지
               <span class="sr-only">(current)</span>
             </a>
           </li>
@@ -144,7 +144,7 @@ body {
 											    <span th:if="${value.equals('0')}">
 											    <tr class="alert" role="alert" th:each="inquireCommand : ${list }">
 											      <span th:if="${inquireCommand.sellerNum != null && inquireCommand.buyerNum == null}">
-											    	<td><a th:href="@{../inquire/sellerInqDetail(adminInqNum=${inquireCommand.adminInqNum})}">[[${inquireCommand.adminInqNum}]]</a></td>
+											    	<td><a th:href="@{../sellerInqDetail(adminInqNum=${inquireCommand.adminInqNum})}">[[${inquireCommand.adminInqNum}]]</a></td>
 											    	<td>[[${inquireCommand.adminInqTitle}]]</td>
 											    	<td>[[${inquireCommand.sellerNum}]]</td>
 											    	<td>[[${#dates.format(inquireCommand.adminInqDate, 'yyyy-MM-dd')}]]</td>
